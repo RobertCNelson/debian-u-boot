@@ -37,6 +37,8 @@
 #include <asm/mach-types.h>
 #include "pandora.h"
 
+#define FRAMEBUFFER_ADDRESS 0x80598000
+
 /*
  * Routine: board_init
  * Description: Early hardware init.
@@ -50,6 +52,8 @@ int board_init(void)
 	gd->bd->bi_arch_number = MACH_TYPE_OMAP3_PANDORA;
 	/* boot param addr */
 	gd->bd->bi_boot_params = (OMAP34XX_SDRC_CS0 + 0x100);
+	/* framebuffer base */
+	gd->fb_base = FRAMEBUFFER_ADDRESS;
 
 	return 0;
 }
