@@ -3,6 +3,7 @@
 #include <twl4030.h>
 
 #ifdef CONFIG_LCD
+#include "logo.h"
 
 #define TWL_INTBR_PMBR1	0x92
 #define GPIODATADIR1	0x9b
@@ -78,6 +79,21 @@ static void lcd_init(void)
 	twl4030_i2c_write_u8(TWL4030_CHIP_GPIO, 0x40, SETGPIODATAOUT1);
 }
 
+static void draw_logo(void)
+{
+	DECLARE_GLOBAL_DATA_PTR;
+	unsigned short *dest = (void *)gd->fb_base;
+	unsigned short *logo = (unsigned short *)logo_data;
+	int i;
+
+	dest += 800 * 480/2 + 800/2;
+	dest -= 800 * logo_height/2;
+	dest -= logo_width/2;
+
+	for (i = 0; i < logo_height; i++, dest += 800, logo += logo_width)
+		memcpy(dest, logo, logo_width * 2);
+}
+
 /* u-boot LCD driver support */
 vidinfo_t panel_info = {
 	800, 480, LCD_BPP
@@ -94,6 +110,7 @@ short console_row;
 
 void lcd_enable(void)
 {
+	draw_logo();
 }
 
 void lcd_ctrl_init(void *lcdbase)
