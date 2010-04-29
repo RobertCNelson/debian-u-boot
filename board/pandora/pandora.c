@@ -78,6 +78,10 @@ int misc_init_r(void)
 	writel(GPIO28, &gpio5_base->setdataout);
 	writel(GPIO4, &gpio6_base->setdataout);
 
+	/* Enable battery backup capacitor (3.2V, 0.5mA charge current) */
+	twl4030_i2c_write_u8(TWL4030_CHIP_PM_RECEIVER, 0x1e,
+			     TWL4030_PM_RECEIVER_BB_CFG);
+
 	dieid_num_r();
 
 	return 0;
