@@ -88,11 +88,11 @@ static struct menu_item default_menu_items[] = {
 
 static void menu_init(void)
 {
-	const char *check_format1 = "%sload mmc1 0:%d 0x82000000 boot.scr";
-	const char *check_format2 = "%sload mmc1 0:%d 0x82000000 boot.txt";
-	const char *run_format1 = "%sload mmc1 0:%d 0x82000000 boot.scr;source 0x82000000";
-	const char *run_format2 = "mw.l 0x82000000 0 1024;%sload mmc1 0:%d 0x82000000 boot.txt;"
-					"ssource 0x82000000";
+	const char *check_format1 = "%sload mmc1 0:%d ${loadaddr} boot.scr";
+	const char *check_format2 = "%sload mmc1 0:%d ${loadaddr} boot.txt";
+	const char *run_format1 = "%sload mmc1 0:%d ${loadaddr} boot.scr;source ${loadaddr}";
+	const char *run_format2 = "mw.l ${loadaddr} 0 1024;%sload mmc1 0:%d ${loadaddr} boot.txt;"
+					"ssource ${loadaddr}";
 	disk_partition_t part_info;
 	block_dev_desc_t *dev_desc;
 	char tmp_name[32], tmp_cmd[128];

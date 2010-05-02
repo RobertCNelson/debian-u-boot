@@ -58,7 +58,7 @@
  */
 #define CONFIG_ENV_SIZE			(128 << 10)	/* 128 KiB */
 						/* Sector */
-#define CONFIG_SYS_MALLOC_LEN		(CONFIG_ENV_SIZE + (128 << 10))
+#define CONFIG_SYS_MALLOC_LEN		(1024 * 1024 + CONFIG_ENV_SIZE)
 #define CONFIG_SYS_GBL_DATA_SIZE	128	/* bytes reserved for */
 						/* initial data */
 /* LCD support */
@@ -109,7 +109,6 @@
 
 #define CONFIG_CMD_EXT2		/* EXT2 Support			*/
 #define CONFIG_CMD_FAT		/* FAT support			*/
-#define CONFIG_CMD_JFFS2	/* JFFS2 Support		*/
 
 #define CONFIG_CMD_I2C		/* I2C serial bus support	*/
 #define CONFIG_CMD_MMC		/* MMC support			*/
@@ -149,52 +148,40 @@
 
 #define CONFIG_SYS_MAX_NAND_DEVICE	1	/* Max number of NAND */
 						/* devices */
-#define CONFIG_JFFS2_NAND
-/* nand device jffs2 lives on */
-#define CONFIG_JFFS2_DEV		"nand0"
-/* start of jffs2 partition */
-#define CONFIG_JFFS2_PART_OFFSET	0x680000
-#define CONFIG_JFFS2_PART_SIZE		0xf980000	/* size of jffs2 */
-							/* partition */
+
+#ifdef CONFIG_CMD_NAND
+#define CONFIG_CMD_MTDPARTS
+#define CONFIG_MTD_PARTITIONS
+#define CONFIG_MTD_DEVICE
+#define CONFIG_CMD_UBI
+#define CONFIG_CMD_UBIFS
+#define CONFIG_RBTREE
+#define CONFIG_LZO
+
+#define MTDIDS_DEFAULT			"nand0=nand"
+#define MTDPARTS_DEFAULT		"mtdparts=nand:512k(xloader),"\
+					"1920k(uboot),128k(uboot-env),"\
+					"10m(boot),-(rootfs)"
+#endif
 
 /* Environment information */
 #define CONFIG_BOOTDELAY		1
 
 #define CONFIG_EXTRA_ENV_SETTINGS \
 	"loadaddr=0x82000000\0" \
-	"console=ttyS0,115200n8\0" \
-	"videospec=omapfb:vram:2M,vram:4M\0" \
-	"mmcargs=setenv bootargs console=${console} " \
-		"video=${videospec} " \
-		"root=/dev/mmcblk0p2 rw " \
-		"rootfstype=ext3 rootwait\0" \
-	"nandargs=setenv bootargs console=${console} " \
-		"video=${videospec} " \
-		"root=/dev/mtdblock4 rw " \
-		"rootfstype=jffs2\0" \
-	"loadbootscript=fatload mmc 0 ${loadaddr} boot.scr\0" \
-	"bootscript=echo Running bootscript from mmc ...; " \
-		"source ${loadaddr}\0" \
-	"loaduimage=fatload mmc 0 ${loadaddr} uImage\0" \
-	"mmcboot=echo Booting from mmc ...; " \
-		"run mmcargs; " \
-		"bootm ${loadaddr}\0" \
-	"nandboot=echo Booting from nand ...; " \
-		"run nandargs; " \
-		"nand read ${loadaddr} 280000 400000; " \
-		"bootm ${loadaddr}\0" \
+	"bootargs=ubi.mtd=4 ubi.mtd=3 root=ubi0:rootfs rootfstype=ubifs " \
+	"rw rootflags=bulk_read console=ttyS0,115200n8 " \
+	"vram=6272K omapfb.vram=0:3000K\0" \
+	"mtdparts=" MTDPARTS_DEFAULT "\0" \
 
 #define CONFIG_BOOTCOMMAND \
-	"if mmc init; then " \
-		"if run loadbootscript; then " \
-			"run bootscript; " \
-		"else " \
-			"if run loaduimage; then " \
-				"run mmcboot; " \
-			"else run nandboot; " \
-			"fi; " \
-		"fi; " \
-	"else run nandboot; fi"
+	"if mmc init && fatload mmc1 0 ${loadaddr} autoboot.txt || " \
+			"ext2load mmc1 0 ${loadaddr} autoboot.txt; then " \
+		"ssource ${loadaddr}; " \
+	"fi; " \
+	"ubi part boot && ubifsmount boot && ubifsload ${loadaddr} uImage && bootm ${loadaddr};" \
+	"setenv stdout lcd; echo Failed to load kernel, you may need to reflash the firmware.; " \
+	"pmenu"
 
 #define CONFIG_AUTO_COMPLETE	1
 /*
@@ -261,39 +248,19 @@
 #define PISMO1_NAND_SIZE		GPMC_SIZE_128M
 #define PISMO1_ONEN_SIZE		GPMC_SIZE_128M
 
-#define CONFIG_SYS_MAX_FLASH_SECT	520	/* max number of sectors on */
-						/* one chip */
-#define CONFIG_SYS_MAX_FLASH_BANKS	2	/* max number of flash banks */
 #define CONFIG_SYS_MONITOR_LEN		(256 << 10)	/* Reserve 2 sectors */
 
 #define CONFIG_SYS_FLASH_BASE		boot_flash_base
 
 /* Monitor at start of flash */
 #define CONFIG_SYS_MONITOR_BASE		CONFIG_SYS_FLASH_BASE
-#define CONFIG_SYS_ONENAND_BASE		ONENAND_MAP
 
 #define CONFIG_ENV_IS_IN_NAND		1
-#define ONENAND_ENV_OFFSET		0x240000 /* environment starts here */
 #define SMNAND_ENV_OFFSET		0x240000 /* environment starts here */
 
 #define CONFIG_SYS_ENV_SECT_SIZE	boot_flash_sec
 #define CONFIG_ENV_OFFSET		boot_flash_off
 #define CONFIG_ENV_ADDR			SMNAND_ENV_OFFSET
-
-/*-----------------------------------------------------------------------
- * CFI FLASH driver setup
- */
-/* timeout values are in ticks */
-#define CONFIG_SYS_FLASH_ERASE_TOUT	(100 * CONFIG_SYS_HZ)
-#define CONFIG_SYS_FLASH_WRITE_TOUT	(100 * CONFIG_SYS_HZ)
-
-/* Flash banks JFFS2 should use */
-#define CONFIG_SYS_MAX_MTD_BANKS	(CONFIG_SYS_MAX_FLASH_BANKS + \
-					CONFIG_SYS_MAX_NAND_DEVICE)
-#define CONFIG_SYS_JFFS2_MEM_NAND
-/* use flash_info[2] */
-#define CONFIG_SYS_JFFS2_FIRST_BANK	CONFIG_SYS_MAX_FLASH_BANKS
-#define CONFIG_SYS_JFFS2_NUM_BANKS	1
 
 #ifndef __ASSEMBLY__
 extern unsigned int boot_flash_base;
