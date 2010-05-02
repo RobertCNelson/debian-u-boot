@@ -223,9 +223,8 @@ static int do_ssource(cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 
 	addr = simple_strtoul(argv[1], NULL, 16);
 
-	printf("## Executing script at %08lx\n", addr);
-	return parse_string_outer((char *)addr,
-		FLAG_PARSE_SEMICOLON | FLAG_EXIT_FROM_LOOP);
+	printf("## Executing plain script at %08lx\n", addr);
+	return parse_string_outer((char *)addr, FLAG_PARSE_SEMICOLON);
 }
 
 U_BOOT_CMD(
