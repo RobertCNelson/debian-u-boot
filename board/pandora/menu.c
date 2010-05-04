@@ -68,6 +68,15 @@ static int menu_do_poweroff(struct menu_item *item)
 	return 0;
 }
 
+static int menu_do_serial(struct menu_item *item)
+{
+	printf("Switched to serial.\n");
+
+	setenv("stdout", "serial");
+	setenv("bootcmd", "");
+	return 1;
+}
+
 static int menu_do_script_cmd(struct menu_item *item)
 {
 	int failed = 0;
@@ -84,12 +93,13 @@ static int menu_do_script_cmd(struct menu_item *item)
 static struct menu_item default_menu_items[] = {
 	{ "default boot",	menu_do_default, },
 	{ "power off",		menu_do_poweroff, },
+	{ "serial prompt",	menu_do_serial, },
 };
 
 static void menu_init(void)
 {
-	const char *check_format1 = "%sload mmc1 0:%d ${loadaddr} boot.scr";
-	const char *check_format2 = "%sload mmc1 0:%d ${loadaddr} boot.txt";
+	const char *check_format1 = "%sload mmc1 0:%d ${loadaddr} boot.scr 4";
+	const char *check_format2 = "%sload mmc1 0:%d ${loadaddr} boot.txt 4";
 	const char *run_format1 = "%sload mmc1 0:%d ${loadaddr} boot.scr;source ${loadaddr}";
 	const char *run_format2 = "mw.l ${loadaddr} 0 1024;%sload mmc1 0:%d ${loadaddr} boot.txt;"
 					"ssource ${loadaddr}";
@@ -99,7 +109,7 @@ static void menu_init(void)
 	struct menu_item *mitem;
 	int i;
 
-	for (i = 0; i < ARRAY_SIZE(default_menu_items); i++)
+	for (i = 0; i < 2; i++)
 		menu_items[i] = &default_menu_items[i];
 	menu_item_count = i;
 
@@ -152,6 +162,9 @@ found:
 		mitem->cmd = strdup(tmp_cmd);
 		menu_items[menu_item_count++] = mitem;
 	}
+
+	if (menu_item_count < ARRAY_SIZE(menu_items))
+		menu_items[menu_item_count++] = &default_menu_items[2];
 
 	setenv("stdout", "lcd");
 }

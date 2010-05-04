@@ -165,7 +165,7 @@
 #endif
 
 /* Environment information */
-#define CONFIG_BOOTDELAY		1
+#define CONFIG_BOOTDELAY		0
 
 #define CONFIG_EXTRA_ENV_SETTINGS \
 	"loadaddr=0x82000000\0" \
