@@ -37,7 +37,11 @@
 #include <asm/mach-types.h>
 #include "pandora.h"
 
-#define FRAMEBUFFER_ADDRESS 0x80598000
+/*
+ * try to put it where it won't be overwritten by
+ * loading kernel until the FB driver loads
+ */
+#define FRAMEBUFFER_ADDRESS 0x86000000
 
 /*
  * Routine: board_init
