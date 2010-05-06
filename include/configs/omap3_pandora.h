@@ -162,6 +162,8 @@
 #define MTDPARTS_DEFAULT		"mtdparts=nand:512k(xloader),"\
 					"1920k(uboot),128k(uboot-env),"\
 					"10m(boot),-(rootfs)"
+#else
+#define MTDPARTS_DEFAULT
 #endif
 
 /* Environment information */
@@ -256,7 +258,7 @@
 #define CONFIG_SYS_MONITOR_BASE		CONFIG_SYS_FLASH_BASE
 
 #define CONFIG_ENV_IS_IN_NAND		1
-#define SMNAND_ENV_OFFSET		0x240000 /* environment starts here */
+#define SMNAND_ENV_OFFSET		0x260000 /* environment starts here */
 
 #define CONFIG_SYS_ENV_SECT_SIZE	boot_flash_sec
 #define CONFIG_ENV_OFFSET		boot_flash_off
@@ -268,6 +270,24 @@ extern volatile unsigned int boot_flash_env_addr;
 extern unsigned int boot_flash_off;
 extern unsigned int boot_flash_sec;
 extern unsigned int boot_flash_type;
+#endif
+
+#ifdef RECOVERY
+#undef CONFIG_ENV_IS_IN_NAND
+#undef CONFIG_EXTRA_ENV_SETTINGS
+#undef CONFIG_BOOTCOMMAND
+#undef CONFIG_BOOTDELAY
+
+#define CONFIG_ENV_IS_NOWHERE
+#define CONFIG_BOOTDELAY		3
+#define CONFIG_EXTRA_ENV_SETTINGS \
+	"stdout=lcd\0" \
+	"stderr=lcd\0"
+#define CONFIG_BOOTCOMMAND \
+	"mmc init; " \
+	"if fatload mmc1 0 82000000 boot.scr || ext2load mmc1 0 82000000 boot.scr; " \
+	"then source 82000000; fi; " \
+	"echo Could not read boot.scr;"
 #endif
 
 #endif				/* __CONFIG_H */
