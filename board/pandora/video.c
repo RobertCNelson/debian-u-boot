@@ -1,4 +1,5 @@
 #include <common.h>
+#include <asm/io.h>
 #include <lcd.h>
 #include <twl4030.h>
 
@@ -47,6 +48,14 @@ static void lcd_init(void)
 	DECLARE_GLOBAL_DATA_PTR;
 	u8 d;
 
+	/* make sure LCD nreset is driven low (GPIO157)
+	 * (we are called before misc_init_r() which normally handles this stuff) */
+	writel(0x20000000, 0x49056090);
+	writel(readl(0x49056034) & ~0x20000000, 0x49056034);
+	/* also GPIO164 (some audible noise otherwise) */
+	writel(0x10, 0x49058094);
+	writel(readl(0x49058034) & ~0x10, 0x49058034);
+
 	/* set VPLL2 to 1.8V */
 	twl4030_i2c_write_u8(TWL4030_CHIP_PM_RECEIVER, 0x05,
 			     TWL4030_PM_RECEIVER_VPLL2_DEDICATED);
@@ -63,7 +72,7 @@ static void lcd_init(void)
 	//memset(gd->fb_base, 0, 800*480*2);
 	udelay(2000);
 
-	*((volatile uint *) 0x49056094) = 0x20000000; /* Bring LCD out of reset (157) */
+	writel(0x20000000, 0x49056094); /* Bring LCD out of reset (157) */
 	udelay(2000); /* Need to wait at least 1ms after reset to start sending signals */
 
 	dss_lcd_init((uint)gd->fb_base);
