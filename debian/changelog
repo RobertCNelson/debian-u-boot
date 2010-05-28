@@ -1,0 +1,5 @@
+u-boot (2010.03-1) unstable; urgency=low
+
+  * Initial packaging.  closes: #583605. 
+
+ -- Clint Adams <schizo@debian.org>  Fri, 28 May 2010 16:20:39 -0400

@@ -1,0 +1,18 @@
+This is the Debian prepackaged version of Das U-Boot
+with lots of features.
+
+This package was put together by Clint Adams <schizo@debian.org>
+with sources obtained from:
+  ftp://ftp.denx.de/pub/u-boot/
+
+The following copyright and license apply to this software:
+
+Copyright © 2000-2009 Wolfgang Denk, DENX Software Engineering, wd@denx.de.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 2 of
+the License, or (at your option) any later version.
+
+The full text of the GNU GPL may be found on your Debian system
+in /usr/share/common-licenses.

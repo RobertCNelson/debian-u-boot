@@ -1,0 +1,112 @@
+#!/usr/bin/make -f
+INSTALL = install
+INSTALL_FILE    = $(INSTALL) -p    -o root -g root  -m  644
+INSTALL_PROGRAM = $(INSTALL) -p    -o root -g root  -m  755
+INSTALL_SCRIPT  = $(INSTALL) -p    -o root -g root  -m  755
+INSTALL_DIR     = $(INSTALL) -p -d -o root -g root  -m  755
+
+package=u-boot
+
+DEB_HOST_ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
+
+ifeq ($(DEB_HOST_ARCH),powerpc)
+UBOOT_TARGETS = ZUMA
+TARGET_FORMAT = u-boot.img
+else
+ifeq ($(DEB_HOST_ARCH),armel)
+UBOOT_TARGETS = sheevaplug
+TARGET_FORMAT = u-boot.kwb
+else
+ifeq ($(DEB_HOST_ARCH),i386)
+UBOOT_TARGETS = eNET
+TARGET_FORMAT = u-boot.img
+else
+ifeq ($(DEB_HOST_ARCH),mips)
+UBOOT_TARGETS = qemu_mips
+TARGET_FORMAT = u-boot.img
+else
+ifeq ($(DEB_HOST_ARCH),mipsel)
+UBOOT_TARGETS = qemu_mips
+TARGET_FORMAT = u-boot.img
+else
+ifeq ($(DEB_HOST_ARCH),avr32)
+UBOOT_TARGETS = hammerhead
+TARGET_FORMAT = u-boot.img
+else
+ifeq ($(DEB_HOST_ARCH),sh4)
+UBOOT_TARGETS = espt
+TARGET_FORMAT = u-boot.img
+else
+UBOOT_TARGETS =
+TARGET_FORMAT =
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+
+build:
+	$(checkdir)
+
+	$(MAKE) mrproper
+ifeq ($(UBOOT_TARGETS),)
+	@echo No targets defined for your architecture.
+	exit 1
+endif
+
+	for i in $(UBOOT_TARGETS); do \
+	$(MAKE) $${i}_config; \
+	$(INSTALL) -d -m 755 debian/$(package)/usr/lib/$(package)/$${i}; \
+        $(MAKE) $(TARGET_FORMAT) && \
+	$(INSTALL) -p -m 644 $(TARGET_FORMAT) debian/$(package)/usr/lib/$(package)/$${i}; \
+	done
+
+	touch build
+
+clean:
+	$(checkdir)
+	-rm -f build
+	if test -f Makefile; then $(MAKE) distclean; fi
+	-rm -f `find . -name "*~"` \
+	        debian/files* core debian/*ubstvars
+	-rm -rf debian/u-boot
+
+binary-indep:	checkroot
+	$(checkdir)
+
+binary-arch:	checkroot build
+	$(checkdir)
+
+	cd debian/$(package) && $(INSTALL_DIR) usr/share/doc/$(package) \
+		DEBIAN
+
+	$(INSTALL_FILE) debian/README.Debian debian/$(package)/usr/share/doc/$(package)/
+	$(INSTALL_FILE) CHANGELOG debian/$(package)/usr/share/doc/$(package)/changelog
+	$(INSTALL_FILE) debian/copyright debian/$(package)/usr/share/doc/$(package)/copyright
+	$(INSTALL_FILE) debian/changelog debian/$(package)/usr/share/doc/$(package)/changelog.Debian
+
+	gzip -9f `find debian/$(package)/usr/share/doc -type f ! -name "copyright"`
+	dpkg-gencontrol -ldebian/changelog -isp -p$(package) -Tdebian/substvars -Pdebian/u-boot
+	cd debian/$(package) && find * -type f ! -regex '^DEBIAN/.*' -print0 | xargs -r0 md5sum > DEBIAN/md5sums
+
+	chown -R root:root debian/$(package)
+	chmod -R go=rX debian/$(package)
+
+	dpkg --build debian/$(package) ..
+
+define checkdir
+	test -f debian/rules
+endef
+
+binary:		binary-arch
+
+prebuild:
+	@true
+
+checkroot:
+	$(checkdir)
+	test root = "`whoami`"
+
+.PHONY: binary binary-arch binary-indep clean checkroot prebuild
