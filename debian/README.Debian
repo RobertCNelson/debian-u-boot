@@ -1,1 +1,13 @@
 At this point, you must install U-Boot to NAND yourself.
+
+Some examples using mtd-utils:
+
+SheevaPlug:
+
+ sudo flash_eraseall /dev/mtd0
+ sudo nandwrite -p /dev/mtd0 /usr/lib/u-boot/sheevaplug/u-boot.kwb
+
+GuruPlug:
+
+ sudo flash_eraseall /dev/mtd0
+ sudo nandwrite -p /dev/mtd0 /usr/lib/u-boot/guruplug/u-boot.kwb
