@@ -1,5 +1,15 @@
+u-boot (2010.06~rc1-1) unstable; urgency=low
+
+  * Add Vcs-Git and Vcs-Browser headers.
+  * Add GuruPlug target (armel).
+  * Switch mipsel target to TB0229.
+  * Add watch file.
+  * Update README.Debian for SheevaPlug and GuruPlug.
+
+ -- Clint Adams <schizo@debian.org>  Mon, 31 May 2010 19:29:40 -0400
+
 u-boot (2010.03-1) unstable; urgency=low
 
-  * Initial packaging.  closes: #583605. 
+  * Initial packaging.  closes: #583605.
 
  -- Clint Adams <schizo@debian.org>  Fri, 28 May 2010 16:20:39 -0400
