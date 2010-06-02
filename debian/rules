@@ -26,7 +26,7 @@ UBOOT_TARGETS = qemu_mips
 TARGET_FORMAT = u-boot.img
 else
 ifeq ($(DEB_HOST_ARCH),mipsel)
-UBOOT_TARGETS = dbau1100_config
+UBOOT_TARGETS = dbau1100
 TARGET_FORMAT = u-boot.img
 else
 ifeq ($(DEB_HOST_ARCH),avr32)
