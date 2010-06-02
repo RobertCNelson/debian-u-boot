@@ -1,3 +1,11 @@
+u-boot (2010.06~rc1-3) unstable; urgency=low
+
+  * Fix mipsel typo.
+  * Apply patch from Nobuhiro Iwamatsu to change sh4 target board
+    from espt to sh7785lcr_32bit.  closes: #584192.
+
+ -- Clint Adams <schizo@debian.org>  Wed, 02 Jun 2010 08:25:04 -0400
+
 u-boot (2010.06~rc1-2) unstable; urgency=low
 
   * Produce u-boot.bin on i386.
