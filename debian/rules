@@ -34,7 +34,7 @@ UBOOT_TARGETS = hammerhead
 TARGET_FORMAT = u-boot.img
 else
 ifeq ($(DEB_HOST_ARCH),sh4)
-UBOOT_TARGETS = sh7785lcr_32bit
+UBOOT_TARGETS = sh7785lcr_32bit r2dplus
 TARGET_FORMAT = u-boot.img
 else
 UBOOT_TARGETS =
