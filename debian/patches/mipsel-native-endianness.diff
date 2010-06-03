@@ -1,0 +1,17 @@
+diff --git a/arch/mips/cpu/config.mk b/arch/mips/cpu/config.mk
+index a173c54..a87bc28 100644
+--- a/arch/mips/cpu/config.mk
++++ b/arch/mips/cpu/config.mk
+@@ -28,12 +28,6 @@ else \
+ 	echo "-march=4kc -mtune=4kc"; \
+ fi)
+ 
+-ifneq (,$(findstring 4KCle,$(CROSS_COMPILE)))
+-ENDIANNESS = -EL
+-else
+-ENDIANNESS = -EB
+-endif
+-
+ MIPSFLAGS += $(ENDIANNESS)
+ 
+ PLATFORM_CPPFLAGS += $(MIPSFLAGS)
