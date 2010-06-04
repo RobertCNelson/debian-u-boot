@@ -1,8 +1,134 @@
-diff --git a/arch/mips/cpu/config.mk b/arch/mips/cpu/config.mk
-index a173c54..a87bc28 100644
+[MIPS] Fix little-endian build with non-ELDK toolchains
+
+We've been in trouble for a long time when cross compiling with non-ELDK
+toolchains.  This is caused by -EB passed to CPPFLAGS incorrectly, by the
+lack of an endian specifier to LDFLAGS, and by wrong OUTPUT_FORMATs.
+
+We're going to implement two workarounds.  One is the endianness specifier
+bugfix not to pass -EB / -EL to CPPFLAGS unless ELDK toolchain is used.
+Note that ELDK and non-ELDK toolchains know their default endianness, so
+the endianness specifier may not be necessary in principle.
+
+The other is removal of OUTPUT_FORMAT in *.lds files.  If we have this,
+it doesn't work unless an endianness specifier is added to LDFLAGS.  As
+we haven't added that to LDFLAGS so far, it must have not worked properly,
+except ELDK; I don't know why and how ELDK works, though.
+
+With these two changes, all objects will be generated and linked in the
+toolchain's default endianness.  Then MAKEALL mips_el will work even with
+non-ELDK toolchain.
+
+Note that Linux/MIPS kernel has CONFIG_CPU_BIG_ENDIAN and
+CONFIG_CPU_LITTLE_ENDIAN alternatives to allow users to compile kernels
+with a toolchain for the other endianness. But U-Boot does not have such
+feature for now, and it's another story.
+
+Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
+---
+ board/dbau1x00/u-boot.lds  |    4 ----
+ board/gth2/u-boot.lds      |    4 ----
+ board/incaip/u-boot.lds    |    4 ----
+ board/pb1x00/u-boot.lds    |    4 ----
+ board/purple/u-boot.lds    |    4 ----
+ board/qemu-mips/u-boot.lds |    4 ----
+ board/tb0229/u-boot.lds    |    2 --
+ cpu/mips/config.mk         |    8 --------
+ examples/mips.lds          |    4 ----
+ mips_config.mk             |   26 ++++++++++++++++++++++++++
+ 10 files changed, 26 insertions(+), 38 deletions(-)
+
+--- a/board/dbau1x00/u-boot.lds
++++ b/board/dbau1x00/u-boot.lds
+@@ -21,10 +21,6 @@
+  * MA 02111-1307 USA
+  */
+ 
+-/*
+-OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
+-*/
+-OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+ OUTPUT_ARCH(mips)
+ ENTRY(_start)
+ SECTIONS
+--- a/board/gth2/u-boot.lds
++++ b/board/gth2/u-boot.lds
+@@ -21,10 +21,6 @@
+  * MA 02111-1307 USA
+  */
+ 
+-/*
+-OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
+-*/
+-OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+ OUTPUT_ARCH(mips)
+ ENTRY(_start)
+ SECTIONS
+--- a/board/incaip/u-boot.lds
++++ b/board/incaip/u-boot.lds
+@@ -21,10 +21,6 @@
+  * MA 02111-1307 USA
+  */
+ 
+-/*
+-OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
+-*/
+-OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+ OUTPUT_ARCH(mips)
+ ENTRY(_start)
+ SECTIONS
+--- a/board/pb1x00/u-boot.lds
++++ b/board/pb1x00/u-boot.lds
+@@ -21,10 +21,6 @@
+  * MA 02111-1307 USA
+  */
+ 
+-/*
+-OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
+-*/
+-OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+ OUTPUT_ARCH(mips)
+ ENTRY(_start)
+ SECTIONS
+--- a/board/purple/u-boot.lds
++++ b/board/purple/u-boot.lds
+@@ -21,10 +21,6 @@
+  * MA 02111-1307 USA
+  */
+ 
+-/*
+-OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
+-*/
+-OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+ OUTPUT_ARCH(mips)
+ ENTRY(_start)
+ SECTIONS
+--- a/board/qemu-mips/u-boot.lds
++++ b/board/qemu-mips/u-boot.lds
+@@ -21,10 +21,6 @@
+  * MA 02111-1307 USA
+  */
+ 
+-/*
+-OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
+-*/
+-OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+ OUTPUT_ARCH(mips)
+ ENTRY(_start)
+ SECTIONS
+--- a/board/tb0229/u-boot.lds
++++ b/board/tb0229/u-boot.lds
+@@ -23,8 +23,6 @@
+  * MA 02111-1307 USA
+  */
+ 
+-OUTPUT_FORMAT("elf32-tradlittlemips", "elf32-tradlittlemips", "elf32-tradlittlemips")
+-
+ OUTPUT_ARCH(mips)
+ ENTRY(_start)
+ SECTIONS
 --- a/arch/mips/cpu/config.mk
 +++ b/arch/mips/cpu/config.mk
-@@ -28,12 +28,6 @@ else \
+@@ -28,12 +28,4 @@
  	echo "-march=4kc -mtune=4kc"; \
  fi)
  
@@ -12,6 +138,51 @@ index a173c54..a87bc28 100644
 -ENDIANNESS = -EB
 -endif
 -
- MIPSFLAGS += $(ENDIANNESS)
- 
+-MIPSFLAGS += $(ENDIANNESS)
+-
  PLATFORM_CPPFLAGS += $(MIPSFLAGS)
+--- a/examples/standalone/mips.lds
++++ b/examples/standalone/mips.lds
+@@ -21,10 +21,6 @@
+  * MA 02111-1307 USA
+  */
+ 
+-/*
+-OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
+-*/
+-OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+ OUTPUT_ARCH(mips)
+ SECTIONS
+ {
+--- a/arch/mips/config.mk
++++ b/arch/mips/config.mk
+@@ -50,3 +50,29 @@
+ PLATFORM_CPPFLAGS		+= -G 0 -mabicalls -fpic
+ PLATFORM_CPPFLAGS		+= -msoft-float
+ PLATFORM_LDFLAGS		+= -G 0 -static -n -nostdlib
++
++#
++# A toolchain has its default endianness, so in principle, we don't
++# need any endianness specifier as long as we compile U-Boot for that
++# endianness.  Furthermore, it's not a good practice to add it without
++# giving it much thought.  Here's hints from Linux' Makefile:
++#
++# We explicitly add the endianness specifier if needed, (snip)  We
++# carefully avoid to add it redundantly because gcc 3.3/3.4 complains
++# when fed the toolchain default!
++#
++# Certain gcc versions upto gcc 4.1.1 (probably 4.2-subversion as of
++# 2006-10-10 don't properly change the predefined symbols if -EB / -EL
++# are used, so we kludge that here.  A bug has been filed at
++# <A HREF="http://gcc.gnu.org/bugzilla/show_bug.cgi?id=29413.">http://gcc.gnu.org/bugzilla/show_bug.cgi?id=29413.</A>
++#
++# Well, we've added the endianness specifier for years when compiling
++# with ELDK.  For this historical reason, and maintaining backward
++# compatibility, we leave it as far as ELDK is used.
++#
++ifneq ($(findstring mips_4KC-,$(CROSS_COMPILE)),)
++PLATFORM_CPPFLAGS += -EB
++endif
++ifneq ($(findstring mips_4KCle-,$(CROSS_COMPILE)),)
++PLATFORM_CPPFLAGS += -EL
++endif
