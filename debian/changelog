@@ -1,3 +1,10 @@
+u-boot (2010.06~rc1-5) unstable; urgency=low
+
+  * Replace mipsel-native-endianness.diff with patch adapted
+    from a 2008 mailing list posting by Shinya Kuribayashi.
+
+ -- Clint Adams <schizo@debian.org>  Fri, 04 Jun 2010 20:08:27 -0400
+
 u-boot (2010.06~rc1-4) unstable; urgency=low
 
   * Add r2dplus target for sh4.
