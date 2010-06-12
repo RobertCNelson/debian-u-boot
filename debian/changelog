@@ -1,3 +1,10 @@
+u-boot (2010.06~rc1-6) unstable; urgency=medium
+
+  * Add guruplug-miiphy_reset.diff.
+  * Clean between targets.  closes: #585570.
+
+ -- Clint Adams <schizo@debian.org>  Fri, 11 Jun 2010 21:57:31 -0400
+
 u-boot (2010.06~rc1-5) unstable; urgency=low
 
   * Replace mipsel-native-endianness.diff with patch adapted
