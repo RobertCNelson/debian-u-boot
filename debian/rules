@@ -57,6 +57,7 @@ ifeq ($(UBOOT_TARGETS),)
 endif
 
 	for i in $(UBOOT_TARGETS); do \
+	$(MAKE) clean; \
 	$(MAKE) $${i}_config; \
 	$(INSTALL) -d -m 755 debian/$(package)/usr/lib/$(package)/$${i}; \
         $(MAKE) $(TARGET_FORMAT) && \
