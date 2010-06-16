@@ -1,0 +1,33 @@
+Package: u-boot
+Version: 2010.06~rc1-6
+Severity: normal
+User: debian-sh4@superh.org
+Usertags: sh4
+
+u-boot currently fails to build on SH4, as cross-compilation is 
+detected, and sh4-linux-gcc is then called. This can simply be fixed
+by the following patch:
+
+--- u-boot-2010.06~rc1.orig/Makefile
++++ u-boot-2010.06~rc1/Makefile
+@@ -40,7 +40,8 @@ HOSTARCH := $(shell uname -m | \
+ 	    -e s/sa110/arm/ \
+ 	    -e s/ppc64/powerpc/ \
+ 	    -e s/ppc/powerpc/ \
+-	    -e s/macppc/powerpc/)
++	    -e s/macppc/powerpc/ \
++	    -e s/sh.*/sh/)
+ 
+ HOSTOS := $(shell uname -s | tr '[:upper:]' '[:lower:]' | \
+ 	    sed -e 's/\(cygwin\).*/cygwin/')
+
+
+
+-- System Information:
+Debian Release: squeeze/sid
+Architecture: sh4
+
+Kernel: Linux 2.6.32-5-sh7751r
+Locale: LANG=fr_FR.UTF-8, LC_CTYPE=fr_FR.UTF-8 (charmap=UTF-8)
+Shell: /bin/sh linked to /bin/dash
+
