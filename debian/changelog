@@ -1,3 +1,11 @@
+u-boot (2010.06~rc2-1) unstable; urgency=medium
+
+  * Add sh4-native-compile.diff from Aurelien Jarno.  closes: #586026.
+  * New upstream version.
+    - Drop marvell-machtypes.diff.
+
+ -- Clint Adams <schizo@debian.org>  Tue, 15 Jun 2010 21:37:26 -0400
+
 u-boot (2010.06~rc1-6) unstable; urgency=medium
 
   * Add guruplug-miiphy_reset.diff.
