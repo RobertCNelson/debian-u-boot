@@ -51,11 +51,12 @@ build:
 	$(checkdir)
 
 	$(MAKE) mrproper
-ifeq ($(UBOOT_TARGETS),)
-	@echo No targets defined for your architecture.
-	exit 1
-endif
 
+	$(MAKE) tools
+	$(INSTALL) -d -m 755 debian/$(package)/usr/bin
+	$(INSTALL) -p -m 755 tools/mkimage debian/$(package)/usr/bin/
+
+ifneq ($(UBOOT_TARGETS),)
 	for i in $(UBOOT_TARGETS); do \
 	$(MAKE) clean; \
 	$(MAKE) $${i}_config; \
@@ -63,6 +64,7 @@ endif
         $(MAKE) $(TARGET_FORMAT) && \
 	$(INSTALL) -p -m 644 $(TARGET_FORMAT) debian/$(package)/usr/lib/$(package)/$${i}; \
 	done
+endif
 
 	touch build
 
@@ -89,6 +91,7 @@ binary-arch:	checkroot build
 	$(INSTALL_FILE) debian/changelog debian/$(package)/usr/share/doc/$(package)/changelog.Debian
 
 	gzip -9f `find debian/$(package)/usr/share/doc -type f ! -name "copyright"`
+	dpkg-shlibdeps -Tdebian/substvars debian/$(package)/usr/bin/mkimage
 	dpkg-gencontrol -ldebian/changelog -isp -p$(package) -Tdebian/substvars -Pdebian/u-boot
 	cd debian/$(package) && find * -type f ! -regex '^DEBIAN/.*' -print0 | xargs -r0 md5sum > DEBIAN/md5sums
 
