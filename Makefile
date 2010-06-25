@@ -24,7 +24,7 @@
 VERSION = 2010
 PATCHLEVEL = 06
 SUBLEVEL =
-EXTRAVERSION = -rc2
+EXTRAVERSION = -rc3
 ifneq "$(SUBLEVEL)" ""
 U_BOOT_VERSION = $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)$(EXTRAVERSION)
 else
@@ -385,8 +385,8 @@ $(VERSION_FILE):
 		@cmp -s $@ $@.tmp && rm -f $@.tmp || mv -f $@.tmp $@
 
 $(TIMESTAMP_FILE):
-		@date +'#define U_BOOT_DATE "%b %d %C%y"' > $@
-		@date +'#define U_BOOT_TIME "%T"' >> $@
+		@LC_ALL=C date +'#define U_BOOT_DATE "%b %d %C%y"' > $@
+		@LC_ALL=C date +'#define U_BOOT_TIME "%T"' >> $@
 
 gdbtools:
 		$(MAKE) -C tools/gdb all || exit 1
@@ -2873,6 +2873,10 @@ otc570_config	:	unconfig
 pm9263_config	:	unconfig
 	@$(MKCONFIG) $(@:_config=) arm arm926ejs pm9263 ronetix at91
 
+pm9g45_config	:	unconfig
+	@mkdir -p $(obj)include
+	@$(MKCONFIG) -a pm9g45 arm arm926ejs pm9g45 ronetix at91
+
 SBC35_A9G20_NANDFLASH_config \
 SBC35_A9G20_EEPROM_config \
 SBC35_A9G20_config	:	unconfig
@@ -2916,8 +2920,9 @@ cp922_XA10_config	\
 cp1026_config: unconfig
 	@board/armltd/integrator/split_by_variant.sh cp $@
 
-da830evm_config:	unconfig
-	@$(MKCONFIG) $(@:_config=) arm arm926ejs da830evm davinci davinci
+da830evm_config		\
+da850evm_config:	unconfig
+	@$(MKCONFIG) $(@:_config=) arm arm926ejs da8xxevm davinci davinci
 
 davinci_dvevm_config :	unconfig
 	@$(MKCONFIG) $(@:_config=) arm arm926ejs dvevm davinci davinci
@@ -2942,6 +2947,9 @@ davinci_dm365evm_config :	unconfig
 
 davinci_dm6467evm_config :	unconfig
 	@$(MKCONFIG) $(@:_config=) arm arm926ejs dm6467evm davinci davinci
+
+edminiv2_config: unconfig
+	@$(MKCONFIG) $(@:_config=) arm arm926ejs $(@:_config=) LaCie orion5x
 
 guruplug_config: unconfig
 	@$(MKCONFIG) $(@:_config=) arm arm926ejs $(@:_config=) Marvell kirkwood
@@ -3155,6 +3163,9 @@ SMN42_config	:	unconfig
 ## ARM CORTEX Systems
 #########################################################################
 
+am3517_evm_config :	unconfig
+	@$(MKCONFIG) $(@:_config=) arm arm_cortexa8 am3517evm logicpd omap3
+
 devkit8000_config :	unconfig
 	@$(MKCONFIG) $(@:_config=) arm arm_cortexa8 devkit8000 timll omap3
 
@@ -3178,6 +3189,9 @@ omap3_zoom1_config :	unconfig
 
 omap3_zoom2_config :	unconfig
 	@$(MKCONFIG) $(@:_config=) arm arm_cortexa8 zoom2 logicpd omap3
+
+s5p_goni_config:	unconfig
+	@$(MKCONFIG) $(@:_config=) arm arm_cortexa8 goni samsung s5pc1xx
 
 smdkc100_config:	unconfig
 	@$(MKCONFIG) $(@:_config=) arm arm_cortexa8 smdkc100 samsung s5pc1xx
@@ -3323,6 +3337,9 @@ smdk6400_config	:	unconfig
 		$(MKCONFIG) $(@:_noUSB_config=) arm arm1176 smdk6400 samsung s3c64xx;	\
 	fi
 	@echo "CONFIG_NAND_U_BOOT = y" >> $(obj)include/config.mk
+
+tnetv107x_evm_config: unconfig
+	@$(MKCONFIG) $(@:_config=) arm arm1176 tnetv107xevm ti tnetv107x
 
 #========================================================================
 # i386
@@ -3734,6 +3751,6 @@ endif
 
 backup:
 	F=`basename $(TOPDIR)` ; cd .. ; \
-	gtar --force-local -zcvf `date "+$$F-%Y-%m-%d-%T.tar.gz"` $$F
+	gtar --force-local -zcvf `LC_ALL=C date "+$$F-%Y-%m-%d-%T.tar.gz"` $$F
 
 #########################################################################
