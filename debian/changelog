@@ -1,3 +1,13 @@
+u-boot (2010.06~rc3-1) unstable; urgency=low
+
+  * New upstream version.
+  * Fix sh4-native-compile.diff to not break sh64, thanks to Paul
+    Mundt.
+  * Ship mkimage, conflict/replace uboot-mkimage, build on all
+    architectures.
+
+ -- Clint Adams <schizo@debian.org>  Fri, 25 Jun 2010 14:49:06 -0400
+
 u-boot (2010.06~rc2-1) unstable; urgency=medium
 
   * Add sh4-native-compile.diff from Aurelien Jarno.  closes: #586026.
