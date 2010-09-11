@@ -1,3 +1,13 @@
+u-boot (2010.09~rc1-1) unstable; urgency=low
+
+  * New upstream release candidate.
+    - Drop guruplug-miiphy_reset.diff.
+    - Update mipsel-native-endianness.diff.
+    - Drop sh4-native-compile.diff.
+  * Bump to Standards-Version 3.9.1.
+
+ -- Clint Adams <schizo@debian.org>  Sat, 11 Sep 2010 00:43:04 -0400
+
 u-boot (2010.06-1) unstable; urgency=low
 
   * New upstream version.

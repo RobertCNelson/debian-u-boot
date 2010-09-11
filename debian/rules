@@ -86,7 +86,6 @@ binary-arch:	checkroot build
 		DEBIAN
 
 	$(INSTALL_FILE) debian/README.Debian debian/$(package)/usr/share/doc/$(package)/
-	$(INSTALL_FILE) CHANGELOG debian/$(package)/usr/share/doc/$(package)/changelog
 	$(INSTALL_FILE) debian/copyright debian/$(package)/usr/share/doc/$(package)/copyright
 	$(INSTALL_FILE) debian/changelog debian/$(package)/usr/share/doc/$(package)/changelog.Debian
 
