@@ -749,6 +749,18 @@ void video_puts (const char *s)
 
 /*****************************************************************************/
 
+/*
+ * Do not enforce drivers (or board code) to provide empty
+ * video_set_lut() if they do not support 8 bpp format.
+ * Implement weak default function instead.
+ */
+void __video_set_lut (unsigned int index, unsigned char r,
+		      unsigned char g, unsigned char b)
+{
+}
+void video_set_lut (unsigned int, unsigned char, unsigned char, unsigned char)
+			__attribute__((weak, alias("__video_set_lut")));
+
 #if defined(CONFIG_CMD_BMP) || defined(CONFIG_SPLASH_SCREEN)
 
 #define FILL_8BIT_332RGB(r,g,b)	{			\
@@ -1107,7 +1119,7 @@ int video_display_bitmap (ulong bmp_image, int x, int y)
 	case 8:
 		padded_line -= width;
 		if (VIDEO_DATA_FORMAT == GDF__8BIT_INDEX) {
-			/* Copy colormap					     */
+			/* Copy colormap */
 			for (xcount = 0; xcount < colors; ++xcount) {
 				cte = bmp->color_table[xcount];
 				video_set_lut (xcount, cte.red, cte.green, cte.blue);
@@ -1309,11 +1321,11 @@ void logo_plot (void *screen, int width, int x, int y)
 #ifdef CONFIG_VIDEO_BMP_LOGO
 	source = bmp_logo_bitmap;
 
-	/* Allocate temporary space for computing colormap			 */
+	/* Allocate temporary space for computing colormap */
 	logo_red = malloc (BMP_LOGO_COLORS);
 	logo_green = malloc (BMP_LOGO_COLORS);
 	logo_blue = malloc (BMP_LOGO_COLORS);
-	/* Compute color map							 */
+	/* Compute color map */
 	for (i = 0; i < VIDEO_LOGO_COLORS; i++) {
 		logo_red[i] = (bmp_logo_palette[i] & 0x0f00) >> 4;
 		logo_green[i] = (bmp_logo_palette[i] & 0x00f0);

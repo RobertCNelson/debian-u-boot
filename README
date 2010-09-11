@@ -1495,6 +1495,16 @@ The following options need to be configured:
 
 		#define I2C_DELAY  udelay(2)
 
+		CONFIG_SOFT_I2C_GPIO_SCL / CONFIG_SOFT_I2C_GPIO_SDA
+
+		If your arch supports the generic GPIO framework (asm/gpio.h),
+		then you may alternatively define the two GPIOs that are to be
+		used as SCL / SDA.  Any of the previous I2C_xxx macros will
+		have GPIO-based defaults assigned to them as appropriate.
+
+		You should define these to the GPIO value as given directly to
+		the generic GPIO functions.
+
 		CONFIG_SYS_I2C_INIT_BOARD
 
 		When a board is reset during an i2c bus transfer
@@ -2562,7 +2572,7 @@ to save the current settings.
 
 Please note that the environment is read-only until the monitor
 has been relocated to RAM and a RAM copy of the environment has been
-created; also, when using EEPROM you will have to use getenv_r()
+created; also, when using EEPROM you will have to use getenv_f()
 until then to read environment variables.
 
 The environment is protected by a CRC32 checksum. Before the monitor
@@ -3148,10 +3158,10 @@ List of environment variables (most likely not complete):
 		  interface is currently active. For example you
 		  can do the following
 
-		  => setenv ethact FEC ETHERNET
-		  => ping 192.168.0.1 # traffic sent on FEC ETHERNET
-		  => setenv ethact SCC ETHERNET
-		  => ping 10.0.0.1 # traffic sent on SCC ETHERNET
+		  => setenv ethact FEC
+		  => ping 192.168.0.1 # traffic sent on FEC
+		  => setenv ethact SCC
+		  => ping 10.0.0.1 # traffic sent on SCC
 
   ethrotate	- When set to "no" U-Boot does not go through all
 		  available network interfaces.

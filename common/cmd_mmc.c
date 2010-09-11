@@ -28,14 +28,12 @@
 #ifndef CONFIG_GENERIC_MMC
 static int curr_device = -1;
 
-int do_mmc (cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
+int do_mmc (cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
 	int dev;
 
-	if (argc < 2) {
-		cmd_usage(cmdtp);
-		return 1;
-	}
+	if (argc < 2)
+		return cmd_usage(cmdtp);
 
 	if (strcmp(argv[1], "init") == 0) {
 		if (argc == 2) {
@@ -46,8 +44,7 @@ int do_mmc (cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 		} else if (argc == 3) {
 			dev = (int)simple_strtoul(argv[2], NULL, 10);
 		} else {
-			cmd_usage(cmdtp);
-			return 1;
+			return cmd_usage(cmdtp);
 		}
 
 		if (mmc_legacy_init(dev) != 0) {
@@ -72,14 +69,12 @@ int do_mmc (cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 #endif
 			curr_device = dev;
 		} else {
-			cmd_usage(cmdtp);
-			return 1;
+			return cmd_usage(cmdtp);
 		}
 
 		printf("mmc%d is current device\n", curr_device);
 	} else {
-		cmd_usage(cmdtp);
-		return 1;
+		return cmd_usage(cmdtp);
 	}
 
 	return 0;
@@ -114,7 +109,7 @@ static void print_mmcinfo(struct mmc *mmc)
 	printf("Bus Width: %d-bit\n", mmc->bus_width);
 }
 
-int do_mmcinfo (cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
+int do_mmcinfo (cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
 	struct mmc *mmc;
 	int dev_num;
@@ -135,12 +130,15 @@ int do_mmcinfo (cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 	return 0;
 }
 
-U_BOOT_CMD(mmcinfo, 2, 0, do_mmcinfo,
-	"mmcinfo <dev num>-- display MMC info",
+U_BOOT_CMD(
+	mmcinfo, 2, 0, do_mmcinfo,
+	"display MMC info",
+	"<dev num>\n"
+	"    - device number of the device to dislay info of\n"
 	""
 );
 
-int do_mmcops(cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
+int do_mmcops(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
 	int rc = 0;
 
