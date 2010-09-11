@@ -46,7 +46,7 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
 -/*
 -OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
 -*/
--OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+-OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradlittlemips")
  OUTPUT_ARCH(mips)
  ENTRY(_start)
  SECTIONS
@@ -59,7 +59,7 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
 -/*
 -OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
 -*/
--OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+-OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradlittlemips")
  OUTPUT_ARCH(mips)
  ENTRY(_start)
  SECTIONS
@@ -72,7 +72,7 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
 -/*
 -OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
 -*/
--OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+-OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradlittlemips")
  OUTPUT_ARCH(mips)
  ENTRY(_start)
  SECTIONS
@@ -85,7 +85,7 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
 -/*
 -OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
 -*/
--OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+-OUTPUT_FORMAT("elf32-tradlittlemips", "elf32-tradbigmips", "elf32-tradlittlemips")
  OUTPUT_ARCH(mips)
  ENTRY(_start)
  SECTIONS
@@ -98,7 +98,7 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
 -/*
 -OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
 -*/
--OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+-OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradlittlemips")
  OUTPUT_ARCH(mips)
  ENTRY(_start)
  SECTIONS
@@ -111,7 +111,7 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
 -/*
 -OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
 -*/
--OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+-OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradlittlemips")
  OUTPUT_ARCH(mips)
  ENTRY(_start)
  SECTIONS
@@ -150,7 +150,7 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
 -/*
 -OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
 -*/
--OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradbigmips")
+-OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradlittlemips")
  OUTPUT_ARCH(mips)
  SECTIONS
  {
