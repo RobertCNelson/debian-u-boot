@@ -1,2 +1,3 @@
 mipsel-native-endianness.diff
 kerma-sheevaplug-mvsata.diff
+kerma-sheevaplug-mvsdio.diff
