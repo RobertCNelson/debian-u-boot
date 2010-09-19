@@ -1,3 +1,9 @@
+u-boot (2010.09~rc2-1) unstable; urgency=low
+
+  * New upstrem release candidate.
+
+ -- Clint Adams <schizo@debian.org>  Sun, 19 Sep 2010 14:20:52 -0400
+
 u-boot (2010.09~rc1-2) unstable; urgency=low
 
   * Add patch from Gérald Kerma to add Sheevaplug mvsata support.
