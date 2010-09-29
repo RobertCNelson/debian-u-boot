@@ -1,3 +1,9 @@
+u-boot (2010.09-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Clint Adams <schizo@debian.org>  Wed, 29 Sep 2010 00:06:25 -0400
+
 u-boot (2010.09~rc2-1) unstable; urgency=low
 
   * New upstrem release candidate.
