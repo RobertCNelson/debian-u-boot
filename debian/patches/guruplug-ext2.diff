@@ -1,0 +1,12 @@
+diff --git a/include/configs/guruplug.h b/include/configs/guruplug.h
+index eb3fa57..6c45df6 100644
+--- a/include/configs/guruplug.h
++++ b/include/configs/guruplug.h
+@@ -92,6 +92,7 @@
+ #include <config_cmd_default.h>
+ #define CONFIG_CMD_DHCP
+ #define CONFIG_CMD_ENV
++#define CONFIG_CMD_EXT2
+ #define CONFIG_CMD_FAT
+ #define CONFIG_CMD_NAND
+ #define CONFIG_CMD_PING
