@@ -62,7 +62,9 @@ ifneq ($(UBOOT_TARGETS),)
 	$(MAKE) $${i}_config; \
 	$(INSTALL) -d -m 755 debian/$(package)/usr/lib/$(package)/$${i}; \
         $(MAKE) $(TARGET_FORMAT) && \
-	$(INSTALL) -p -m 644 $(TARGET_FORMAT) debian/$(package)/usr/lib/$(package)/$${i}; \
+	$(INSTALL) -p -m 644 $(TARGET_FORMAT) debian/$(package)/usr/lib/$(package)/$${i} && \
+	$(INSTALL) -p -m 644 u-boot debian/$(package)/usr/lib/$(package)/$${i}/uboot.elf && \
+	strip debian/$(package)/usr/lib/$(package)/$${i}/uboot.elf; \
 	done
 endif
 
