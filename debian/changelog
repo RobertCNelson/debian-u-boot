@@ -1,3 +1,10 @@
+u-boot (2010.09-2) unstable; urgency=low
+
+  * Enable ext2 commands on GuruPlug.
+  * Ship ELF files (for loading into RAM with OpenOCD).
+
+ -- Clint Adams <clint@gnu.org>  Sat, 20 Nov 2010 18:20:40 -0500
+
 u-boot (2010.09-1) unstable; urgency=low
 
   * New upstream release.
