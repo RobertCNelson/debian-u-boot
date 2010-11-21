@@ -1,0 +1,9 @@
+u-boot: statically-linked-binary ./usr/lib/u-boot/guruplug/uboot.elf
+u-boot: statically-linked-binary ./usr/lib/u-boot/sheevaplug/uboot.elf
+u-boot: statically-linked-binary ./usr/lib/u-boot/ZUMA/uboot.elf
+u-boot: statically-linked-binary ./usr/lib/u-boot/eNET/uboot.elf
+u-boot: statically-linked-binary ./usr/lib/u-boot/qemu_mips/uboot.elf
+u-boot: statically-linked-binary ./usr/lib/u-boot/dbau1100/uboot.elf
+u-boot: statically-linked-binary ./usr/lib/u-boot/hammerhead/uboot.elf
+u-boot: statically-linked-binary ./usr/lib/u-boot/sh7785lcr_32bit/uboot.elf
+u-boot: statically-linked-binary ./usr/lib/u-boot/r2dplus/uboot.elf

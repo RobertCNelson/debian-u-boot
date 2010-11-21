@@ -85,11 +85,13 @@ binary-arch:	checkroot build
 	$(checkdir)
 
 	cd debian/$(package) && $(INSTALL_DIR) usr/share/doc/$(package) \
+		usr/share/lintian/overrides \
 		DEBIAN
 
 	$(INSTALL_FILE) debian/README.Debian debian/$(package)/usr/share/doc/$(package)/
 	$(INSTALL_FILE) debian/copyright debian/$(package)/usr/share/doc/$(package)/copyright
 	$(INSTALL_FILE) debian/changelog debian/$(package)/usr/share/doc/$(package)/changelog.Debian
+	$(INSTALL_FILE) debian/lintian.overrides debian/$(package)/usr/share/lintian/overrides/$(package)
 
 	gzip -9f `find debian/$(package)/usr/share/doc -type f ! -name "copyright"`
 	dpkg-shlibdeps -Tdebian/substvars debian/$(package)/usr/bin/mkimage
