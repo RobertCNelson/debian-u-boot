@@ -9,21 +9,19 @@ Changes in v2:
  include/configs/sheevaplug.h |   29 +++++++++++++++++++++++++++++
  1 files changed, 29 insertions(+), 0 deletions(-)
 
-diff --git a/include/configs/sheevaplug.h b/include/configs/sheevaplug.h
-index c5de86e..dc803e1 100644
 --- a/include/configs/sheevaplug.h
 +++ b/include/configs/sheevaplug.h
-@@ -94,6 +94,7 @@
- #define CONFIG_CMD_AUTOSCRIPT
+@@ -46,6 +46,7 @@
+ #include <config_cmd_default.h>
  #define CONFIG_CMD_DHCP
  #define CONFIG_CMD_ENV
 +#define CONFIG_CMD_IDE
  #define CONFIG_CMD_MII
  #define CONFIG_CMD_NAND
  #define CONFIG_CMD_PING
-@@ -196,6 +197,34 @@
- #endif /* CONFIG_CMD_USB */
-
+@@ -98,6 +99,34 @@
+ #endif /* CONFIG_CMD_NET */
+ 
  /*
 + * IDE Support on SATA port0
 + */
@@ -56,4 +54,3 @@ index c5de86e..dc803e1 100644
   * File system
   */
  #define CONFIG_CMD_EXT2
-
