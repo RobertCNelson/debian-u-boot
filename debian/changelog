@@ -1,3 +1,10 @@
+u-boot (2010.12~rc2-1) unstable; urgency=low
+
+  * New upstream release candidate.
+  * Add openrd_base target.
+
+ -- Clint Adams <clint@gnu.org>  Sat, 04 Dec 2010 15:32:38 -0500
+
 u-boot (2010.09-2) unstable; urgency=low
 
   * Enable ext2 commands on GuruPlug.
