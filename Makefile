@@ -24,7 +24,7 @@
 VERSION = 2010
 PATCHLEVEL = 12
 SUBLEVEL =
-EXTRAVERSION = -rc2
+EXTRAVERSION = -rc3
 ifneq "$(SUBLEVEL)" ""
 U_BOOT_VERSION = $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)$(EXTRAVERSION)
 else
@@ -185,9 +185,6 @@ LIBS += lib/lzma/liblzma.o
 LIBS += lib/lzo/liblzo.o
 LIBS += $(shell if [ -f board/$(VENDOR)/common/Makefile ]; then echo \
 	"board/$(VENDOR)/common/lib$(VENDOR).o"; fi)
-ifdef CONFIG_FSL_DIU_FB
-LIBS += board/freescale/common/libfreescale.o
-endif
 LIBS += $(CPUDIR)/lib$(CPU).o
 ifdef SOC
 LIBS += $(CPUDIR)/$(SOC)/lib$(SOC).o
