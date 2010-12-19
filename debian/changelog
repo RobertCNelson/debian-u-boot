@@ -1,3 +1,10 @@
+u-boot (2010.12~rc3-1) unstable; urgency=low
+
+  * New upstream release candidate.
+  * Add dockstar target.
+
+ -- Clint Adams <clint@gnu.org>  Sun, 19 Dec 2010 09:45:42 -0500
+
 u-boot (2010.12~rc2-1) unstable; urgency=low
 
   * New upstream release candidate.
