@@ -14,7 +14,7 @@ UBOOT_TARGETS = ZUMA
 TARGET_FORMAT = u-boot.img
 else
 ifeq ($(DEB_HOST_ARCH),armel)
-UBOOT_TARGETS = sheevaplug guruplug openrd_base
+UBOOT_TARGETS = sheevaplug guruplug openrd_base dockstar
 TARGET_FORMAT = u-boot.kwb
 else
 ifeq ($(DEB_HOST_ARCH),i386)
