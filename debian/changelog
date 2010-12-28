@@ -1,3 +1,11 @@
+u-boot (2010.12-1) unstable; urgency=low
+
+  * New upstream version.
+  * Install more tools in preparation for splitting off a
+    u-boot-tools binary package.
+
+ -- Clint Adams <clint@gnu.org>  Tue, 28 Dec 2010 17:03:44 -0500
+
 u-boot (2010.12~rc3-1) unstable; urgency=low
 
   * New upstream release candidate.
