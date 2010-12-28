@@ -52,10 +52,6 @@ build:
 
 	$(MAKE) mrproper
 
-	$(MAKE) tools
-	$(INSTALL) -d -m 755 debian/$(package)/usr/bin
-	$(INSTALL) -p -m 755 tools/mkimage debian/$(package)/usr/bin/
-
 ifneq ($(UBOOT_TARGETS),)
 	for i in $(UBOOT_TARGETS); do \
 	$(MAKE) clean; \
@@ -66,8 +62,14 @@ ifneq ($(UBOOT_TARGETS),)
 	$(INSTALL) -p -m 644 u-boot debian/$(package)/usr/lib/$(package)/$${i}/uboot.elf && \
 	strip debian/$(package)/usr/lib/$(package)/$${i}/uboot.elf; \
 	done
+else
+	$(MAKE) tools
 endif
 
+	$(INSTALL) -d -m 755 debian/$(package)/usr/bin
+	for i in envcrc gen_eth_addr img2srec jtagconsole mkimage ncb netconsole; do \
+		test -f tools/$${i} && $(INSTALL) -p -m 755 tools/$${i} debian/$(package)/usr/bin/; \
+		done
 	touch build
 
 clean:
