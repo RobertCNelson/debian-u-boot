@@ -7,7 +7,7 @@ INSTALL_DIR     = $(INSTALL) -p -d -o root -g root  -m  755
 
 package=u-boot
 
-DEB_HOST_ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
 ifeq ($(DEB_HOST_ARCH),powerpc)
 UBOOT_TARGETS = ZUMA
