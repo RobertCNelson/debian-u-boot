@@ -69,6 +69,7 @@ clean:
 	rm -rf debian/$(package) debian/$(compat_package)
 	rm -f build
 	$(MAKE) distclean
+	rm -rf arch/arm/include/asm/arch arch/arm/include/asm/proc
 	rm -rf debian/build
 	rm -f `find . -name "*~"`
 
