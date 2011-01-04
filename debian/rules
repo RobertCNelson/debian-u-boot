@@ -1,84 +1,69 @@
 #!/usr/bin/make -f
-INSTALL = install
-INSTALL_FILE    = $(INSTALL) -p    -o root -g root  -m  644
-INSTALL_PROGRAM = $(INSTALL) -p    -o root -g root  -m  755
-INSTALL_SCRIPT  = $(INSTALL) -p    -o root -g root  -m  755
-INSTALL_DIR     = $(INSTALL) -p -d -o root -g root  -m  755
 
-package=u-boot
+INSTALL_FILE    := install -m 644
+INSTALL_PROGRAM := install -m 755
+INSTALL_DIR     := install -m 755 -d
+
+package := u-boot
 
 DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
-ifeq ($(DEB_HOST_ARCH),powerpc)
-UBOOT_TARGETS = ZUMA
-TARGET_FORMAT = u-boot.img
-else
-ifeq ($(DEB_HOST_ARCH),armel)
-UBOOT_TARGETS = sheevaplug guruplug openrd_base dockstar
-TARGET_FORMAT = u-boot.kwb
-else
-ifeq ($(DEB_HOST_ARCH),i386)
-UBOOT_TARGETS = eNET
-TARGET_FORMAT = u-boot.bin
-else
-ifeq ($(DEB_HOST_ARCH),mips)
-UBOOT_TARGETS = qemu_mips
-TARGET_FORMAT = u-boot.img
-else
-ifeq ($(DEB_HOST_ARCH),mipsel)
-UBOOT_TARGETS = dbau1100
-TARGET_FORMAT = u-boot.img
-else
-ifeq ($(DEB_HOST_ARCH),avr32)
-UBOOT_TARGETS = hammerhead
-TARGET_FORMAT = u-boot.img
-else
-ifeq ($(DEB_HOST_ARCH),sh4)
-UBOOT_TARGETS = sh7785lcr_32bit r2dplus
-TARGET_FORMAT = u-boot.img
-else
-UBOOT_TARGETS =
-TARGET_FORMAT =
-endif
-endif
-endif
-endif
-endif
-endif
+ifneq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
+export CROSS_COMPILE := $(DEB_HOST_GNU_TYPE)-
 endif
 
 build:
 	$(checkdir)
 
-	$(MAKE) mrproper
-
-ifneq ($(UBOOT_TARGETS),)
-	for i in $(UBOOT_TARGETS); do \
-	$(MAKE) clean; \
-	$(MAKE) $${i}_config; \
-	$(INSTALL) -d -m 755 debian/$(package)/usr/lib/$(package)/$${i}; \
-        $(MAKE) $(TARGET_FORMAT) && \
-	$(INSTALL) -p -m 644 $(TARGET_FORMAT) debian/$(package)/usr/lib/$(package)/$${i} && \
-	$(INSTALL) -p -m 644 u-boot debian/$(package)/usr/lib/$(package)/$${i}/uboot.elf && \
-	strip debian/$(package)/usr/lib/$(package)/$${i}/uboot.elf; \
+	# NB: tools are hard to cross-builds which might call mkimage: one
+	# would need to build tools for the host machine but a mkimage for the
+	# build machine; unfortunately, mkimage can't be overriden right now,
+	# so simply skip building tools when potentially building a specific
+	# image format
+	set -e; sed -n 's/^$(DEB_HOST_ARCH)[[:space:]]\+//p' debian/targets \
+	    | while read platform target; do \
+	        builddir=`pwd`/debian/build/$$platform; \
+	        installdir=debian/$(package)/usr/lib/$(package)/$$platform; \
+	        mkdir -p $$builddir; \
+	        $(MAKE) O=$$builddir $${platform}_config; \
+	        $(MAKE) O=$$builddir $$builddir/$$target; \
+	        $(INSTALL_DIR) $$installdir; \
+	        $(INSTALL_FILE) $$builddir/$$target $$installdir; \
+	        $(INSTALL_FILE) $$builddir/u-boot $$installdir/uboot.elf; \
+	        $(CROSS_COMPILE)strip $$installdir/uboot.elf; \
+	        if [ -n "$(CROSS_COMPILE)" ]; then \
+	            $(MAKE) O=$$builddir tools; \
+	            for tool in envcrc gen_eth_addr img2srec ncb; do \
+	                t=$$builddir/$$target/$$tool; \
+	                if [ -x $$t ]; then \
+	                    $(INSTALL_DIR) debian/$(package)/usr/bin/; \
+	                    $(INSTALL_PROGRAM) $$t debian/$(package)/usr/bin/; \
+	                fi; \
+	            done; \
+	        fi; \
 	done
-else
-	$(MAKE) tools
-endif
 
-	$(INSTALL) -d -m 755 debian/$(package)/usr/bin
-	for i in envcrc gen_eth_addr img2srec jtagconsole mkimage ncb netconsole; do \
-		test -f tools/$${i} && $(INSTALL) -p -m 755 tools/$${i} debian/$(package)/usr/bin/; \
-		done
-	touch build
+	# board-independent tools
+	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip tools
+	$(INSTALL_DIR) debian/$(package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/mkimage debian/$(package)/usr/bin/
+
+	# scripts
+	$(INSTALL_PROGRAM) tools/jtagconsole debian/$(package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/netconsole  debian/$(package)/usr/bin/
+
+	touch $@
 
 clean:
 	$(checkdir)
-	-rm -f build
-	if test -f Makefile; then $(MAKE) distclean; fi
-	-rm -f `find . -name "*~"` \
-	        debian/files* core debian/*ubstvars
-	-rm -rf debian/u-boot
+	rm -f debian/files debian/substvars
+	rm -rf debian/u-boot
+	rm -f build
+	$(MAKE) distclean
+	rm -rf debian/build
+	rm -f `find . -name "*~"`
 
 binary-indep:	checkroot
 	$(checkdir)
@@ -86,16 +71,19 @@ binary-indep:	checkroot
 binary-arch:	checkroot build
 	$(checkdir)
 
-	cd debian/$(package) && $(INSTALL_DIR) usr/share/doc/$(package) \
-		usr/share/lintian/overrides \
-		DEBIAN
+	$(INSTALL_DIR) debian/$(package)/DEBIAN \
+	    debian/$(package)/usr/share/doc/$(package)/ \
+	    debian/$(package)/usr/share/lintian/overrides/
 
-	$(INSTALL_FILE) debian/README.Debian debian/$(package)/usr/share/doc/$(package)/
-	$(INSTALL_FILE) debian/copyright debian/$(package)/usr/share/doc/$(package)/copyright
-	$(INSTALL_FILE) debian/changelog debian/$(package)/usr/share/doc/$(package)/changelog.Debian
-	$(INSTALL_FILE) debian/lintian.overrides debian/$(package)/usr/share/lintian/overrides/$(package)
+	$(INSTALL_FILE) debian/README.Debian debian/copyright \
+	    debian/$(package)/usr/share/doc/$(package)/
+	$(INSTALL_FILE) debian/changelog \
+	    debian/$(package)/usr/share/doc/$(package)/changelog.Debian
+	$(INSTALL_FILE) debian/lintian.overrides \
+	    debian/$(package)/usr/share/lintian/overrides/$(package)
 
 	gzip -9f `find debian/$(package)/usr/share/doc -type f ! -name "copyright"`
+	# XXX misses board-specific tools
 	dpkg-shlibdeps -Tdebian/substvars debian/$(package)/usr/bin/mkimage
 	dpkg-gencontrol -ldebian/changelog -isp -p$(package) -Tdebian/substvars -Pdebian/u-boot
 	cd debian/$(package) && find * -type f ! -regex '^DEBIAN/.*' -print0 | xargs -r0 md5sum > DEBIAN/md5sums
