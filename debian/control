@@ -9,7 +9,6 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/u-boot.git;a=summary
 
 Package: u-boot
 Architecture: any
-Section: admin
 Depends: ${shlibs:Depends}
 Breaks: uboot-mkimage (<= 0.4)
 Replaces: uboot-mkimage (<= 0.4)
