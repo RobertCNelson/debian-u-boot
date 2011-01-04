@@ -4,8 +4,9 @@ INSTALL_FILE    := install -m 644
 INSTALL_PROGRAM := install -m 755
 INSTALL_DIR     := install -m 755 -d
 
-package := u-boot
 compat_package := uboot-mkimage
+package := u-boot
+tools_package := u-boot-tools
 
 DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
@@ -45,34 +46,34 @@ build:
 	            $(MAKE) O=$$builddir tools; \
 	            envcrc=$$builddir/$$target/envcrc; \
 	            if [ -x $$envcrc ]; then \
-	                $(INSTALL_DIR) debian/$(package)/usr/bin/; \
-	                $(INSTALL_PROGRAM) $$envcrc debian/$(package)/usr/bin/; \
+	                $(INSTALL_DIR) debian/$(tools_package)/usr/bin/; \
+	                $(INSTALL_PROGRAM) $$envcrc debian/$(tools_package)/usr/bin/; \
 	            fi; \
 	        fi; \
 	done
 
-	$(INSTALL_DIR) debian/$(package)/usr/bin/
+	$(INSTALL_DIR) debian/$(tools_package)/usr/bin/
 
 ifeq ($(CROSS_COMPILE),)
 	# board-independent tools
 	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
 	    tools-all
-	$(INSTALL_PROGRAM) tools/gen_eth_addr debian/$(package)/usr/bin/
-	$(INSTALL_PROGRAM) tools/img2srec     debian/$(package)/usr/bin/
-	$(INSTALL_PROGRAM) tools/mkimage      debian/$(package)/usr/bin/
-	$(INSTALL_PROGRAM) tools/ncb          debian/$(package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/gen_eth_addr debian/$(tools_package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/img2srec     debian/$(tools_package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/mkimage      debian/$(tools_package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/ncb          debian/$(tools_package)/usr/bin/
 endif
 
 	# scripts
-	$(INSTALL_PROGRAM) tools/jtagconsole  debian/$(package)/usr/bin/
-	$(INSTALL_PROGRAM) tools/netconsole   debian/$(package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/jtagconsole  debian/$(tools_package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/netconsole   debian/$(tools_package)/usr/bin/
 
 	touch $@
 
 clean:
 	$(checkdir)
-	rm -f debian/files debian/substvars
-	rm -rf debian/$(package) debian/$(compat_package)
+	rm -f debian/files debian/*.substvars
+	rm -rf debian/$(compat_package) debian/$(package) debian/$(tools_package)
 	rm -f build
 	$(MAKE) distclean
 	rm -rf arch/arm/include/asm/arch arch/arm/include/asm/proc
@@ -82,8 +83,8 @@ clean:
 binary-indep:	checkroot
 	$(checkdir)
 
-	$(INSTALL_DIR) debian/$(compat_package)/DEBIAN \
-	    debian/$(compat_package)/usr/share/doc/$(compat_package)/
+	$(INSTALL_DIR) debian/$(compat_package)/DEBIAN
+	$(INSTALL_DIR) debian/$(compat_package)/usr/share/doc/$(compat_package)/
 
 	$(INSTALL_FILE) debian/copyright \
 	    debian/$(compat_package)/usr/share/doc/$(compat_package)/
@@ -91,7 +92,7 @@ binary-indep:	checkroot
 	    debian/$(compat_package)/usr/share/doc/$(compat_package)/changelog.Debian
 
 	gzip -9f `find debian/$(compat_package)/usr/share/doc -type f ! -name "copyright"`
-	dpkg-gencontrol -ldebian/changelog -isp -p$(compat_package) -Tdebian/substvars -Pdebian/$(compat_package)
+	dpkg-gencontrol -ldebian/changelog -isp -p$(compat_package) -Tdebian/$(compat_package).substvars -Pdebian/$(compat_package)
 	cd debian/$(compat_package) && find * -type f ! -regex '^DEBIAN/.*' -print0 | xargs -r0 md5sum > DEBIAN/md5sums
 
 	chown -R root:root debian/$(compat_package)
@@ -102,31 +103,55 @@ binary-indep:	checkroot
 binary-arch:	checkroot build
 	$(checkdir)
 
-	$(INSTALL_DIR) debian/$(package)/DEBIAN \
-	    debian/$(package)/usr/share/doc/$(package)/ \
-	    debian/$(package)/usr/share/lintian/overrides/ \
-	    debian/$(package)/usr/share/man/man1
+	$(INSTALL_DIR) debian/$(package)/DEBIAN
 
-	$(INSTALL_FILE) doc/mkimage.1 debian/$(package)/usr/share/man/man1/
-
-	$(INSTALL_FILE) debian/README.Debian debian/copyright \
+	$(INSTALL_DIR) debian/$(package)/usr/share/doc/$(package)/
+	$(INSTALL_FILE) debian/README.Debian \
+	    debian/$(package)/usr/share/doc/$(package)/
+	$(INSTALL_FILE) debian/copyright \
 	    debian/$(package)/usr/share/doc/$(package)/
 	$(INSTALL_FILE) debian/changelog \
 	    debian/$(package)/usr/share/doc/$(package)/changelog.Debian
+
+	$(INSTALL_DIR) debian/$(package)/usr/share/lintian/overrides/
 	$(INSTALL_FILE) debian/lintian.overrides \
 	    debian/$(package)/usr/share/lintian/overrides/$(package)
 
 	gzip -9f `find debian/$(package)/usr/share/doc -type f ! -name "copyright"`
-	gzip -9f `find debian/$(package)/usr/share/man -type f`
-	# XXX misses board-specific tools
-	dpkg-shlibdeps -Tdebian/substvars debian/$(package)/usr/bin/mkimage
-	dpkg-gencontrol -ldebian/changelog -isp -p$(package) -Tdebian/substvars -Pdebian/$(package)
+	dpkg-gencontrol -ldebian/changelog -isp -p$(package) -Tdebian/$(package).substvars -Pdebian/$(package)
 	cd debian/$(package) && find * -type f ! -regex '^DEBIAN/.*' -print0 | xargs -r0 md5sum > DEBIAN/md5sums
 
 	chown -R root:root debian/$(package)
 	chmod -R go=rX debian/$(package)
 
 	dpkg --build debian/$(package) ..
+
+
+	$(INSTALL_DIR) debian/$(tools_package)/DEBIAN
+
+	$(INSTALL_DIR) debian/$(tools_package)/usr/share/doc/$(tools_package)/
+	$(INSTALL_FILE) debian/copyright     debian/$(tools_package)/usr/share/doc/$(tools_package)/
+	$(INSTALL_FILE) debian/changelog     debian/$(tools_package)/usr/share/doc/$(tools_package)/changelog.Debian
+
+	$(INSTALL_DIR) debian/$(tools_package)/usr/share/man/man1
+	$(INSTALL_FILE) doc/mkimage.1 debian/$(tools_package)/usr/share/man/man1/
+
+	gzip -9f `find debian/$(tools_package)/usr/share/doc -type f ! -name "copyright"`
+	gzip -9f `find debian/$(tools_package)/usr/share/man -type f`
+
+	# XXX misses board-specific envcrc tool
+	dpkg-shlibdeps -Tdebian/$(tools_package).substvars \
+	    debian/$(tools_package)/usr/bin/gen_eth_addr \
+	    debian/$(tools_package)/usr/bin/img2srec \
+	    debian/$(tools_package)/usr/bin/mkimage \
+	    debian/$(tools_package)/usr/bin/ncb
+	dpkg-gencontrol -ldebian/changelog -isp -p$(tools_package) -Tdebian/$(tools_package).substvars -Pdebian/$(tools_package)
+	cd debian/$(tools_package) && find * -type f ! -regex '^DEBIAN/.*' -print0 | xargs -r0 md5sum > DEBIAN/md5sums
+
+	chown -R root:root debian/$(tools_package)
+	chmod -R go=rX debian/$(tools_package)
+
+	dpkg --build debian/$(tools_package) ..
 
 define checkdir
 	test -f debian/rules
