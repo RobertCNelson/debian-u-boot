@@ -24,11 +24,12 @@ LDFLAGS := $(patsubst -Wl$(comma)%,%,$(LDFLAGS))
 build:
 	$(checkdir)
 
-	# NB: tools are hard to cross-builds which might call mkimage: one
-	# would need to build tools for the host machine but a mkimage for the
-	# build machine; unfortunately, mkimage can't be overriden right now,
-	# so simply skip building tools when potentially building a specific
-	# image format
+	# NB: tools are hard to cross-build in builds which might call mkimage
+	# or in general when they called during the build (e.g. bmp_logo is
+	# called to generate a logo); one would need to build tools for the
+	# host machine but also for the build machine; unfortunately, mkimage
+	# can't be overriden right now, so simply skip building tools when
+	# potentially building a specific image format
 	set -e; sed -n 's/^$(DEB_HOST_ARCH)[[:space:]]\+//p' debian/targets \
 	    | while read platform target; do \
 	        builddir=`pwd`/debian/build/$$platform; \
@@ -42,24 +43,29 @@ build:
 	        $(CROSS_COMPILE)strip $$installdir/uboot.elf; \
 	        if [ -n "$(CROSS_COMPILE)" ]; then \
 	            $(MAKE) O=$$builddir tools; \
-	            for tool in envcrc gen_eth_addr img2srec ncb; do \
-	                t=$$builddir/$$target/$$tool; \
-	                if [ -x $$t ]; then \
-	                    $(INSTALL_DIR) debian/$(package)/usr/bin/; \
-	                    $(INSTALL_PROGRAM) $$t debian/$(package)/usr/bin/; \
-	                fi; \
-	            done; \
+	            envcrc=$$builddir/$$target/envcrc; \
+	            if [ -x $$envcrc ]; then \
+	                $(INSTALL_DIR) debian/$(package)/usr/bin/; \
+	                $(INSTALL_PROGRAM) $$envcrc debian/$(package)/usr/bin/; \
+	            fi; \
 	        fi; \
 	done
 
-	# board-independent tools
-	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip tools
 	$(INSTALL_DIR) debian/$(package)/usr/bin/
-	$(INSTALL_PROGRAM) tools/mkimage debian/$(package)/usr/bin/
+
+ifeq ($(CROSS_COMPILE),)
+	# board-independent tools
+	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
+	    tools-all
+	$(INSTALL_PROGRAM) tools/gen_eth_addr debian/$(package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/img2srec     debian/$(package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/mkimage      debian/$(package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/ncb          debian/$(package)/usr/bin/
+endif
 
 	# scripts
-	$(INSTALL_PROGRAM) tools/jtagconsole debian/$(package)/usr/bin/
-	$(INSTALL_PROGRAM) tools/netconsole  debian/$(package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/jtagconsole  debian/$(package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/netconsole   debian/$(package)/usr/bin/
 
 	touch $@
 
