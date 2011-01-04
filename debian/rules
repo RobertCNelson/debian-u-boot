@@ -79,7 +79,10 @@ binary-arch:	checkroot build
 
 	$(INSTALL_DIR) debian/$(package)/DEBIAN \
 	    debian/$(package)/usr/share/doc/$(package)/ \
-	    debian/$(package)/usr/share/lintian/overrides/
+	    debian/$(package)/usr/share/lintian/overrides/ \
+	    debian/$(package)/usr/share/man/man1
+
+	$(INSTALL_FILE) doc/mkimage.1 debian/$(package)/usr/share/man/man1/
 
 	$(INSTALL_FILE) debian/README.Debian debian/copyright \
 	    debian/$(package)/usr/share/doc/$(package)/
@@ -89,6 +92,7 @@ binary-arch:	checkroot build
 	    debian/$(package)/usr/share/lintian/overrides/$(package)
 
 	gzip -9f `find debian/$(package)/usr/share/doc -type f ! -name "copyright"`
+	gzip -9f `find debian/$(package)/usr/share/man -type f`
 	# XXX misses board-specific tools
 	dpkg-shlibdeps -Tdebian/substvars debian/$(package)/usr/bin/mkimage
 	dpkg-gencontrol -ldebian/changelog -isp -p$(package) -Tdebian/substvars -Pdebian/u-boot
