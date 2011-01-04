@@ -5,6 +5,7 @@ INSTALL_PROGRAM := install -m 755
 INSTALL_DIR     := install -m 755 -d
 
 package := u-boot
+compat_package := uboot-mkimage
 
 DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
@@ -65,7 +66,7 @@ build:
 clean:
 	$(checkdir)
 	rm -f debian/files debian/substvars
-	rm -rf debian/u-boot
+	rm -rf debian/$(package) debian/$(compat_package)
 	rm -f build
 	$(MAKE) distclean
 	rm -rf debian/build
@@ -73,6 +74,23 @@ clean:
 
 binary-indep:	checkroot
 	$(checkdir)
+
+	$(INSTALL_DIR) debian/$(compat_package)/DEBIAN \
+	    debian/$(compat_package)/usr/share/doc/$(compat_package)/
+
+	$(INSTALL_FILE) debian/copyright \
+	    debian/$(compat_package)/usr/share/doc/$(compat_package)/
+	$(INSTALL_FILE) debian/changelog \
+	    debian/$(compat_package)/usr/share/doc/$(compat_package)/changelog.Debian
+
+	gzip -9f `find debian/$(compat_package)/usr/share/doc -type f ! -name "copyright"`
+	dpkg-gencontrol -ldebian/changelog -isp -p$(compat_package) -Tdebian/substvars -Pdebian/$(compat_package)
+	cd debian/$(compat_package) && find * -type f ! -regex '^DEBIAN/.*' -print0 | xargs -r0 md5sum > DEBIAN/md5sums
+
+	chown -R root:root debian/$(compat_package)
+	chmod -R go=rX debian/$(compat_package)
+
+	dpkg --build debian/$(compat_package) ..
 
 binary-arch:	checkroot build
 	$(checkdir)
@@ -95,7 +113,7 @@ binary-arch:	checkroot build
 	gzip -9f `find debian/$(package)/usr/share/man -type f`
 	# XXX misses board-specific tools
 	dpkg-shlibdeps -Tdebian/substvars debian/$(package)/usr/bin/mkimage
-	dpkg-gencontrol -ldebian/changelog -isp -p$(package) -Tdebian/substvars -Pdebian/u-boot
+	dpkg-gencontrol -ldebian/changelog -isp -p$(package) -Tdebian/substvars -Pdebian/$(package)
 	cd debian/$(package) && find * -type f ! -regex '^DEBIAN/.*' -print0 | xargs -r0 md5sum > DEBIAN/md5sums
 
 	chown -R root:root debian/$(package)
@@ -107,7 +125,7 @@ define checkdir
 	test -f debian/rules
 endef
 
-binary:		binary-arch
+binary:		binary-arch binary-indep
 
 prebuild:
 	@true
