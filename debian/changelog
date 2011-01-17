@@ -29,6 +29,8 @@ u-boot (2010.12-2) unstable; urgency=low
   * Drop board-specific tools; these are too dangerous; only ship mkimage for
     now.
   * Add igep0020 and omap3_beagle builds on armel
+  * Update snapshot.commit to the 2010.12 release contents; this avoids a
+    pointless diff with the tarball.
 
  -- Loïc Minier <lool@debian.org>  Mon, 17 Jan 2011 22:43:41 +0100
 
