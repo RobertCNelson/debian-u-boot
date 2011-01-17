@@ -1,3 +1,37 @@
+u-boot (2010.12-2) unstable; urgency=low
+
+  * Avoid calling dpkg-architecture if DEB_HOST_ARCH is set.
+  * Misc refactoring of debian/rules.
+    - Split per architecture list of platform and targets into
+      debian/targets.
+    - Actually use INSTALL_FILE/INSTALL_DIR/INSTALL_PROGRAM.
+    - Add support for cross-builds; these will currently lack tools.
+    - Build board-specific u-boot files in a separate build dir from the
+      generic tools
+  * Fix handling of -Wl,foo LDFLAGS; the upstream build passes LDFLAGS
+    directly to ld instead of calling gcc for linking; so instead of passing
+    -Wl,foo in LDFLAGS as in automake builds, one should set LDFLAGS to foo
+    directly; add a snippet to strip -Wl, from LDFLAGS; alternatively, we
+    could do as in other special packages like the kernel and simply unset
+    LDFLAGS entirely; closes: #607613.
+  * Install and compress upstream mkimage manpage; based on a patch by
+    Marcin Juszkiewicz.
+  * Add a dummy uboot-mkimage package for upgrades from squeeze; based on a
+    patch by Marcin Juszkiewicz; closes: #607618.
+  * Add new patch, fix-definition-of-global_data-struct, from the upstream
+    x86 maintainer; fixes build of eNET board which breaks u-boot's build on
+    i386; closes: #608801.
+  * Workaround an upstream bug in distclean by removing include/asm/proc and
+    /arch explicitly for now; patch was sent upstream.
+  * Don't repeat Section: in binary package.
+  * Add myself to Uploaders.
+  * Split tools in u-boot-tools package.
+  * Drop board-specific tools; these are too dangerous; only ship mkimage for
+    now.
+  * Add igep0020 and omap3_beagle builds on armel
+
+ -- Loïc Minier <lool@debian.org>  Mon, 17 Jan 2011 22:43:41 +0100
+
 u-boot (2010.12-1) unstable; urgency=low
 
   * New upstream version.
