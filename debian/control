@@ -20,8 +20,8 @@ Description: A boot loader for embedded systems
 Package: u-boot-tools
 Architecture: any
 Depends: ${shlibs:Depends}
-Breaks: uboot-mkimage (<= 0.4), u-boot (<< 2010.12-2)
-Replaces: uboot-mkimage (<= 0.4), u-boot (<< 2010.12-2)
+Breaks: uboot-mkimage (<= 0.4build1), u-boot (<< 2010.12-2)
+Replaces: uboot-mkimage (<= 0.4build1), u-boot (<< 2010.12-2)
 Description: companion tools for Das U-Boot
  Collection of tools useful along the U-Boot bootloader found in the u-boot
  package.
