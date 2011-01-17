@@ -2,6 +2,8 @@
 # --------------------------------------------
 armel			dockstar	u-boot.kwb
 armel			guruplug	u-boot.kwb
+armel			igep0020	u-boot.bin
+armel			omap3_beagle	u-boot.bin
 armel			openrd_base	u-boot.kwb
 armel			sheevaplug	u-boot.kwb
 avr32			hammerhead	u-boot.img
