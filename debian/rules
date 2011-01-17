@@ -38,21 +38,13 @@ build:
 	        $(CROSS_COMPILE)strip $$installdir/uboot.elf; \
 	done
 
-	$(INSTALL_DIR) debian/$(tools_package)/usr/bin/
-
 ifeq ($(CROSS_COMPILE),)
 	# board-independent tools
 	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
 	    tools-all
-	$(INSTALL_PROGRAM) tools/gen_eth_addr debian/$(tools_package)/usr/bin/
-	$(INSTALL_PROGRAM) tools/img2srec     debian/$(tools_package)/usr/bin/
-	$(INSTALL_PROGRAM) tools/mkimage      debian/$(tools_package)/usr/bin/
-	$(INSTALL_PROGRAM) tools/ncb          debian/$(tools_package)/usr/bin/
+	$(INSTALL_DIR) debian/$(tools_package)/usr/bin/
+	$(INSTALL_PROGRAM) tools/mkimage debian/$(tools_package)/usr/bin/
 endif
-
-	# scripts
-	$(INSTALL_PROGRAM) tools/jtagconsole  debian/$(tools_package)/usr/bin/
-	$(INSTALL_PROGRAM) tools/netconsole   debian/$(tools_package)/usr/bin/
 
 	touch $@
 
@@ -127,10 +119,7 @@ binary-arch:	checkroot build
 
 	# XXX misses board-specific envcrc tool
 	dpkg-shlibdeps -Tdebian/$(tools_package).substvars \
-	    debian/$(tools_package)/usr/bin/gen_eth_addr \
-	    debian/$(tools_package)/usr/bin/img2srec \
-	    debian/$(tools_package)/usr/bin/mkimage \
-	    debian/$(tools_package)/usr/bin/ncb
+	    debian/$(tools_package)/usr/bin/mkimage
 	dpkg-gencontrol -ldebian/changelog -isp -p$(tools_package) -Tdebian/$(tools_package).substvars -Pdebian/$(tools_package)
 	cd debian/$(tools_package) && find * -type f ! -regex '^DEBIAN/.*' -print0 | xargs -r0 md5sum > DEBIAN/md5sums
 
