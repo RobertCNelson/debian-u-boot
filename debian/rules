@@ -25,12 +25,6 @@ LDFLAGS := $(patsubst -Wl$(comma)%,%,$(LDFLAGS))
 build:
 	$(checkdir)
 
-	# NB: tools are hard to cross-build in builds which might call mkimage
-	# or in general when they called during the build (e.g. bmp_logo is
-	# called to generate a logo); one would need to build tools for the
-	# host machine but also for the build machine; unfortunately, mkimage
-	# can't be overriden right now, so simply skip building tools when
-	# potentially building a specific image format
 	set -e; sed -n 's/^$(DEB_HOST_ARCH)[[:space:]]\+//p' debian/targets \
 	    | while read platform target; do \
 	        builddir=`pwd`/debian/build/$$platform; \
@@ -42,14 +36,6 @@ build:
 	        $(INSTALL_FILE) $$builddir/$$target $$installdir; \
 	        $(INSTALL_FILE) $$builddir/u-boot $$installdir/uboot.elf; \
 	        $(CROSS_COMPILE)strip $$installdir/uboot.elf; \
-	        if [ -n "$(CROSS_COMPILE)" ]; then \
-	            $(MAKE) O=$$builddir tools; \
-	            envcrc=$$builddir/$$target/envcrc; \
-	            if [ -x $$envcrc ]; then \
-	                $(INSTALL_DIR) debian/$(tools_package)/usr/bin/; \
-	                $(INSTALL_PROGRAM) $$envcrc debian/$(tools_package)/usr/bin/; \
-	            fi; \
-	        fi; \
 	done
 
 	$(INSTALL_DIR) debian/$(tools_package)/usr/bin/
