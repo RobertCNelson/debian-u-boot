@@ -117,9 +117,8 @@ binary-arch:	checkroot build
 	gzip -9f `find debian/$(tools_package)/usr/share/doc -type f ! -name "copyright"`
 	gzip -9f `find debian/$(tools_package)/usr/share/man -type f`
 
-	# XXX misses board-specific envcrc tool
 	dpkg-shlibdeps -Tdebian/$(tools_package).substvars \
-	    debian/$(tools_package)/usr/bin/mkimage
+	    debian/$(tools_package)/usr/bin/*
 	dpkg-gencontrol -ldebian/changelog -isp -p$(tools_package) -Tdebian/$(tools_package).substvars -Pdebian/$(tools_package)
 	cd debian/$(tools_package) && find * -type f ! -regex '^DEBIAN/.*' -print0 | xargs -r0 md5sum > DEBIAN/md5sums
 
