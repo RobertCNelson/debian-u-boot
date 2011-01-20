@@ -27,6 +27,7 @@ Description: companion tools for Das U-Boot
  package.
 
 Package: uboot-mkimage
+Section: utils
 Architecture: all
 Depends: u-boot-tools
 Description: generate kernel image for U-Boot (transitional package)
