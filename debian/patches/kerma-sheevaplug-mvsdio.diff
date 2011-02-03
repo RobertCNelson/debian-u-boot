@@ -21,7 +21,7 @@ Changes in v1:
 
 --- a/arch/arm/cpu/arm926ejs/kirkwood/timer.c
 +++ b/arch/arm/cpu/arm926ejs/kirkwood/timer.c
-@@ -166,3 +166,26 @@
+@@ -168,3 +168,26 @@
  
  	return 0;
  }
@@ -60,7 +60,7 @@ Changes in v1:
  #define KW_SATA_PORT0_OFFSET		0x2000
 --- a/drivers/mmc/Makefile
 +++ b/drivers/mmc/Makefile
-@@ -31,6 +31,7 @@
+@@ -32,6 +32,7 @@
  COBJS-$(CONFIG_GENERIC_MMC) += mmc.o
  COBJS-$(CONFIG_GENERIC_ATMEL_MCI) += gen_atmel_mci.o
  COBJS-$(CONFIG_MXC_MMC) += mxcmmc.o
