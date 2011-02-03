@@ -10,6 +10,8 @@ u-boot (2011.03~rc1-1) experimental; urgency=low
     - Add patch EfikaMX-switch-to-MACH_TYPE_MX51_EFIKAMX from the upstream
       mailing-list; fixes build on EfikaMX (EfikaMX: switch to
       MACH_TYPE_MX51_EFIKAMX)
+    - Add patch Drop-config.h-include-in-tools-imximage.h from the upstream
+      mailing-list; fixes tools-all build of imximage.c.
     - Build u-boot.imx for efikamx on armel.
   * Refresh patch kerma-sheevaplug-mvsdio to fix fuzz.
 
