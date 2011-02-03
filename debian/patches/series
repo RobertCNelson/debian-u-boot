@@ -3,3 +3,4 @@ kerma-sheevaplug-mvsata.diff
 kerma-sheevaplug-mvsdio.diff
 fix-definition-of-global_data-struct.diff
 EfikaMX-switch-to-MACH_TYPE_MX51_EFIKAMX.diff
+Drop-config.h-include-in-tools-imximage.h.diff
