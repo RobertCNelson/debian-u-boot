@@ -1,3 +1,20 @@
+u-boot (2011.03~rc1-1) experimental; urgency=low
+
+  * dpkg-shlibdeps usr/bin/* rather than just mkimage.
+  * uboot-mkimage's Section is utils.
+  * Allow overriding CROSS_COMPILE.
+  * New upstream release candidate.
+    - Merge commit v2011.03-rc1
+    - Update snapshot.commit to 2011.03-rc1
+  * Add EfikaMX support.
+    - Add patch EfikaMX-switch-to-MACH_TYPE_MX51_EFIKAMX from the upstream
+      mailing-list; fixes build on EfikaMX (EfikaMX: switch to
+      MACH_TYPE_MX51_EFIKAMX)
+    - Build u-boot.imx for efikamx on armel.
+  * Refresh patch kerma-sheevaplug-mvsdio to fix fuzz.
+
+ -- Loïc Minier <lool@debian.org>  Thu, 03 Feb 2011 13:13:14 +0100
+
 u-boot (2010.12-2) unstable; urgency=low
 
   * Avoid calling dpkg-architecture if DEB_HOST_ARCH is set.
