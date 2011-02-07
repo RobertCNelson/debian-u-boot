@@ -1,0 +1,33 @@
+From e72f46787f44c1104a8df18511ab230b6072a1f0 Mon Sep 17 00:00:00 2001
+From: Nobuhiro Iwamatsu <nobuhiro.iwamatsu.yj@renesas.com>
+Date: Thu, 3 Feb 2011 16:27:45 +0900
+Subject: [PATCH] sh: sh7785lcr: Fix out of tree building
+
+Signed-off-by: Nobuhiro Iwamatsu <nobuhiro.iwamatsu.yj@renesas.com>
+Signed-off-by: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
+---
+ board/renesas/sh7785lcr/Makefile |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/board/renesas/sh7785lcr/Makefile b/board/renesas/sh7785lcr/Makefile
+index b5c496f..e404fa6 100644
+--- a/board/renesas/sh7785lcr/Makefile
++++ b/board/renesas/sh7785lcr/Makefile
+@@ -23,8 +23,12 @@ LIB	= $(obj)lib$(BOARD).o
+ COBJS	:= sh7785lcr.o selfcheck.o rtl8169_mac.o
+ SOBJS	:= lowlevel_init.o
+ 
+-$(LIB):	$(obj).depend $(COBJS) $(SOBJS)
+-	$(call cmd_link_o_target, $(COBJS) $(SOBJS))
++SRCS	:= $(SOBJS:.o=.S) $(COBJS:.o=.c)
++OBJS	:= $(addprefix $(obj),$(COBJS))
++SOBJS	:= $(addprefix $(obj),$(SOBJS))
++
++$(LIB): $(obj).depend $(OBJS) $(SOBJS)
++	$(call cmd_link_o_target, $(OBJS) $(SOBJS))
+ 
+ clean:
+ 	rm -f $(SOBJS) $(OBJS)
+-- 
+1.7.2.3
+
