@@ -1,3 +1,11 @@
+u-boot (2011.03~rc1-2) experimental; urgency=low
+
+  * New patch sh-sh7785lcr-Fix-out-of-tree-building; from upstream
+    e72f46787f44c1104a8df18511ab230b6072a1f0; fixes Debian sh4 build; thanks
+    Nobuhiro Iwamatsu; closes: #611873.
+
+ -- Loïc Minier <lool@debian.org>  Mon, 07 Feb 2011 17:20:16 +0100
+
 u-boot (2011.03~rc1-1) experimental; urgency=low
 
   * dpkg-shlibdeps usr/bin/* rather than just mkimage.
