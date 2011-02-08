@@ -1,3 +1,17 @@
+u-boot (2011.03~rc1-3) experimental; urgency=low
+
+  * Add debian/source/local-options
+    - unapply-patches: avoids committing patched tree after a build
+    - abort-on-upstream-changes: avoids creating a debian-changes-* patch
+      when building from a dirty tree
+  * Add patch MIPS-dbau1x00-Remove-unused-flash-driver-stub,
+    from u-boot-mipsel.git 17a990b55008fd79636e4880d9d10b7172ca87ce and also
+    sent to the upstream mailing-list; fixes build of dbau1x00 board by
+    removing board/dbau1x00/flash.c entirely, and hence fixes the build of
+    u-boot on mipsel.
+
+ -- Loïc Minier <lool@debian.org>  Tue, 08 Feb 2011 16:49:05 +0100
+
 u-boot (2011.03~rc1-2) experimental; urgency=low
 
   * New patch sh-sh7785lcr-Fix-out-of-tree-building; from upstream
