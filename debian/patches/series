@@ -5,3 +5,4 @@ fix-definition-of-global_data-struct.diff
 EfikaMX-switch-to-MACH_TYPE_MX51_EFIKAMX.diff
 Drop-config.h-include-in-tools-imximage.h.diff
 sh-sh7785lcr-Fix-out-of-tree-building.diff
+MIPS-dbau1x00-Remove-unused-flash-driver-stub.diff

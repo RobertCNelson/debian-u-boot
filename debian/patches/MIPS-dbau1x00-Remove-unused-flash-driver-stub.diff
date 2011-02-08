@@ -1,0 +1,90 @@
+From 17a990b55008fd79636e4880d9d10b7172ca87ce Mon Sep 17 00:00:00 2001
+From: Daniel Schwierzeck <daniel.schwierzeck@googlemail.com>
+Date: Thu, 3 Feb 2011 14:17:10 +0100
+Subject: [PATCH] MIPS: dbau1x00: Remove unused flash driver stub
+
+All dbau1x00 boards use the CFI driver so this stub driver is useless
+and should not be compiled.
+
+This patch fixes the error:
+
+u-boot-git/board/dbau1x00/flash.c:34: multiple definition of `flash_init'
+drivers/mtd/libmtd.o:u-boot-git/drivers/mtd/cfi_flash.c:2084: first defined here
+board/dbau1x00/libdbau1x00.o: In function `write_buff':
+u-boot-git/board/dbau1x00/flash.c:40: multiple definition of `write_buff'
+drivers/mtd/libmtd.o:u-boot-git/drivers/mtd/cfi_flash.c:1265: first defined here
+
+Signed-off-by: Daniel Schwierzeck <daniel.schwierzeck@googlemail.com>
+Cc: Wolfgang Denk <wd@denx.de>
+Signed-off-by: Shinya Kuribayashi <skuribay@pobox.com>
+---
+ board/dbau1x00/Makefile |    2 +-
+ board/dbau1x00/flash.c  |   43 -------------------------------------------
+ 2 files changed, 1 insertions(+), 44 deletions(-)
+ delete mode 100644 board/dbau1x00/flash.c
+
+diff --git a/board/dbau1x00/Makefile b/board/dbau1x00/Makefile
+index f1594a2..e36a9d2 100644
+--- a/board/dbau1x00/Makefile
++++ b/board/dbau1x00/Makefile
+@@ -25,7 +25,7 @@ include $(TOPDIR)/config.mk
+ 
+ LIB	= $(obj)lib$(BOARD).o
+ 
+-COBJS	= $(BOARD).o flash.o
++COBJS	= $(BOARD).o
+ SOBJS	= lowlevel_init.o
+ 
+ SRCS	:= $(SOBJS:.o=.S) $(COBJS:.o=.c)
+diff --git a/board/dbau1x00/flash.c b/board/dbau1x00/flash.c
+deleted file mode 100644
+index a2fed1d..0000000
+--- a/board/dbau1x00/flash.c
++++ /dev/null
+@@ -1,43 +0,0 @@
+-/*
+- * (C) Copyright 2003
+- * Wolfgang Denk, DENX Software Engineering, wd@denx.de.
+- *
+- * See file CREDITS for list of people who contributed to this
+- * project.
+- *
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU General Public License as
+- * published by the Free Software Foundation; either version 2 of
+- * the License, or (at your option) any later version.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- * GNU General Public License for more details.
+- *
+- * You should have received a copy of the GNU General Public License
+- * along with this program; if not, write to the Free Software
+- * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+- * MA 02111-1307 USA
+- */
+-
+-#include <common.h>
+-
+-flash_info_t flash_info[CONFIG_SYS_MAX_FLASH_BANKS];	/* info for FLASH chips */
+-
+-/*-----------------------------------------------------------------------
+- * flash_init()
+- *
+- * sets up flash_info and returns size of FLASH (bytes)
+- */
+-unsigned long flash_init (void)
+-{
+-	printf ("Skipping flash_init\n");
+-	return (0);
+-}
+-
+-int write_buff (flash_info_t * info, uchar * src, ulong addr, ulong cnt)
+-{
+-	printf ("write_buff not implemented\n");
+-	return (-1);
+-}
+-- 
+1.7.2.3
+
