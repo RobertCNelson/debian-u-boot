@@ -1,3 +1,10 @@
+u-boot (2011.03~rc1-4) experimental; urgency=low
+
+  * Add patch x86-Align-config.mk-and-linker-scripts-with-other-ar.
+    From upstream mailing-list; fixes x86 build (eNET).
+
+ -- Loïc Minier <lool@debian.org>  Wed, 09 Feb 2011 14:51:01 +0100
+
 u-boot (2011.03~rc1-3) experimental; urgency=low
 
   * Add debian/source/local-options
