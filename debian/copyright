@@ -5,6 +5,10 @@ This package was put together by Clint Adams <schizo@debian.org>
 with sources obtained from:
   ftp://ftp.denx.de/pub/u-boot/
 
+u-boot took over some packaging bits from uboot-mkimage which was copyright
+Joey Hess <joeyh@debian.org> and Marc Singer <elf@debian.org> and from
+uboot-envtools which was copyright Per Andersson <avtobiff@gmail.com>.
+
 The following copyright and license apply to this software:
 
 Copyright © 2000-2009 Wolfgang Denk, DENX Software Engineering, wd@denx.de.
