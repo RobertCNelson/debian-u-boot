@@ -4,6 +4,10 @@ INSTALL_FILE    := install -m 644
 INSTALL_PROGRAM := install -m 755
 INSTALL_DIR     := install -m 755 -d
 
+version := $(shell dpkg-parsechangelog | sed -n 's/^Version: //p')
+tools_version := 20081215-3+$(version)
+
+env_package := uboot-envtools
 mkimage_package := uboot-mkimage
 package := u-boot
 tools_package := u-boot-tools
@@ -63,7 +67,7 @@ endif
 clean:
 	$(checkdir)
 	rm -f debian/files debian/*.substvars
-	rm -rf debian/$(mkimage_package) debian/$(package) debian/$(tools_package)
+	rm -rf debian/$(env_package) debian/$(mkimage_package) debian/$(package) debian/$(tools_package)
 	rm -f build
 	$(MAKE) distclean
 	rm -rf arch/arm/include/asm/arch arch/arm/include/asm/proc
@@ -89,6 +93,24 @@ binary-indep:	checkroot
 	chmod -R go=rX debian/$(mkimage_package)
 
 	dpkg --build debian/$(mkimage_package) ..
+
+
+	$(INSTALL_DIR) debian/$(env_package)/DEBIAN
+	$(INSTALL_DIR) debian/$(env_package)/usr/share/doc/$(env_package)/
+
+	$(INSTALL_FILE) debian/copyright \
+	    debian/$(env_package)/usr/share/doc/$(env_package)/
+	$(INSTALL_FILE) debian/changelog \
+	    debian/$(env_package)/usr/share/doc/$(env_package)/changelog.Debian
+
+	gzip -9f `find debian/$(env_package)/usr/share/doc -type f ! -name "copyright"`
+	dpkg-gencontrol -v$(tools_version) -ldebian/changelog -isp -p$(env_package) -Tdebian/$(env_package).substvars -Pdebian/$(env_package)
+	cd debian/$(env_package) && find * -type f ! -regex '^DEBIAN/.*' -print0 | xargs -r0 md5sum > DEBIAN/md5sums
+
+	chown -R root:root debian/$(env_package)
+	chmod -R go=rX debian/$(env_package)
+
+	dpkg --build debian/$(env_package) ..
 
 binary-arch:	checkroot build
 	$(checkdir)
