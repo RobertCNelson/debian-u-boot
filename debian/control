@@ -20,11 +20,19 @@ Description: A boot loader for embedded systems
 Package: u-boot-tools
 Architecture: any
 Depends: ${shlibs:Depends}
-Breaks: uboot-mkimage (<= 0.4build1), u-boot (<< 2010.12-2)
-Replaces: uboot-mkimage (<= 0.4build1), u-boot (<< 2010.12-2)
+Breaks: uboot-envtools,
+        uboot-mkimage (<= 0.4build1),
+        u-boot (<< 2010.12-2)
+Replaces: uboot-envtools,
+          uboot-mkimage (<= 0.4build1),
+          u-boot (<< 2010.12-2)
 Description: companion tools for Das U-Boot
  Collection of tools useful along the U-Boot bootloader found in the u-boot
  package.
+ .
+ This package includes the mkimage program, which allows generation of U-Boot
+ images in various formats, and the fw_printenv and fw_setenv programs to read
+ and modify U-Boot's environment.
 
 Package: uboot-mkimage
 Section: utils

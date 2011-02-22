@@ -22,6 +22,12 @@ endif
 comma := ,
 LDFLAGS := $(patsubst -Wl$(comma)%,%,$(LDFLAGS))
 
+# macro to test whether a host header is present
+check_include = $(shell echo | $(CROSS_COMPILE)gcc -E -include $(1) -o /dev/null - 2>/dev/null && echo 1 || echo 0)
+
+# whether we have Linux MTD headers
+has_mtd_user := $(call check_include, mtd/mtd-user.h)
+
 build:
 	$(checkdir)
 
@@ -40,10 +46,16 @@ build:
 
 ifeq ($(CROSS_COMPILE),)
 	# board-independent tools
+	$(INSTALL_DIR) debian/$(tools_package)/usr/bin/
 	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
 	    tools
-	$(INSTALL_DIR) debian/$(tools_package)/usr/bin/
 	$(INSTALL_PROGRAM) tools/mkimage debian/$(tools_package)/usr/bin/
+	# only build env tools if we have Linux MTD headers
+ifeq ($(has_mtd_user),1)
+	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip env
+	$(INSTALL_PROGRAM) tools/env/fw_printenv debian/$(tools_package)/usr/bin/
+	ln -sf fw_printenv debian/$(tools_package)/usr/bin/fw_setenv
+endif
 endif
 
 	touch $@
