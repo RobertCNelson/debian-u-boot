@@ -45,7 +45,8 @@ build:
 	        $(INSTALL_DIR) $$installdir; \
 	        $(INSTALL_FILE) $$builddir/$$target $$installdir; \
 	        $(INSTALL_FILE) $$builddir/u-boot $$installdir/uboot.elf; \
-	        $(CROSS_COMPILE)strip $$installdir/uboot.elf; \
+	        $(CROSS_COMPILE)strip --remove-section=.comment \
+	            $$installdir/uboot.elf; \
 	done
 
 ifeq ($(CROSS_COMPILE),)
