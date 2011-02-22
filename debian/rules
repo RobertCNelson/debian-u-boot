@@ -146,7 +146,10 @@ binary-arch:	checkroot build
 	$(INSTALL_FILE) debian/changelog     debian/$(tools_package)/usr/share/doc/$(tools_package)/changelog.Debian
 
 	$(INSTALL_DIR) debian/$(tools_package)/usr/share/man/man1
-	$(INSTALL_FILE) doc/mkimage.1 debian/$(tools_package)/usr/share/man/man1/
+	$(INSTALL_DIR) debian/$(tools_package)/usr/share/man/man8
+	$(INSTALL_FILE) doc/mkimage.1                 debian/$(tools_package)/usr/share/man/man1/
+	$(INSTALL_FILE) debian/manpages/fw_printenv.8 debian/$(tools_package)/usr/share/man/man8/
+	$(INSTALL_FILE) debian/manpages/fw_setenv.8   debian/$(tools_package)/usr/share/man/man8/
 
 	gzip -9f `find debian/$(tools_package)/usr/share/doc -type f ! -name "copyright"`
 	gzip -9f `find debian/$(tools_package)/usr/share/man -type f`
