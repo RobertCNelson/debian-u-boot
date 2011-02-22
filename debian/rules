@@ -41,7 +41,7 @@ build:
 ifeq ($(CROSS_COMPILE),)
 	# board-independent tools
 	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
-	    tools-all
+	    tools
 	$(INSTALL_DIR) debian/$(tools_package)/usr/bin/
 	$(INSTALL_PROGRAM) tools/mkimage debian/$(tools_package)/usr/bin/
 endif
