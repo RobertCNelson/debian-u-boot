@@ -38,7 +38,7 @@ Package: uboot-envtools
 Section: utils
 Architecture: all
 Depends: u-boot-tools
-Description: read/modify the environment for the bootloader U-Boot (transitional package)
+Description: read/modify the environment for the U-Boot boot loader (transitional package)
  Package to ease upgrading from uboot-envtools to u-boot-tools.
  .
  This package may safely be removed.
