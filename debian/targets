@@ -7,6 +7,7 @@ armel			igep0020	u-boot.bin
 armel			omap3_beagle	u-boot.bin
 armel			openrd_base	u-boot.kwb
 armel			sheevaplug	u-boot.kwb
+armhf			efikamx		u-boot.imx
 avr32			hammerhead	u-boot.img
 i386			eNET		u-boot.bin
 mipsel			dbau1100	u-boot.img
