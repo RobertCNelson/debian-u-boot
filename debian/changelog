@@ -1,3 +1,21 @@
+u-boot (2011.03-1) unstable; urgency=low
+
+  [ Loïc Minier ]
+  * Only try to build env tools when Linux MTD headers are present.
+    closes: #619673.
+
+  [ Clint Adams ]
+  * New upstream version.
+    - Drop fix-definition-of-global_data-struct.diff (now upstream).
+    - Drop EfikaMX-switch-to-MACH_TYPE_MX51_EFIKAMX.diff (upstream now).
+    - Drop sh-sh7785lcr-Fix-out-of-tree-building.diff (upstream now).
+    - Drop MIPS-dbau1x00-Remove-unused-flash-driver-stub.diff (upstream now).
+    - Drop x86-Align-config.mk-and-linker-scripts-with-other-ar.diff
+      (upstream now).
+    - Update snapshot.commit to 2011.03
+
+ -- Clint Adams <clint@debian.org>  Fri, 01 Apr 2011 10:30:46 -0400
+
 u-boot (2011.03~rc1-4) experimental; urgency=low
 
   * Add patch x86-Align-config.mk-and-linker-scripts-with-other-ar.
