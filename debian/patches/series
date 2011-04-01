@@ -1,7 +1,6 @@
 mipsel-native-endianness.diff
 kerma-sheevaplug-mvsata.diff
 kerma-sheevaplug-mvsdio.diff
-EfikaMX-switch-to-MACH_TYPE_MX51_EFIKAMX.diff
 Drop-config.h-include-in-tools-imximage.h.diff
 sh-sh7785lcr-Fix-out-of-tree-building.diff
 MIPS-dbau1x00-Remove-unused-flash-driver-stub.diff
