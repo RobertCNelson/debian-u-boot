@@ -177,8 +177,8 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
  * Memory map
  *
  * 0x0000_0000	0x3fff_ffff	DDR			1G cacheablen
- * 0xa000_0000	0xbfff_ffff	PCI Express Mem		1G non-cacheable
- * 0xffc2_0000	0xffc5_ffff	PCI IO range		256K non-cacheable
+ * 0x8000_0000  0xbfff_ffff	PCI Express Mem		1G non-cacheable
+ * 0xffc0_0000  0xffc3_ffff	PCI IO range		256k non-cacheable
  *
  * Localbus cacheable (TBD)
  * 0xXXXX_XXXX	0xXXXX_XXXX	SRAM			YZ M Cacheable
@@ -344,7 +344,6 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 #define CONFIG_I2C_MULTI_BUS
 #define CONFIG_I2C_CMD_TREE
 #define CONFIG_SYS_I2C_SPEED		400000	/* I2C speed and slave address*/
-#define CONFIG_SYS_I2C_EEPROM_ADDR	0x57
 #define CONFIG_SYS_I2C_SLAVE		0x7F
 #define CONFIG_SYS_I2C_NOPROBES	{{0,0x29}}	/* Don't probe these addrs */
 #define CONFIG_SYS_I2C_OFFSET		0x3000
@@ -357,7 +356,7 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 #ifdef CONFIG_ID_EEPROM
 #define CONFIG_SYS_I2C_EEPROM_NXID
 #endif
-#define CONFIG_SYS_I2C_EEPROM_ADDR	0x57
+#define CONFIG_SYS_I2C_EEPROM_ADDR	0x52
 #define CONFIG_SYS_I2C_EEPROM_ADDR_LEN 1
 #define CONFIG_SYS_EEPROM_BUS_NUM	1
 
@@ -369,27 +368,27 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
  * Memory space is mapped 1-1, but I/O space must start from 0.
  */
 
-/* controller 2, Slot 2, tgtid 2, Base address 9000 */
 #if defined(CONFIG_PCI)
+/* controller 2, Slot 2, tgtid 2, Base address 9000 */
 #define CONFIG_SYS_PCIE2_NAME		"Slot 1"
 #define CONFIG_SYS_PCIE2_MEM_VIRT	0xa0000000
 #define CONFIG_SYS_PCIE2_MEM_BUS	0xa0000000
 #define CONFIG_SYS_PCIE2_MEM_PHYS	0xa0000000
 #define CONFIG_SYS_PCIE2_MEM_SIZE	0x20000000	/* 512M */
-#define CONFIG_SYS_PCIE2_IO_VIRT	0xffc20000
-#define CONFIG_SYS_PCIE2_IO_BUS	0x00000000
-#define CONFIG_SYS_PCIE2_IO_PHYS	0xffc20000
+#define CONFIG_SYS_PCIE2_IO_VIRT	0xffc10000
+#define CONFIG_SYS_PCIE2_IO_BUS		0x00000000
+#define CONFIG_SYS_PCIE2_IO_PHYS	0xffc10000
 #define CONFIG_SYS_PCIE2_IO_SIZE	0x00010000	/* 64k */
 
 /* controller 1, Slot 1, tgtid 1, Base address a000 */
 #define CONFIG_SYS_PCIE1_NAME		"Slot 2"
-#define CONFIG_SYS_PCIE1_MEM_VIRT	0xc0000000
-#define CONFIG_SYS_PCIE1_MEM_BUS	0xc0000000
-#define CONFIG_SYS_PCIE1_MEM_PHYS	0xc0000000
+#define CONFIG_SYS_PCIE1_MEM_VIRT	0x80000000
+#define CONFIG_SYS_PCIE1_MEM_BUS	0x80000000
+#define CONFIG_SYS_PCIE1_MEM_PHYS	0x80000000
 #define CONFIG_SYS_PCIE1_MEM_SIZE	0x20000000	/* 512M */
-#define CONFIG_SYS_PCIE1_IO_VIRT	0xffc30000
-#define CONFIG_SYS_PCIE1_IO_BUS	0x00000000
-#define CONFIG_SYS_PCIE1_IO_PHYS	0xffc30000
+#define CONFIG_SYS_PCIE1_IO_VIRT	0xffc00000
+#define CONFIG_SYS_PCIE1_IO_BUS		0x00000000
+#define CONFIG_SYS_PCIE1_IO_PHYS	0xffc00000
 #define CONFIG_SYS_PCIE1_IO_SIZE	0x00010000	/* 64k */
 
 #define CONFIG_PCI_PNP			/* do pci plug-and-play */
