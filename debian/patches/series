@@ -2,5 +2,4 @@ mipsel-native-endianness.diff
 kerma-sheevaplug-mvsata.diff
 kerma-sheevaplug-mvsdio.diff
 Drop-config.h-include-in-tools-imximage.h.diff
-MIPS-dbau1x00-Remove-unused-flash-driver-stub.diff
 x86-Align-config.mk-and-linker-scripts-with-other-ar.diff
