@@ -1,3 +1,11 @@
+u-boot (2011.03-2) unstable; urgency=low
+
+  * Fix i386 FTBFS with eNET-monitor_flash_len.diff
+  * Add patch for OpenRD-Client and OpenRD-Ultimate.
+  * Drop openrd_base target and add openrd_ultimate target.
+
+ -- Clint Adams <clint@debian.org>  Tue, 05 Apr 2011 15:56:43 -0400
+
 u-boot (2011.03-1) unstable; urgency=low
 
   [ Loïc Minier ]
