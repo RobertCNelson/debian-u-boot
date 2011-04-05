@@ -3,3 +3,4 @@ kerma-sheevaplug-mvsata.diff
 kerma-sheevaplug-mvsdio.diff
 Drop-config.h-include-in-tools-imximage.h.diff
 eNET-monitor_flash_len.diff
+openrd-client-and-ultimate.diff
