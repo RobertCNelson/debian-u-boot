@@ -5,7 +5,7 @@ armel			efikamx		u-boot.imx
 armel			guruplug	u-boot.kwb
 armel			igep0020	u-boot.bin
 armel			omap3_beagle	u-boot.bin
-armel			openrd_base	u-boot.kwb
+armel			openrd_ultimate	u-boot.kwb
 armel			sheevaplug	u-boot.kwb
 armhf			efikamx		u-boot.imx
 armhf			igep0020	u-boot.bin
