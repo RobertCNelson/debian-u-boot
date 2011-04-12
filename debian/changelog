@@ -1,3 +1,9 @@
+u-boot (2011.03-3) unstable; urgency=low
+
+  * Actually pass the right arch_number for OpenRD-Ultimate.
+
+ -- Clint Adams <clint@debian.org>  Tue, 12 Apr 2011 14:28:20 -0400
+
 u-boot (2011.03-2) unstable; urgency=low
 
   * Fix i386 FTBFS with eNET-monitor_flash_len.diff
