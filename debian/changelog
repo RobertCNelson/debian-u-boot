@@ -1,3 +1,9 @@
+u-boot (2011.03-4) unstable; urgency=low
+
+  * Enable FAT, SD/MMC, MTD, JFFS, UBIFS support on OpenRD boards.
+
+ -- Clint Adams <clint@debian.org>  Wed, 13 Apr 2011 18:05:36 -0400
+
 u-boot (2011.03-3) unstable; urgency=low
 
   * Actually pass the right arch_number for OpenRD-Ultimate.
