@@ -39,7 +39,8 @@ USP_OBJS        = $(USP_DIR)/mv_flash.o $(USP_DIR)/mv_serial.o \
                   $(USP_DIR)/mv_pci.o $(USP_DIR)/mv_nand.o \
                   $(USP_DIR)/mv_ide.o $(USP_DIR)/mv_egiga.o \
 		  $(USP_DIR)/mv_fs.o $(USP_DIR)/mv_loadnet.o $(USP_DIR)/mv_protectionUnit.o \
-  		  $(USP_DIR)/mv_i2c.o $(USP_DIR)/mv_ext2_boot.o $(USP_ETH_SWITCH_DIR)/mvSwitch.o
+  		  $(USP_DIR)/mv_i2c.o $(USP_DIR)/mv_ext2_boot.o $(USP_ETH_SWITCH_DIR)/mvSwitch.o \
+  		  $(USP_DIR)/sdio/mmc.o 
 
 ifeq ($(NAND_BOOT), y)
 USP_OBJS        += $(USP_DIR)/nBootloader.o

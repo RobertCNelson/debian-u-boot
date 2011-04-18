@@ -203,3 +203,11 @@ int icache_status (void)
 {
 	return (read_p15_c1 () & C1_IC) != 0;
 }
+
+void dcache_enable(void)
+{
+u_long reg;
+reg = read_p15_c1();
+cp_delay();
+write_p15_c1(reg | C1_DC);
+}

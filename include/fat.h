@@ -86,7 +86,7 @@
 #else
 #define FAT_DPRINT(args...)
 #endif
-#define FAT_ERROR(arg)		printf(arg)
+#define FAT_ERROR(arg...)	printf(arg)
 
 #define ISDIRDELIM(c)   ((c) == '/' || (c) == '\\')
 
@@ -113,6 +113,8 @@
 			+ (mydata->fatsize != 32 ? 0 : \
 			  (FAT2CPU16((dent)->starthi) << 16)))
 
+#define CHECK_CLUST(x, fatsize) ((x) <= 1 || \
+				(x) >= ((fatsize) != 32 ? 0xfff0 : 0xffffff0))
 
 typedef struct boot_sector {
 	__u8	ignored[3];	/* Bootstrap code */
@@ -178,13 +180,13 @@ typedef struct dir_slot {
 
 /* Private filesystem parameters */
 typedef struct {
+	__u8	fatbuf[FATBUFSIZE]; /* Current FAT buffer */
 	int	fatsize;	/* Size of FAT in bits */
 	__u16	fatlength;	/* Length of FAT in sectors */
 	__u16	fat_sect;	/* Starting sector of the FAT */
 	__u16	rootdir_sect;	/* Start sector of root directory */
 	__u16	clust_size;	/* Size of clusters in sectors */
 	short	data_begin;	/* The sector of the first cluster, can be negative */
-	__u8	fatbuf[FATBUFSIZE]; /* Current FAT buffer */
 	int	fatbufnum;	/* Used by get_fatent, init to -1 */
 } fsdata;
 

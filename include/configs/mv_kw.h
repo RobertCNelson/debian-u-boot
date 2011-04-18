@@ -44,10 +44,6 @@
 /* version number passing when loading Kernel */
 #define VER_NUM 0x03041000           /* 3.4.16 */
 
-#define CONFIG_AUTOSCRIPT
-
-#define CLEAN_ENV
-
 /********************/
 /* MV DEV SUPPORTS  */
 /********************/	
@@ -64,16 +60,12 @@
 /**********************************/
 /* Marvell Monitor Extension      */
 /**********************************/
-#ifdef MV_INCLUDE_MONT_EXT
 #define enaMonExt()( /*(!getenv("enaMonExt")) ||\*/\
 		     ( getenv("enaMonExt") && \
                        ((!strcmp(getenv("enaMonExt"),"yes")) ||\
 		       (!strcmp(getenv("enaMonExt"),"Yes"))) \
 		     )\
 		    )
-#else
-#define enaMonExt() (0)
-#endif
 
 /********/
 /* CLKs */
@@ -158,6 +150,8 @@ extern unsigned int mvTclkGet(void);
 			 | CFG_CMD_FLASH	\
 			 | CFG_CMD_MEMORY	\
 			 | CFG_CMD_IDE	\
+			 | CFG_CMD_IMI \
+			 | CFG_CMD_CACHE \
 			 | CFG_CMD_EXT2	\
 			 | CFG_CMD_ENV	\
 			 | CFG_CMD_BOOTD	\
@@ -168,6 +162,8 @@ extern unsigned int mvTclkGet(void);
 			 )
 						 
 #endif
+
+#define MV_MMC
 
 #if defined(MV_NAND) || defined(MV_NAND_BOOT)
 #define CONFIG_CMD_BASIC1 (CONFIG_CMD_BASIC | CFG_CMD_NAND)
@@ -214,14 +210,9 @@ extern unsigned int mvTclkGet(void);
 #else
 #define CONFIG_CMD_BASIC6 CONFIG_CMD_BASIC5
 #endif
+#define CONFIG_COMMANDS CONFIG_CMD_BASIC6
 
-#if defined(CONFIG_AUTOSCRIPT)
-#define CONFIG_CMD_BASIC7 (CONFIG_CMD_BASIC6 | CFG_CMD_AUTOSCRIPT)
-#else
-#define CONFIG_CMD_BASIC7 CONFIG_CMD_BASIC6
-#endif
 
-#define CONFIG_COMMANDS CONFIG_CMD_BASIC7
 
 /* this must be included AFTER the definition of CONFIG_COMMANDS (if any) */
 #include <cmd_confdefs.h>
@@ -396,7 +387,7 @@ extern unsigned int mvTclkGet(void);
 /* SDIO/MMC */
 /************/
 
-#if defined(MV_88F6183) || defined(MV_88F6183L)
+#if defined(MV_88F6183) || defined(MV_88F6183L) || defined(MV88F6281)
 #define CONFIG_MMC
 #define CFG_MMC_BASE 0xF0000000
 #endif
@@ -465,7 +456,7 @@ extern unsigned int mvTclkGet(void);
 /* Pnp PCI Network cards */
  #define CONFIG_EEPRO100		/* Support for Intel 82557/82559/82559ER chips */
  #define CONFIG_SK98			/* yukon */
-/* #define YUK_ETHADDR         		"00:00:00:EE:51:81" */
+ #define YUK_ETHADDR         		"00:00:00:EE:51:81"
  #define CONFIG_DRIVER_RTL8029 
 
 /* To reduce image size... */
