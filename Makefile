@@ -1416,8 +1416,8 @@ MV64XXX_PPC_config :  unconfig
 
 ifeq ($(CROSS),armlinux)
 else
-CSL = arm-none-linux-gnueabi-
-CSLBE = armeb-none-linux-gnueabi-
+CSL = arm-linux-gnueabi-
+CSLBE = armeb-linux-gnueabi-
 endif
 
 rd88f6281a_config \
@@ -1587,7 +1587,7 @@ mv_kw:	unconfig
 #==============================
 ifeq ($(BE),)
 ifeq ($(CSL),)
-	@echo "CROSS_COMPILE = arm-none-linux-gnueabi-" >> include/config.mk;
+	@echo "CROSS_COMPILE = arm-linux-gnueabi-" >> include/config.mk;
 else	
 	@echo "CROSS_COMPILE = $(CSL)" >> include/config.mk;
 endif
@@ -1600,7 +1600,7 @@ ifeq ($(BE),1)
 	@echo "BIG_ENDIAN =y" >> include/config.mk;
 	@echo "LDFLAGS += -EB" >> include/config.mk;
 ifeq ($(CSLBE),)		
-	@echo "CROSS_COMPILE = armeb-none-linux-gnueabi-" >> include/config.mk;	
+	@echo "CROSS_COMPILE = armeb-linux-gnueabi-" >> include/config.mk;	
 else
 	@echo "CROSS_COMPILE = $(CSLBE)"  >> include/config.mk;
 endif	
@@ -1776,7 +1776,7 @@ endif
 #=============================
 # Summary of compilation flags
 #=============================
-	@echo -e "CPPFLAGS += \044(MV_IMAGE_FLAGS) \044(MV_FLAGS)" >> include/config.mk;
+	@/bin/echo -e "CPPFLAGS += \044(MV_IMAGE_FLAGS) \044(MV_FLAGS)" >> include/config.mk;
 
 	
 #########################################################################
@@ -1871,7 +1871,7 @@ mv_dd:	unconfig
 #==============================
 ifeq ($(BE),)
 ifeq ($(CSL),)
-	@echo "CROSS_COMPILE = arm-none-linux-gnueabi-" >> include/config.mk;
+	@echo "CROSS_COMPILE = arm-linux-gnueabi-" >> include/config.mk;
 else	
 	@echo "CROSS_COMPILE = $(CSL)" >> include/config.mk;
 endif
@@ -1888,7 +1888,7 @@ ifeq ($(BE),1)
 	@echo "BIG_ENDIAN =y" >> include/config.mk;
 	@echo "LDFLAGS += -EB" >> include/config.mk;
 ifeq ($(CSLBE),)		
-	@echo "CROSS_COMPILE = armeb-none-linux-gnueabi-" >> include/config.mk;	
+	@echo "CROSS_COMPILE = armeb-linux-gnueabi-" >> include/config.mk;	
 else
 	@echo "CROSS_COMPILE = $(CSLBE)"  >> include/config.mk;
 endif	
@@ -1948,7 +1948,7 @@ endif
 #=============================
 # Summary of compilation flags
 #=============================
-	@echo -e "CPPFLAGS += \044(MV_IMAGE_FLAGS) \044(MV_FLAGS)" >> include/config.mk;
+	@/bin/echo -e "CPPFLAGS += \044(MV_IMAGE_FLAGS) \044(MV_FLAGS)" >> include/config.mk;
 
 
 #########################################################################
@@ -1957,8 +1957,8 @@ endif
 
 ifeq ($(CROSS),armlinux)
 else
-CSL = arm-none-linux-gnueabi-
-CSLBE = armeb-none-linux-gnueabi-
+CSL = arm-linux-gnueabi-
+CSLBE = armeb-linux-gnueabi-
 endif
 
 db88f1181_config \
@@ -2377,7 +2377,7 @@ mv_feroceon:	unconfig
 #==============================
 ifeq ($(BE),)
 ifeq ($(CSL),)
-	@echo "CROSS_COMPILE = arm-none-linux-gnueabi-" >> include/config.mk;
+	@echo "CROSS_COMPILE = arm-linux-gnueabi-" >> include/config.mk;
 else	
 	@echo "CROSS_COMPILE = $(CSL)" >> include/config.mk;
 endif
@@ -2390,7 +2390,7 @@ ifeq ($(BE),1)
 	@echo "BIG_ENDIAN =y" >> include/config.mk;
 	@echo "LDFLAGS += -EB" >> include/config.mk;
 ifeq ($(CSLBE),)		
-	@echo "CROSS_COMPILE = armeb-none-linux-gnueabi-" >> include/config.mk;	
+	@echo "CROSS_COMPILE = armeb-linux-gnueabi-" >> include/config.mk;	
 else
 	@echo "CROSS_COMPILE = $(CSLBE)"  >> include/config.mk;
 endif	
@@ -2564,7 +2564,7 @@ endif
 #=============================
 # Summary of compilation flags
 #=============================
-	@echo -e "CPPFLAGS += \044(MV_IMAGE_FLAGS) \044(MV_FLAGS)" >> include/config.mk;
+	@/bin/echo -e "CPPFLAGS += \044(MV_IMAGE_FLAGS) \044(MV_FLAGS)" >> include/config.mk;
 
 	
 #########################################################################
