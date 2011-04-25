@@ -5,3 +5,4 @@ Drop-config.h-include-in-tools-imximage.h.diff
 eNET-monitor_flash_len.diff
 openrd-client-and-ultimate.diff
 openrd-mmc-mtd-fat.diff
+panda-default-console.diff
