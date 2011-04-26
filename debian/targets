@@ -3,9 +3,6 @@
 armel			dockstar	u-boot.kwb
 armel			efikamx		u-boot.imx
 armel			guruplug	u-boot.kwb
-armel			igep0020	u-boot.bin
-armel			omap3_beagle	u-boot.bin
-armel			omap4_panda	u-boot.bin
 armel			openrd_ultimate	u-boot.kwb
 armel			sheevaplug	u-boot.kwb
 armhf			efikamx		u-boot.imx
