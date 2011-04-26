@@ -26,10 +26,7 @@ Breaks: uboot-envtools (<< 20081215-3~),
 Replaces: uboot-envtools (<< 20081215-3~),
           uboot-mkimage (<= 0.4build1),
           u-boot (<< 2010.12-2)
-Description: companion tools for Das U-Boot
- Collection of tools useful along the U-Boot bootloader found in the u-boot
- package.
- .
+Description: companion tools for Das U-Boot bootloader
  This package includes the mkimage program, which allows generation of U-Boot
  images in various formats, and the fw_printenv and fw_setenv programs to read
  and modify U-Boot's environment.
