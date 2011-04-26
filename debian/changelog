@@ -1,3 +1,12 @@
+u-boot (2011.03-6) unstable; urgency=low
+
+  * Bump to Standards-Version 3.9.2.
+  * Tweak the u-boot-tools description.
+  * Drop igep0020, omap3_beagle, and omap4_panda targets from
+    armel; they are available on armhf.
+
+ -- Clint Adams <clint@debian.org>  Tue, 26 Apr 2011 16:11:24 -0400
+
 u-boot (2011.03-5) unstable; urgency=low
 
   [ Sebastian Reichel ]
