@@ -89,19 +89,6 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
  OUTPUT_ARCH(mips)
  ENTRY(_start)
  SECTIONS
---- a/board/purple/u-boot.lds
-+++ b/board/purple/u-boot.lds
-@@ -21,10 +21,6 @@
-  * MA 02111-1307 USA
-  */
- 
--/*
--OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
--*/
--OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradlittlemips")
- OUTPUT_ARCH(mips)
- ENTRY(_start)
- SECTIONS
 --- a/board/qemu-mips/u-boot.lds
 +++ b/board/qemu-mips/u-boot.lds
 @@ -21,10 +21,6 @@
@@ -126,21 +113,6 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
  OUTPUT_ARCH(mips)
  ENTRY(_start)
  SECTIONS
---- a/arch/mips/cpu/config.mk
-+++ b/arch/mips/cpu/config.mk
-@@ -28,12 +28,4 @@
- 	echo "-march=4kc -mtune=4kc"; \
- fi)
- 
--ifneq (,$(findstring 4KCle,$(CROSS_COMPILE)))
--ENDIANNESS = -EL
--else
--ENDIANNESS = -EB
--endif
--
--MIPSFLAGS += $(ENDIANNESS)
--
- PLATFORM_CPPFLAGS += $(MIPSFLAGS)
 --- a/examples/standalone/mips.lds
 +++ b/examples/standalone/mips.lds
 @@ -21,10 +21,6 @@
@@ -154,35 +126,3 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
  OUTPUT_ARCH(mips)
  SECTIONS
  {
---- a/arch/mips/config.mk
-+++ b/arch/mips/config.mk
-@@ -50,3 +50,29 @@
- PLATFORM_CPPFLAGS		+= -G 0 -mabicalls -fpic
- PLATFORM_CPPFLAGS		+= -msoft-float
- PLATFORM_LDFLAGS		+= -G 0 -static -n -nostdlib
-+
-+#
-+# A toolchain has its default endianness, so in principle, we don't
-+# need any endianness specifier as long as we compile U-Boot for that
-+# endianness.  Furthermore, it's not a good practice to add it without
-+# giving it much thought.  Here's hints from Linux' Makefile:
-+#
-+# We explicitly add the endianness specifier if needed, (snip)  We
-+# carefully avoid to add it redundantly because gcc 3.3/3.4 complains
-+# when fed the toolchain default!
-+#
-+# Certain gcc versions upto gcc 4.1.1 (probably 4.2-subversion as of
-+# 2006-10-10 don't properly change the predefined symbols if -EB / -EL
-+# are used, so we kludge that here.  A bug has been filed at
-+# <A HREF="http://gcc.gnu.org/bugzilla/show_bug.cgi?id=29413.">http://gcc.gnu.org/bugzilla/show_bug.cgi?id=29413.</A>
-+#
-+# Well, we've added the endianness specifier for years when compiling
-+# with ELDK.  For this historical reason, and maintaining backward
-+# compatibility, we leave it as far as ELDK is used.
-+#
-+ifneq ($(findstring mips_4KC-,$(CROSS_COMPILE)),)
-+PLATFORM_CPPFLAGS += -EB
-+endif
-+ifneq ($(findstring mips_4KCle-,$(CROSS_COMPILE)),)
-+PLATFORM_CPPFLAGS += -EL
-+endif
