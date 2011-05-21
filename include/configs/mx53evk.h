@@ -38,6 +38,8 @@
 #define CONFIG_SETUP_MEMORY_TAGS	1
 #define CONFIG_INITRD_TAG		1
 
+#define CONFIG_OF_LIBFDT		1
+
 /* Size of malloc() pool */
 #define CONFIG_SYS_MALLOC_LEN		(CONFIG_ENV_SIZE + 2 * 1024 * 1024)
 
@@ -189,5 +191,8 @@
 #define CONFIG_ENV_SIZE        (8 * 1024)
 #define CONFIG_ENV_IS_IN_MMC
 #define CONFIG_SYS_MMC_ENV_DEV 0
+
+#define CONFIG_OF_LIBFDT
+#define CONFIG_SYS_BOOTMAPSZ   0x800000
 
 #endif				/* __CONFIG_H */

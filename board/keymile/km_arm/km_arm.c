@@ -41,9 +41,6 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-static int	io_dev;
-extern I2C_MUX_DEVICE *i2c_mux_ident_muxstring (uchar *buf);
-
 /* Multi-Purpose Pins Functionality configuration */
 u32 kwmpp_config[] = {
 	MPP0_NF_IO2,
@@ -96,7 +93,7 @@ u32 kwmpp_config[] = {
 	MPP41_GPIO,		/* Piggy3 LED[4] */
 	MPP42_GPIO,		/* Piggy3 LED[5] */
 	MPP43_GPIO,		/* Piggy3 LED[6] */
-	MPP44_GPIO,		/* Piggy3 LED[7] */
+	MPP44_GPIO,		/* Piggy3 LED[7], BIST_EN_L */
 	MPP45_GPIO,		/* Piggy3 LED[8] */
 	MPP46_GPIO,		/* Reserved */
 	MPP47_GPIO,		/* Reserved */
@@ -111,24 +108,48 @@ int ethernet_present(void)
 	int	ret = 0;
 
 	if (i2c_read(0x10, 2, 1, &buf, 1) != 0) {
-		printf ("%s: Error reading Boco\n", __FUNCTION__);
+		printf("%s: Error reading Boco\n", __func__);
 		return -1;
 	}
-	if ((buf & 0x40) == 0x40) {
+	if ((buf & 0x40) == 0x40)
 		ret = 1;
-	}
+
 	return ret;
+}
+
+int initialize_unit_leds(void)
+{
+	/*
+	 * init the unit LEDs
+	 * per default they all are
+	 * ok apart from bootstat
+	 * LED connected through BOCO
+	 * BOCO	lies at the address  0x10
+	 * LEDs are in the block CTRL_H	(addr 0x02)
+	 * BOOTSTAT LED is the first 0x01
+	 */
+	#define BOCO        0x10
+	#define CTRL_H      0x02
+	#define APPLEDMASK  0x01
+	uchar buf;
+
+	if (i2c_read(BOCO, CTRL_H, 1, &buf, 1) != 0) {
+		printf("%s: Error reading Boco\n", __func__);
+		return -1;
+	}
+	buf |= APPLEDMASK;
+	if (i2c_write(BOCO, CTRL_H, 1, &buf, 1) != 0) {
+		printf("%s: Error writing Boco\n", __func__);
+		return -1;
+	}
+	return 0;
 }
 
 int misc_init_r(void)
 {
-	I2C_MUX_DEVICE	*i2cdev;
 	char *str;
 	int mach_type;
 
-	/* add I2C Bus for I/O Expander */
-	i2cdev = i2c_mux_ident_muxstring((uchar *)"pca9554a:70:a");
-	io_dev = i2cdev->busid;
 	puts("Piggy:");
 	if (ethernet_present() == 0)
 		puts (" not");
@@ -140,6 +161,9 @@ int misc_init_r(void)
 		printf("Overwriting MACH_TYPE with %d!!!\n", mach_type);
 		gd->bd->bi_arch_number = mach_type;
 	}
+
+	initialize_unit_leds();
+
 	return 0;
 }
 
@@ -162,14 +186,14 @@ int board_early_init_f(void)
 
 #if defined(CONFIG_SOFT_I2C)
 	/* init the GPIO for I2C Bitbang driver */
-	kw_gpio_set_valid(SUEN3_SDA_PIN, 1);
-	kw_gpio_set_valid(SUEN3_SCL_PIN, 1);
-	kw_gpio_direction_output(SUEN3_SDA_PIN, 0);
-	kw_gpio_direction_output(SUEN3_SCL_PIN, 0);
+	kw_gpio_set_valid(KM_KIRKWOOD_SDA_PIN, 1);
+	kw_gpio_set_valid(KM_KIRKWOOD_SCL_PIN, 1);
+	kw_gpio_direction_output(KM_KIRKWOOD_SDA_PIN, 0);
+	kw_gpio_direction_output(KM_KIRKWOOD_SCL_PIN, 0);
 #endif
 #if defined(CONFIG_SYS_EEPROM_WREN)
-	kw_gpio_set_valid(SUEN3_ENV_WP, 38);
-	kw_gpio_direction_output(SUEN3_ENV_WP, 1);
+	kw_gpio_set_valid(KM_KIRKWOOD_ENV_WP, 38);
+	kw_gpio_direction_output(KM_KIRKWOOD_ENV_WP, 1);
 #endif
 
 	return 0;
@@ -180,11 +204,17 @@ int board_init(void)
 	/*
 	 * arch number of board
 	 */
-	gd->bd->bi_arch_number = MACH_TYPE_SUEN3;
+	gd->bd->bi_arch_number = MACH_TYPE_KM_KIRKWOOD;
 
 	/* address of boot parameters */
 	gd->bd->bi_boot_params = kw_sdram_bar(0) + 0x100;
 
+	return 0;
+}
+
+int last_stage_init(void)
+{
+	set_km_env();
 	return 0;
 }
 
@@ -246,7 +276,6 @@ void dram_init_banksize(void)
 
 	for (i = 0; i < CONFIG_NR_DRAM_BANKS; i++) {
 		gd->bd->bi_dram[i].start = kw_sdram_bar(i);
-		gd->bd->bi_dram[i].size = kw_sdram_bs(i);
 		gd->bd->bi_dram[i].size = get_ram_size((long *)kw_sdram_bar(i),
 						       kw_sdram_bs(i));
 	}
@@ -265,15 +294,15 @@ void reset_phy(void)
 }
 
 #if defined(CONFIG_HUSH_INIT_VAR)
-int hush_init_var (void)
+int hush_init_var(void)
 {
-	ivm_read_eeprom ();
+	ivm_read_eeprom();
 	return 0;
 }
 #endif
 
 #if defined(CONFIG_BOOTCOUNT_LIMIT)
-void bootcount_store (ulong a)
+void bootcount_store(ulong a)
 {
 	volatile ulong *save_addr;
 	volatile ulong size = 0;
@@ -286,7 +315,7 @@ void bootcount_store (ulong a)
 	writel(BOOTCOUNT_MAGIC, &save_addr[1]);
 }
 
-ulong bootcount_load (void)
+ulong bootcount_load(void)
 {
 	volatile ulong *save_addr;
 	volatile ulong size = 0;
@@ -303,34 +332,34 @@ ulong bootcount_load (void)
 #endif
 
 #if defined(CONFIG_SOFT_I2C)
-void set_sda (int state)
+void set_sda(int state)
 {
 	I2C_ACTIVE;
 	I2C_SDA(state);
 }
 
-void set_scl (int state)
+void set_scl(int state)
 {
 	I2C_SCL(state);
 }
 
-int get_sda (void)
+int get_sda(void)
 {
 	I2C_TRISTATE;
 	return I2C_READ;
 }
 
-int get_scl (void)
+int get_scl(void)
 {
-	return (kw_gpio_get_value(SUEN3_SCL_PIN) ? 1 : 0);
+	return kw_gpio_get_value(KM_KIRKWOOD_SCL_PIN) ? 1 : 0;
 }
 #endif
 
 #if defined(CONFIG_SYS_EEPROM_WREN)
-int eeprom_write_enable (unsigned dev_addr, int state)
+int eeprom_write_enable(unsigned dev_addr, int state)
 {
-	kw_gpio_set_value(SUEN3_ENV_WP, !state);
+	kw_gpio_set_value(KM_KIRKWOOD_ENV_WP, !state);
 
-	return !kw_gpio_get_value(SUEN3_ENV_WP);
+	return !kw_gpio_get_value(KM_KIRKWOOD_ENV_WP);
 }
 #endif

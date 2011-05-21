@@ -30,7 +30,7 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 
-#include <asm/arch/mx31-regs.h>
+#include <asm/arch/imx-regs.h>
 
 /* High Level Configuration Options */
 #define CONFIG_ARM1136		1	/* This is an arm1136 CPU core */
@@ -53,7 +53,6 @@
  * Size of malloc() pool
  */
 #define CONFIG_SYS_MALLOC_LEN		(2*CONFIG_ENV_SIZE + 2 * 128 * 1024)
-/* Bytes reserved for initial data */
 
 /*
  * Hardware drivers
@@ -61,6 +60,7 @@
 
 #define CONFIG_MXC_UART		1
 #define CONFIG_SYS_MX31_UART1	1
+#define CONFIG_HW_WATCHDOG
 
 #define CONFIG_HARD_SPI		1
 #define CONFIG_MXC_SPI		1
@@ -97,6 +97,8 @@
  * that CFG_NO_FLASH is undefined).
  */
 #undef CONFIG_CMD_IMLS
+
+#define BOARD_LATE_INIT
 
 #define CONFIG_BOOTDELAY	3
 
