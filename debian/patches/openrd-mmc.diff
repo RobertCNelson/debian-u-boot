@@ -1,14 +1,8 @@
 This partially depends on the kerma sheevaplug stuff.
 
---- u-boot-2011.03.orig/include/configs/openrd_base.h
-+++ u-boot-2011.03/include/configs/openrd_base.h
-@@ -60,11 +60,13 @@
-  * Commands configuration
-  */
- #define CONFIG_SYS_NO_FLASH		/* Declare no flash (NOR/SPI) */
-+#define CONFIG_SYS_MVFS
- #include <config_cmd_default.h>
- #define CONFIG_CMD_AUTOSCRIPT
+--- a/include/configs/openrd.h
++++ b/include/configs/openrd.h
+@@ -66,6 +66,7 @@
  #define CONFIG_CMD_DHCP
  #define CONFIG_CMD_ENV
  #define CONFIG_CMD_MII
@@ -16,7 +10,7 @@ This partially depends on the kerma sheevaplug stuff.
  #define CONFIG_CMD_NAND
  #define CONFIG_CMD_PING
  #define CONFIG_CMD_USB
-@@ -139,4 +141,9 @@
+@@ -140,4 +141,9 @@
  #define CONFIG_SYS_ATA_IDE1_OFFSET	MV_SATA_PORT1_OFFSET
  #endif /*CONFIG_MVSATA_IDE*/
  
