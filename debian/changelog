@@ -1,3 +1,18 @@
+u-boot (2011.06~rc1-1) unstable; urgency=low
+
+  * New upstream version.
+    - Update mipsel-native-endianness.diff
+    - Drop Drop-config.h-include-in-tools-imximage.h.diff (merged).
+    - Drop openrd-client-and-ultimate.diff (merged).
+    - Update openrd-mmc.diff (formerly openrd-mmc-mtd-fat.diff).
+    - Drop eNET-monitor_flash_len.diff (merged).
+    - Update snapshot.commit to 2011.06-rc1.
+    - Use the first target for each arch to build the tools, or
+      fake it on the other architectures.
+  * Only build efikamx image on armhf.
+
+ -- Clint Adams <clint@debian.org>  Sat, 21 May 2011 11:04:30 -0400
+
 u-boot (2011.03-6) unstable; urgency=low
 
   * Bump to Standards-Version 3.9.2.
