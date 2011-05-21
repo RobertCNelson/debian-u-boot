@@ -6,7 +6,7 @@ Origin: http://patchwork.ozlabs.org/patch/84702/
 
 --- a/include/configs/omap4_panda.h
 +++ b/include/configs/omap4_panda.h
-@@ -148,7 +148,7 @@
+@@ -149,7 +149,7 @@
  
  #define CONFIG_EXTRA_ENV_SETTINGS \
  	"loadaddr=0x82000000\0" \
