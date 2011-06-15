@@ -59,7 +59,7 @@ ifeq (,$(findstring z$(DEB_HOST_ARCH)z,zarmelz zarmhfz zavr32z zi386z zmipsz zmi
 	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
 	    LDSCRIPT=fake tools
 else
-	$(MAKE) $$(sed -n '/^$(DEB_HOST_ARCH)[[:space:]]\+\([a-z0-9]\+\).*/{s//\1/p;q}' debian/targets)_config
+	$(MAKE) $$(awk '/^$(DEB_HOST_ARCH)[ \t]/ {print $$2; exit}' debian/targets)_config
 	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
 	    tools
 endif
