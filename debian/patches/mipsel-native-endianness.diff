@@ -126,3 +126,18 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
  OUTPUT_ARCH(mips)
  SECTIONS
  {
+--- a/arch/mips/cpu/mips32/config.mk
++++ b/arch/mips/cpu/mips32/config.mk
+@@ -29,12 +29,4 @@
+ #
+ MIPSFLAGS = -march=mips32r2
+ 
+-ifneq (,$(findstring 4KCle,$(CROSS_COMPILE)))
+-ENDIANNESS = -EL
+-else
+-ENDIANNESS = -EB
+-endif
+-
+-MIPSFLAGS += $(ENDIANNESS)
+-
+ PLATFORM_CPPFLAGS += $(MIPSFLAGS)
