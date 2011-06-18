@@ -1,3 +1,10 @@
+u-boot (2011.06~rc2-2) unstable; urgency=low
+
+  * Fix mipsel endianness problem again.
+  * Try building gr_xc3s_1500 on sparc.
+
+ -- Clint Adams <clint@debian.org>  Sat, 18 Jun 2011 10:13:53 -0400
+
 u-boot (2011.06~rc2-1) unstable; urgency=low
 
   * New upstream version. 
