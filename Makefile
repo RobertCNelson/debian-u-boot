@@ -1,5 +1,5 @@
 #
-# (C) Copyright 2000-2010
+# (C) Copyright 2000-2011
 # Wolfgang Denk, DENX Software Engineering, wd@denx.de.
 #
 # See file CREDITS for list of people who contributed to this
@@ -24,7 +24,7 @@
 VERSION = 2011
 PATCHLEVEL = 06
 SUBLEVEL =
-EXTRAVERSION = -rc3
+EXTRAVERSION =
 ifneq "$(SUBLEVEL)" ""
 U_BOOT_VERSION = $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)$(EXTRAVERSION)
 else
@@ -140,7 +140,7 @@ SUBDIRS	= tools \
 	  examples/standalone \
 	  examples/api
 
-.PHONY : $(SUBDIRS)
+.PHONY : $(SUBDIRS) $(VERSION_FILE)
 
 ifeq ($(obj)include/config.mk,$(wildcard $(obj)include/config.mk))
 
@@ -162,6 +162,36 @@ endif
 
 # load other configuration
 include $(TOPDIR)/config.mk
+
+# If board code explicitly specified LDSCRIPT or CONFIG_SYS_LDSCRIPT, use
+# that (or fail if absent).  Otherwise, search for a linker script in a
+# standard location.
+
+ifndef LDSCRIPT
+	#LDSCRIPT := $(TOPDIR)/board/$(BOARDDIR)/u-boot.lds.debug
+	ifdef CONFIG_SYS_LDSCRIPT
+		# need to strip off double quotes
+		LDSCRIPT := $(subst ",,$(CONFIG_SYS_LDSCRIPT))
+	endif
+endif
+
+ifndef LDSCRIPT
+	ifeq ($(CONFIG_NAND_U_BOOT),y)
+		LDSCRIPT := $(TOPDIR)/board/$(BOARDDIR)/u-boot-nand.lds
+		ifeq ($(wildcard $(LDSCRIPT)),)
+			LDSCRIPT := $(TOPDIR)/$(CPUDIR)/u-boot-nand.lds
+		endif
+	endif
+	ifeq ($(wildcard $(LDSCRIPT)),)
+		LDSCRIPT := $(TOPDIR)/board/$(BOARDDIR)/u-boot.lds
+	endif
+	ifeq ($(wildcard $(LDSCRIPT)),)
+		LDSCRIPT := $(TOPDIR)/$(CPUDIR)/u-boot.lds
+	endif
+	ifeq ($(wildcard $(LDSCRIPT)),)
+$(error could not find linker script)
+	endif
+endif
 
 #########################################################################
 # U-Boot objects....order is important (i.e. start must be first)
@@ -236,7 +266,7 @@ endif
 LIBS += drivers/rtc/librtc.o
 LIBS += drivers/serial/libserial.o
 LIBS += drivers/twserial/libtws.o
-LIBS += drivers/usb/eth/libusb_eth.a
+LIBS += drivers/usb/eth/libusb_eth.o
 LIBS += drivers/usb/gadget/libusb_gadget.o
 LIBS += drivers/usb/host/libusb_host.o
 LIBS += drivers/usb/musb/libusb_musb.o
@@ -263,7 +293,7 @@ LIBS += $(CPUDIR)/s5p-common/libs5p-common.o
 endif
 
 LIBS := $(addprefix $(obj),$(sort $(LIBS)))
-.PHONY : $(LIBS) $(TIMESTAMP_FILE) $(VERSION_FILE)
+.PHONY : $(LIBS) $(TIMESTAMP_FILE)
 
 LIBBOARD = board/$(BOARDDIR)/lib$(BOARD).o
 LIBBOARD := $(addprefix $(obj),$(LIBBOARD))
@@ -422,19 +452,6 @@ mmc_spl:	$(TIMESTAMP_FILE) $(VERSION_FILE) depend
 
 $(obj)mmc_spl/u-boot-mmc-spl.bin:	mmc_spl
 
-$(VERSION_FILE):
-		@( localvers='$(shell $(TOPDIR)/tools/setlocalversion $(TOPDIR))' ; \
-		   printf '#define PLAIN_VERSION "%s%s"\n' \
-			"$(U_BOOT_VERSION)" "$${localvers}" ; \
-		   printf '#define U_BOOT_VERSION "U-Boot %s%s"\n' \
-			"$(U_BOOT_VERSION)" "$${localvers}" ; \
-		) > $@.tmp
-		@( printf '#define CC_VERSION_STRING "%s"\n' \
-		 '$(shell $(CC) --version | head -n 1)' )>>  $@.tmp
-		@( printf '#define LD_VERSION_STRING "%s"\n' \
-		 '$(shell $(LD) -v | head -n 1)' )>>  $@.tmp
-		@cmp -s $@ $@.tmp && rm -f $@.tmp || mv -f $@.tmp $@
-
 $(TIMESTAMP_FILE):
 		@LC_ALL=C date +'#define U_BOOT_DATE "%b %d %C%y"' > $@
 		@LC_ALL=C date +'#define U_BOOT_TIME "%T"' >> $@
@@ -509,20 +526,33 @@ $(obj)lib/asm-offsets.s:	$(obj)include/autoconf.mk.dep \
 else	# !config.mk
 all $(obj)u-boot.hex $(obj)u-boot.srec $(obj)u-boot.bin \
 $(obj)u-boot.img $(obj)u-boot.dis $(obj)u-boot \
-$(filter-out tools,$(SUBDIRS)) $(TIMESTAMP_FILE) $(VERSION_FILE) \
+$(filter-out tools,$(SUBDIRS)) $(TIMESTAMP_FILE) \
 updater depend dep tags ctags etags cscope $(obj)System.map:
 	@echo "System not configured - see README" >&2
 	@ exit 1
 
-tools:
+tools: $(VERSION_FILE)
 	$(MAKE) -C $@ all
 endif	# config.mk
+
+$(VERSION_FILE):
+		@( localvers='$(shell $(TOPDIR)/tools/setlocalversion $(TOPDIR))' ; \
+		   printf '#define PLAIN_VERSION "%s%s"\n' \
+			"$(U_BOOT_VERSION)" "$${localvers}" ; \
+		   printf '#define U_BOOT_VERSION "U-Boot %s%s"\n' \
+			"$(U_BOOT_VERSION)" "$${localvers}" ; \
+		) > $@.tmp
+		@( printf '#define CC_VERSION_STRING "%s"\n' \
+		 '$(shell $(CC) --version | head -n 1)' )>>  $@.tmp
+		@( printf '#define LD_VERSION_STRING "%s"\n' \
+		 '$(shell $(LD) -v | head -n 1)' )>>  $@.tmp
+		@cmp -s $@ $@.tmp && rm -f $@.tmp || mv -f $@.tmp $@
 
 easylogo env gdb:
 	$(MAKE) -C tools/$@ all MTD_VERSION=${MTD_VERSION}
 gdbtools: gdb
 
-tools-all: easylogo env gdb
+tools-all: easylogo env gdb $(VERSION_FILE)
 	$(MAKE) -C tools HOST_TOOLS_ALL=y
 
 .PHONY : CHANGELOG
@@ -937,29 +967,6 @@ SX1_config:		unconfig
 	fi;
 	@$(MKCONFIG) -n $@ SX1 arm arm925t sx1
 
-# TRAB default configuration:	8 MB Flash, 32 MB RAM
-trab_config \
-trab_bigram_config \
-trab_bigflash_config \
-trab_old_config:	unconfig
-	@mkdir -p $(obj)include
-	@mkdir -p $(obj)board/trab
-	@[ -z "$(findstring _bigram,$@)" ] || \
-		{ echo "#define CONFIG_FLASH_8MB"  >>$(obj)include/config.h ; \
-		  echo "#define CONFIG_RAM_32MB"   >>$(obj)include/config.h ; \
-		}
-	@[ -z "$(findstring _bigflash,$@)" ] || \
-		{ echo "#define CONFIG_FLASH_16MB" >>$(obj)include/config.h ; \
-		  echo "#define CONFIG_RAM_16MB"   >>$(obj)include/config.h ; \
-		  echo "CONFIG_SYS_TEXT_BASE = 0x0CF40000" >$(obj)board/trab/config.tmp ; \
-		}
-	@[ -z "$(findstring _old,$@)" ] || \
-		{ echo "#define CONFIG_FLASH_8MB"  >>$(obj)include/config.h ; \
-		  echo "#define CONFIG_RAM_16MB"   >>$(obj)include/config.h ; \
-		  echo "CONFIG_SYS_TEXT_BASE = 0x0CF40000" >$(obj)board/trab/config.tmp ; \
-		}
-	@$(MKCONFIG) -n $@ -a trab arm arm920t trab - s3c24x0
-
 tx25_config	: unconfig
 	@echo "CONFIG_NAND_U_BOOT = y" >> $(obj)include/config.mk
 	@$(MKCONFIG) $@ arm arm926ejs tx25 karo mx25
@@ -1079,7 +1086,7 @@ clean:
 	@rm -f $(obj)board/cray/L1/{bootscript.c,bootscript.image}	  \
 	       $(obj)board/matrix_vision/*/bootscript.img		  \
 	       $(obj)board/netstar/{eeprom,crcek,crcit,*.srec,*.bin}	  \
-	       $(obj)board/trab/trab_fkt   $(obj)board/voiceblue/eeprom   \
+	       $(obj)board/voiceblue/eeprom 				  \
 	       $(obj)board/armltd/{integratorap,integratorcp}/u-boot.lds  \
 	       $(obj)u-boot.lds						  \
 	       $(obj)arch/blackfin/cpu/bootrom-asm-offsets.[chs]

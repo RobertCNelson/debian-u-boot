@@ -12,7 +12,7 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -25,38 +25,17 @@ include $(TOPDIR)/config.mk
 
 LIB	= $(obj)lib$(BOARD).o
 
-COBJS	:= trab.o flash.o vfd.o cmd_trab.o memory.o tsc2000.o auto_update.o
-SOBJS	:= lowlevel_init.o
+COBJS	:= dvlhost.o watchdog.o
 
-COBJS_FKT := trab_fkt.o rs485.o tsc2000.o
-
-SRCS	:= $(SOBJS:.o=.S) $(COBJS:.o=.c) $(COBJS_FKT:.o=.c)
+SRCS	:= $(SOBJS:.o=.S) $(COBJS:.o=.c)
 OBJS	:= $(addprefix $(obj),$(COBJS))
 SOBJS	:= $(addprefix $(obj),$(SOBJS))
 
-OBJS_FKT := $(addprefix $(obj),$(COBJS_FKT))
-
-LOAD_ADDR = 0xc100000
-
-#########################################################################
-
-all:	$(LIB) $(obj)trab_fkt.srec $(obj)trab_fkt.bin
-
-$(LIB):	$(obj).depend $(OBJS) $(SOBJS)
-	$(call cmd_link_o_target, $(OBJS) $(SOBJS))
-
-$(obj)trab_fkt.srec:	$(OBJS_FKT) $(LIB)
-	$(LD) -g -Ttext $(LOAD_ADDR) -o $(<:.o=) -e trab_fkt $^ $(LIB) \
-		-L$(obj)../../examples/standalone -lstubs \
-		-L$(obj)../../lib -lgeneric \
-		$(PLATFORM_LIBS)
-	$(OBJCOPY) -O srec $(<:.o=) $@
-
-$(obj)trab_fkt.bin:	$(obj)trab_fkt.srec
-	$(OBJCOPY) -I srec -O binary $< $@
+$(LIB):	$(obj).depend $(OBJS)
+	$(call cmd_link_o_target, $(OBJS))
 
 clean:
-	rm -f $(SOBJS) $(OBJS) $(OBJS_FKT)
+	rm -f $(SOBJS) $(OBJS)
 
 distclean:	clean
 	rm -f $(LIB) core *.bak $(obj).depend
