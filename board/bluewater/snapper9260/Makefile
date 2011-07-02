@@ -1,8 +1,9 @@
 #
-# Copyright (c) 2005-2008 Analog Device Inc.
-#
-# (C) Copyright 2001
+# (C) Copyright 2003-2008
 # Wolfgang Denk, DENX Software Engineering, wd@denx.de.
+#
+# (C) Copyright 2011 Bluewater Systems
+# Ryan Mallon <ryan@bluewatersys.com>
 #
 # See file CREDITS for list of people who contributed to this
 # project.
@@ -14,7 +15,7 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -23,10 +24,30 @@
 # MA 02111-1307 USA
 #
 
-CFLAGS_lib += -O2
-CFLAGS_lib/lzma += -O2
-CFLAGS_lib/zlib += -O2
+include $(TOPDIR)/config.mk
 
-# Set some default LDR flags based on boot mode.
-LDR_FLAGS-BFIN_BOOT_PARA := --bits 16 --dma 8
-LDR_FLAGS-BFIN_BOOT_UART := --port g --gpio 6
+LIB	= $(obj)lib$(BOARD).o
+
+COBJS-y	+= snapper9260.o
+
+SRCS	:= $(SOBJS:.o=.S) $(COBJS-y:.o=.c)
+OBJS	:= $(addprefix $(obj),$(COBJS-y))
+SOBJS	:= $(addprefix $(obj),$(SOBJS))
+
+$(LIB):	$(obj).depend $(OBJS) $(SOBJS)
+	$(call cmd_link_o_target, $(OBJS) $(SOBJS))
+
+clean:
+	rm -f $(SOBJS) $(OBJS)
+
+distclean:	clean
+	rm -f $(LIB) core *.bak $(obj).depend
+
+#########################################################################
+
+# defines $(obj).depend target
+include $(SRCTREE)/rules.mk
+
+sinclude $(obj).depend
+
+#########################################################################
