@@ -3,3 +3,4 @@ kerma-sheevaplug-mvsata.diff
 kerma-sheevaplug-mvsdio.diff
 openrd-mmc.diff
 panda-default-console.diff
+sc520_timer-wasted-temp-variable.diff
