@@ -1,0 +1,26 @@
+--- a/arch/x86/cpu/sc520/sc520_timer.c
++++ b/arch/x86/cpu/sc520/sc520_timer.c
+@@ -78,10 +78,9 @@
+ {
+ 	int m = 0;
+ 	long u;
+-	long temp;
+ 
+-	temp = readw(&sc520_mmcr->swtmrmilli);
+-	temp = readw(&sc520_mmcr->swtmrmicro);
++	readw(&sc520_mmcr->swtmrmilli);
++	readw(&sc520_mmcr->swtmrmicro);
+ 
+ 	do {
+ 		m += readw(&sc520_mmcr->swtmrmilli);
+--- a/arch/x86/cpu/config.mk
++++ b/arch/x86/cpu/config.mk
+@@ -23,7 +23,7 @@
+ 
+ CROSS_COMPILE ?= i386-linux-
+ 
+-PLATFORM_CPPFLAGS += -DCONFIG_X86 -D__I386__ -march=i386 -Werror
++PLATFORM_CPPFLAGS += -DCONFIG_X86 -D__I386__ -march=i386 -Werror -Wno-error=unused-but-set-variable
+ 
+ # DO NOT MODIFY THE FOLLOWING UNLESS YOU REALLY KNOW WHAT YOU ARE DOING!
+ LDPPFLAGS += -DRESET_SEG_START=0xffff0000
