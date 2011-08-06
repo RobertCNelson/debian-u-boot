@@ -1,3 +1,10 @@
+u-boot (2011.06-4) unstable; urgency=low
+
+  * Increase the USB non-bulk timeout by an order of magnitude.
+    May fix #635774.
+
+ -- Clint Adams <clint@debian.org>  Sat, 06 Aug 2011 13:42:52 -0400
+
 u-boot (2011.06-3) unstable; urgency=low
 
   * Add DreamPlug support.
