@@ -1,0 +1,25 @@
+Index: u-boot-2011.06/arch/arm/include/asm/mach-types.h
+===================================================================
+--- u-boot-2011.06.orig/arch/arm/include/asm/mach-types.h	2011-07-24 10:27:57.686659427 -0400
++++ u-boot-2011.06/arch/arm/include/asm/mach-types.h	2011-07-24 10:28:15.000000000 -0400
+@@ -2640,6 +2640,7 @@
+ #define MACH_TYPE_CTPXA                2657
+ #define MACH_TYPE_EPB_ARM9_A           2658
+ #define MACH_TYPE_GURUPLUG             2659
++#define MACH_TYPE_DREAMPLUG            3550
+ #define MACH_TYPE_SPEAR310             2660
+ #define MACH_TYPE_SPEAR320             2661
+ #define MACH_TYPE_ROBOTX               2662
+Index: u-boot-2011.06/board/Marvell/dreamplug/dreamplug.c
+===================================================================
+--- u-boot-2011.06.orig/board/Marvell/dreamplug/dreamplug.c	2011-07-24 10:51:57.144642697 -0400
++++ u-boot-2011.06/board/Marvell/dreamplug/dreamplug.c	2011-07-24 10:52:07.234910371 -0400
+@@ -53,7 +53,7 @@
+ 		MPP4_GPIO,
+ 		MPP5_GPO,
+ 		MPP6_SYSRST_OUTn,
+-		MPP7_GP0,
++		MPP7_GPO,
+ 		MPP8_TW_SDA,
+ 		MPP9_TW_SCK,
+ 		MPP10_UART0_TXD,	/* Serial */

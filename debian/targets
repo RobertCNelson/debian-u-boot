@@ -1,6 +1,7 @@
 # DEB_HOST_ARCH		platform	target
 # --------------------------------------------
 armel			dockstar	u-boot.kwb
+armel			dreamplug	u-boot.kwb
 armel			guruplug	u-boot.kwb
 armel			openrd_ultimate	u-boot.kwb
 armel			sheevaplug	u-boot.kwb

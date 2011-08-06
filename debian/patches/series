@@ -4,3 +4,6 @@ kerma-sheevaplug-mvsdio.diff
 openrd-mmc.diff
 panda-default-console.diff
 no-error-on-set-but-unused-variables.diff
+dreamplug-untested-1.patch
+dreamplug-untested-2.patch
+dreamplug-untested-3.patch
