@@ -9,6 +9,7 @@ armhf			efikamx		u-boot.imx
 armhf			igep0020	u-boot.bin
 armhf			omap3_beagle	u-boot.bin
 armhf			omap4_panda	u-boot.bin
+armhf			mx53loco	u-boot.imx
 avr32			hammerhead	u-boot.img
 i386			eNET		u-boot.bin
 mipsel			dbau1100	u-boot.img
