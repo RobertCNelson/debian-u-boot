@@ -1,8 +1,9 @@
 u-boot (2011.06-5) UNRELEASED; urgency=low
 
   * Enable MX53LOCO platform. 
+  * Update lintian overrides 
 
- -- Hector Oron <zumbi@debian.org>  Tue, 30 Aug 2011 17:42:35 +0100
+ -- Hector Oron <zumbi@debian.org>  Tue, 30 Aug 2011 17:54:54 +0100
 
 u-boot (2011.06-4) unstable; urgency=low
 
