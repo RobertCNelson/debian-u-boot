@@ -1,11 +1,12 @@
-u-boot (2011.09-1) UNRELEASED; urgency=low
+u-boot (2011.09-1) unstable; urgency=low
 
   [ Hector Oron ]
   * Enable MX53LOCO platform.
   * Update lintian overrides.
 
   [ Loïc Minier ]
-  * Fix FTBFS on amd64.
+  * Fix FTBFS on amd64 and allow `make tools` to succeed without
+    config.
 
   [ Clint Adams ]
   * New upstream version.
