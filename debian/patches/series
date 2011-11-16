@@ -6,3 +6,4 @@ kerma-sheevaplug-mvsdio.diff
 openrd-mmc.diff
 no-error-on-set-but-unused-variables.diff
 dreamplug-v8.patch
+hurd.diff
