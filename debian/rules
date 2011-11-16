@@ -32,7 +32,10 @@ check_include = $(shell echo | $(CROSS_COMPILE)gcc -E -include $(1) -o /dev/null
 # whether we have Linux MTD headers
 has_mtd_user := $(call check_include, mtd/mtd-user.h)
 
-build:
+build-indep:
+
+build: build-arch build-indep
+build-arch:
 	$(checkdir)
 
 	set -e; sed -n 's/^$(DEB_HOST_ARCH)[[:space:]]\+//p' debian/targets \
@@ -69,7 +72,7 @@ clean:
 	$(checkdir)
 	rm -f debian/files debian/*.substvars
 	rm -rf debian/$(env_package) debian/$(mkimage_package) debian/$(package) debian/$(tools_package)
-	rm -f build
+	rm -f build-arch
 	$(MAKE) distclean
 	rm -rf arch/arm/include/asm/arch arch/arm/include/asm/proc
 	rm -rf debian/build
@@ -178,4 +181,4 @@ checkroot:
 	$(checkdir)
 	test root = "`whoami`"
 
-.PHONY: binary binary-arch binary-indep clean checkroot prebuild
+.PHONY: build build-indep binary binary-arch binary-indep clean checkroot prebuild
