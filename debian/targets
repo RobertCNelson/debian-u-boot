@@ -17,4 +17,3 @@ mips			qemu_mips	u-boot.img
 powerpc			ZUMA		u-boot.img
 sh4			r2dplus		u-boot.img
 sh4			sh7785lcr_32bit	u-boot.img
-sparc			gr_xc3s_1500	u-boot.img
