@@ -21,7 +21,7 @@ Changes in v1:
 
 --- a/arch/arm/cpu/arm926ejs/kirkwood/timer.c
 +++ b/arch/arm/cpu/arm926ejs/kirkwood/timer.c
-@@ -152,3 +152,26 @@
+@@ -153,3 +153,26 @@
  
  	return 0;
  }
@@ -50,7 +50,7 @@ Changes in v1:
 +
 --- a/arch/arm/include/asm/arch-kirkwood/kirkwood.h
 +++ b/arch/arm/include/asm/arch-kirkwood/kirkwood.h
-@@ -61,6 +61,7 @@
+@@ -55,6 +55,7 @@
  #define KW_EGIGA0_BASE			(KW_REGISTER(0x72000))
  #define KW_EGIGA1_BASE			(KW_REGISTER(0x76000))
  #define KW_SATA_BASE			(KW_REGISTER(0x80000))
@@ -60,14 +60,14 @@ Changes in v1:
  #define KW_SATA_PORT0_OFFSET		0x2000
 --- a/drivers/mmc/Makefile
 +++ b/drivers/mmc/Makefile
-@@ -36,6 +36,7 @@
+@@ -35,6 +35,7 @@
+ COBJS-$(CONFIG_MMC_SPI) += mmc_spi.o
  COBJS-$(CONFIG_ARM_PL180_MMCI) += arm_pl180_mmci.o
  COBJS-$(CONFIG_MV_SDHCI) += mv_sdhci.o
- COBJS-$(CONFIG_MXC_MMC) += mxcmmc.o
 +COBJS-$(CONFIG_MV_SDIO) += mv_sdio.o
+ COBJS-$(CONFIG_MXC_MMC) += mxcmmc.o
+ COBJS-$(CONFIG_MXS_MMC) += mxsmmc.o
  COBJS-$(CONFIG_OMAP_HSMMC) += omap_hsmmc.o
- COBJS-$(CONFIG_PXA_MMC) += pxa_mmc.o
- COBJS-$(CONFIG_S5P_MMC) += s5p_mmc.o
 --- /dev/null
 +++ b/drivers/mmc/mv_sdio.c
 @@ -0,0 +1,747 @@
