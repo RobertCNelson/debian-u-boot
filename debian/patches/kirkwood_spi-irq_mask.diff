@@ -1,0 +1,36 @@
+From d6bc6e1a4f49314577e0be9af3cd020078593fdb Mon Sep 17 00:00:00 2001
+From: Ian Campbell <ijc@hellion.org.uk>
+Date: Sun, 8 Jan 2012 19:44:38 +0000
+Subject: [PATCH] kirkwood_spi: correct access to irq_mask register
+
+Problem appears to have been present since day one but masked because alignment
+aborts were not enabled. ca4b55800ed7 "arm, arm926ejs: always do cpu critical
+inits" turned on alignment aborts and uncovered this latent problem.
+
+Signed-off-by: Ian Campbell <ijc@hellion.org.uk>
+---
+ drivers/spi/kirkwood_spi.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/drivers/spi/kirkwood_spi.c b/drivers/spi/kirkwood_spi.c
+index dfe542d..db8ba8b 100644
+--- a/drivers/spi/kirkwood_spi.c
++++ b/drivers/spi/kirkwood_spi.c
+@@ -66,7 +66,7 @@ struct spi_slave *spi_setup_slave(unsigned int bus, unsigned int cs,
+ 	debug("data = 0x%08x \n", data);
+ 
+ 	writel(KWSPI_SMEMRDIRQ, &spireg->irq_cause);
+-	writel(KWSPI_IRQMASK, spireg->irq_mask);
++	writel(KWSPI_IRQMASK, &spireg->irq_mask);
+ 
+ 	/* program mpp registers to select  SPI_CSn */
+ 	if (cs) {
+-- 
+1.7.5.4
+
+
+-- 
+Ian Campbell
+
+
+We've upped our standards, so up yours!
