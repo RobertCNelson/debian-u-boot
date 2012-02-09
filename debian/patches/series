@@ -5,3 +5,4 @@ openrd-mmc.diff
 no-error-on-set-but-unused-variables.diff
 hurd.diff
 kirkwood_spi-irq_mask.diff
+kirkwood-disable-l2c.diff

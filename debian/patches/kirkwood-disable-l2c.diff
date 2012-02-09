@@ -1,0 +1,105 @@
+From: Michael Walle <[michael@walle.cc]>
+Date: Mon, 6 Feb 2012 22:42:10 +0530
+Subject: arm, arm-kirkwood: disable l2c before linux boot
+
+The decompressor expects the L2 cache to be disabled. This fixes booting
+some kernels, which have CONFIG_ARM_PATCH_PHYS_VIRT enabled.
+
+Signed-off-by: Michael Walle <michael@walle.cc>
+Acked-by: Prafulla Wadaskar <prafulla@marvell.com>
+Cc: Albert ARIBAUD <albert.u.boot@aribaud.net>
+Cc: Prafulla Wadaskar <prafulla@marvell.com>
+Cc: Wolfgang Denk <wd@denx.de>
+---
+ arch/arm/cpu/arm926ejs/cache.c           |    9 ++++++++
+ arch/arm/cpu/arm926ejs/cpu.c             |    2 +
+ arch/arm/cpu/arm926ejs/kirkwood/Makefile |    1 +
+ arch/arm/cpu/arm926ejs/kirkwood/cache.c  |   34 ++++++++++++++++++++++++++++++
+ 4 files changed, 46 insertions(+), 0 deletions(-)
+ create mode 100644 arch/arm/cpu/arm926ejs/kirkwood/cache.c
+
+diff --git a/arch/arm/cpu/arm926ejs/cache.c b/arch/arm/cpu/arm926ejs/cache.c
+index ee90ab71..504f6046 100644
+--- a/arch/arm/cpu/arm926ejs/cache.c
++++ b/arch/arm/cpu/arm926ejs/cache.c
+@@ -68,3 +68,12 @@ void  flush_cache(unsigned long start, unsigned long size)
+ {
+ }
+ #endif /* #ifndef CONFIG_SYS_DCACHE_OFF */
++
++/*
++ * Stub implementations for l2 cache operations
++ */
++void __l2_cache_disable(void)
++{
++}
++void l2_cache_disable(void)
++        __attribute__((weak, alias("__l2_cache_disable")));
+diff --git a/arch/arm/cpu/arm926ejs/cpu.c b/arch/arm/cpu/arm926ejs/cpu.c
+index 5c902dfc..626384c3 100644
+--- a/arch/arm/cpu/arm926ejs/cpu.c
++++ b/arch/arm/cpu/arm926ejs/cpu.c
+@@ -50,6 +50,8 @@ int cleanup_before_linux (void)
+ 	/* turn off I/D-cache */
+ 	icache_disable();
+ 	dcache_disable();
++	l2_cache_disable();
++
+ 	/* flush I/D-cache */
+ 	cache_flush();
+ 
+diff --git a/arch/arm/cpu/arm926ejs/kirkwood/Makefile b/arch/arm/cpu/arm926ejs/kirkwood/Makefile
+index 07542975..777006c4 100644
+--- a/arch/arm/cpu/arm926ejs/kirkwood/Makefile
++++ b/arch/arm/cpu/arm926ejs/kirkwood/Makefile
+@@ -30,6 +30,7 @@ COBJS-y	= cpu.o
+ COBJS-y	+= dram.o
+ COBJS-y	+= mpp.o
+ COBJS-y	+= timer.o
++COBJS-y	+= cache.o
+ 
+ SRCS	:= $(SOBJS:.o=.S) $(COBJS-y:.o=.c)
+ OBJS	:= $(addprefix $(obj),$(SOBJS) $(COBJS-y))
+diff --git a/arch/arm/cpu/arm926ejs/kirkwood/cache.c b/arch/arm/cpu/arm926ejs/kirkwood/cache.c
+new file mode 100644
+index 00000000..645d9626
+--- /dev/null
++++ b/arch/arm/cpu/arm926ejs/kirkwood/cache.c
+@@ -0,0 +1,34 @@
++/*
++ * Copyright (c) 2012 Michael Walle
++ * Michael Walle <michael@walle.cc>
++ *
++ * See file CREDITS for list of people who contributed to this
++ * project.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License as
++ * published by the Free Software Foundation; either version 2 of
++ * the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc.
++ */
++#include <common.h>
++#include <asm/arch/cpu.h>
++
++#define FEROCEON_EXTRA_FEATURE_L2C_EN (1<<22)
++
++void l2_cache_disable()
++{
++	u32 ctrl;
++
++	ctrl = readfr_extra_feature_reg();
++	ctrl &= ~FEROCEON_EXTRA_FEATURE_L2C_EN;
++	writefr_extra_feature_reg(ctrl);
++}
+-- 
+1.7.9
+
