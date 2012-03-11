@@ -1,0 +1,28 @@
+From 17a2bf859d1dcd393db767a254442e35f01804f2 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Lo=C3=AFc=20Minier?= <lool@debian.org>
+Date: Sun, 11 Mar 2012 16:40:59 +0100
+Subject: [PATCH] Strip fw_printenv like the other tools
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Loïc Minier <lool@debian.org>
+---
+ tools/env/Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/tools/env/Makefile b/tools/env/Makefile
+index 28b73da..07634bc 100644
+--- a/tools/env/Makefile
++++ b/tools/env/Makefile
+@@ -41,6 +41,7 @@ all:	$(obj)fw_printenv
+ # Some files complain if compiled with -pedantic, use HOSTCFLAGS_NOPED
+ $(obj)fw_printenv:	$(HOSTSRCS) $(HEADERS)
+ 	$(HOSTCC) $(HOSTCFLAGS_NOPED) $(HOSTLDFLAGS) -o $@ $(HOSTSRCS)
++	$(HOSTSTRIP) $@
+ 
+ clean:
+ 	rm -f $(obj)fw_printenv
+-- 
+1.7.9
+
