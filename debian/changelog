@@ -4,6 +4,9 @@ u-boot (2011.12-3) unstable; urgency=low
   * kirkwood: disable L2 cache before Linux boot; thanks to Ian Campbell.
     closes: #658904
 
+  [ Loïc Minier ]
+  * Add patch to strip env tools; sent to upstream mailing-list.
+
  -- Loïc Minier <lool@debian.org>  Sun, 11 Mar 2012 16:12:50 +0100
 
 u-boot (2011.12-2) unstable; urgency=low
