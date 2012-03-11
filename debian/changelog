@@ -1,10 +1,10 @@
-u-boot (2011.12-2.1) unstable; urgency=low
+u-boot (2011.12-3) unstable; urgency=low
 
-  * Non-maintainer upload, with permission.
+  [ Jonathan Nieder ]
   * kirkwood: disable L2 cache before Linux boot; thanks to Ian Campbell.
     closes: #658904
 
- -- Jonathan Nieder <jrnieder@gmail.com>  Fri, 10 Feb 2012 15:34:40 -0600
+ -- Loïc Minier <lool@debian.org>  Sun, 11 Mar 2012 16:12:50 +0100
 
 u-boot (2011.12-2) unstable; urgency=low
 
