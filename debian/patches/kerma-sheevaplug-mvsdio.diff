@@ -21,9 +21,9 @@ Changes in v1:
 
 --- a/arch/arm/cpu/arm926ejs/kirkwood/timer.c
 +++ b/arch/arm/cpu/arm926ejs/kirkwood/timer.c
-@@ -153,3 +153,26 @@
- 
- 	return 0;
+@@ -171,3 +171,26 @@
+ {
+ 	return (ulong)CONFIG_SYS_HZ;
  }
 +
 +
@@ -60,7 +60,7 @@ Changes in v1:
  #define KW_SATA_PORT0_OFFSET		0x2000
 --- a/drivers/mmc/Makefile
 +++ b/drivers/mmc/Makefile
-@@ -35,6 +35,7 @@
+@@ -34,6 +34,7 @@
  COBJS-$(CONFIG_MMC_SPI) += mmc_spi.o
  COBJS-$(CONFIG_ARM_PL180_MMCI) += arm_pl180_mmci.o
  COBJS-$(CONFIG_MV_SDHCI) += mv_sdhci.o
