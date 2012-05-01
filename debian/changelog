@@ -1,4 +1,4 @@
-u-boot (2012.04-1) unstable; urgency=low
+u-boot (2012.04.01-1) unstable; urgency=low
 
   * New upstream version.
     - Update mipsel-native-endianness.diff.
