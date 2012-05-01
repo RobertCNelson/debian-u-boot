@@ -117,19 +117,13 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
  {
 --- a/arch/mips/cpu/mips32/config.mk
 +++ b/arch/mips/cpu/mips32/config.mk
-@@ -29,12 +29,4 @@
- #
- MIPSFLAGS = -march=mips32r2
+@@ -45,5 +45,4 @@
+ # Default to EB if no endianess is configured
+ ENDIANNESS ?= -EB
  
--ifneq (,$(findstring 4KCle,$(CROSS_COMPILE)))
--ENDIANNESS = -EL
--else
--ENDIANNESS = -EB
--endif
--
--MIPSFLAGS += $(ENDIANNESS)
--
- PLATFORM_CPPFLAGS += $(MIPSFLAGS)
+-PLATFORM_CPPFLAGS += $(MIPSFLAGS) $(ENDIANNESS)
+-PLATFORM_LDFLAGS += $(ENDIANNESS)
++PLATFORM_CPPFLAGS += $(MIPSFLAGS)
 --- a/arch/mips/config.mk
 +++ b/arch/mips/config.mk
 @@ -21,7 +21,7 @@
