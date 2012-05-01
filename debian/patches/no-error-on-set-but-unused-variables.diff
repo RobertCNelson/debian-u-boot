@@ -1,18 +1,3 @@
---- a/arch/x86/cpu/sc520/sc520_timer.c
-+++ b/arch/x86/cpu/sc520/sc520_timer.c
-@@ -78,10 +78,9 @@
- {
- 	int m = 0;
- 	long u;
--	long temp;
- 
--	temp = readw(&sc520_mmcr->swtmrmilli);
--	temp = readw(&sc520_mmcr->swtmrmicro);
-+	readw(&sc520_mmcr->swtmrmilli);
-+	readw(&sc520_mmcr->swtmrmicro);
- 
- 	do {
- 		m += readw(&sc520_mmcr->swtmrmilli);
 --- a/arch/x86/cpu/config.mk
 +++ b/arch/x86/cpu/config.mk
 @@ -23,7 +23,7 @@
