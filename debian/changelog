@@ -1,3 +1,13 @@
+u-boot (2012.04-1) unstable; urgency=low
+
+  * New upstream version.
+    - Update mipsel-native-endianness.diff.
+    - Update no-error-on-set-but-unused-variables.diff (partially merged).
+    - Drop kirkwood_spi-irq_mask.diff (merged).
+    - Drop kirkwood-disable-l2c.diff (merged).
+
+ -- Clint Adams <clint@debian.org>  Tue, 01 May 2012 18:07:19 -0400
+
 u-boot (2011.12-3) unstable; urgency=low
 
   [ Jonathan Nieder ]
