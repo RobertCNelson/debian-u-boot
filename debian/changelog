@@ -1,3 +1,10 @@
+u-boot (2012.04.01-2) unstable; urgency=low
+
+  * Remove code duplication in kerma-sheevaplug-mvsdio.diff.
+    closes: #674230.
+
+ -- Clint Adams <clint@debian.org>  Thu, 31 May 2012 21:04:49 -0400
+
 u-boot (2012.04.01-1) unstable; urgency=low
 
   * New upstream version.
