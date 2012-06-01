@@ -19,35 +19,6 @@ Changes in v1:
  include/configs/sheevaplug.h                  |   65 ++-
  6 files changed, 1124 insertions(+), 9 deletions(-)
 
---- a/arch/arm/cpu/arm926ejs/kirkwood/timer.c
-+++ b/arch/arm/cpu/arm926ejs/kirkwood/timer.c
-@@ -171,3 +171,26 @@
- {
- 	return (ulong)CONFIG_SYS_HZ;
- }
-+
-+
-+/*
-+ * This function is derived from PowerPC code (read timebase as long long).
-+ * On ARM it just returns the timer value.
-+ */
-+unsigned long long get_ticks(void)
-+{
-+	return get_timer(0);
-+}
-+
-+/*
-+ * This function is derived from PowerPC code (timebase clock frequency).
-+ * On ARM it returns the number of timer ticks per second.
-+ */
-+ulong get_tbclk (void)
-+{
-+	ulong tbclk;
-+
-+	tbclk = CONFIG_SYS_HZ;
-+	return tbclk;
-+}
-+
 --- a/arch/arm/include/asm/arch-kirkwood/kirkwood.h
 +++ b/arch/arm/include/asm/arch-kirkwood/kirkwood.h
 @@ -55,6 +55,7 @@
