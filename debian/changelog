@@ -1,3 +1,13 @@
+u-boot (2013.01.01-1) experimental; urgency=low
+
+  * New upstream version.  closes: #699232.
+    - Drop strip-env-tools.diff (merged).
+    - Update kerma-sheevaplug-mvsdio.diff.
+    - Update mipsel-native-endianness.diff
+  * Enable CONFIG_SYS_MVFS and CONFIG_CMD_MMC for GuruPlug.
+
+ -- Clint Adams <clint@debian.org>  Thu, 21 Mar 2013 14:21:33 -0400
+
 u-boot (2012.04.01-2) unstable; urgency=low
 
   * Remove code duplication in kerma-sheevaplug-mvsdio.diff.
