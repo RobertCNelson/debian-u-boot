@@ -50,19 +50,6 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
  OUTPUT_ARCH(mips)
  ENTRY(_start)
  SECTIONS
---- a/board/gth2/u-boot.lds
-+++ b/board/gth2/u-boot.lds
-@@ -21,10 +21,6 @@
-  * MA 02111-1307 USA
-  */
- 
--/*
--OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
--*/
--OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradlittlemips")
- OUTPUT_ARCH(mips)
- ENTRY(_start)
- SECTIONS
 --- a/board/incaip/u-boot.lds
 +++ b/board/incaip/u-boot.lds
 @@ -21,10 +21,6 @@
@@ -89,19 +76,6 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
  OUTPUT_ARCH(mips)
  ENTRY(_start)
  SECTIONS
---- a/board/qemu-mips/u-boot.lds
-+++ b/board/qemu-mips/u-boot.lds
-@@ -21,10 +21,6 @@
-  * MA 02111-1307 USA
-  */
- 
--/*
--OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
--*/
--OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradlittlemips")
- OUTPUT_ARCH(mips)
- ENTRY(_start)
- SECTIONS
 --- a/examples/standalone/mips.lds
 +++ b/examples/standalone/mips.lds
 @@ -21,10 +21,6 @@
@@ -115,15 +89,6 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
  OUTPUT_ARCH(mips)
  SECTIONS
  {
---- a/arch/mips/cpu/mips32/config.mk
-+++ b/arch/mips/cpu/mips32/config.mk
-@@ -45,5 +45,4 @@
- # Default to EB if no endianess is configured
- ENDIANNESS ?= -EB
- 
--PLATFORM_CPPFLAGS += $(MIPSFLAGS) $(ENDIANNESS)
--PLATFORM_LDFLAGS += $(ENDIANNESS)
-+PLATFORM_CPPFLAGS += $(MIPSFLAGS)
 --- a/arch/mips/config.mk
 +++ b/arch/mips/config.mk
 @@ -21,7 +21,7 @@
@@ -133,5 +98,5 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
 -CROSS_COMPILE ?= mips_4KC-
 +#CROSS_COMPILE ?= mips_4KC-
  
- CONFIG_STANDALONE_LOAD_ADDR ?= 0x80200000 -T mips.lds
- 
+ # Handle special prefix in ELDK 4.0 toolchain
+ ifneq (,$(findstring 4KCle,$(CROSS_COMPILE)))

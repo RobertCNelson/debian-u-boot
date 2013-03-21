@@ -31,7 +31,7 @@ Changes in v1:
  #define KW_SATA_PORT0_OFFSET		0x2000
 --- a/drivers/mmc/Makefile
 +++ b/drivers/mmc/Makefile
-@@ -34,6 +34,7 @@
+@@ -38,6 +38,7 @@
  COBJS-$(CONFIG_MMC_SPI) += mmc_spi.o
  COBJS-$(CONFIG_ARM_PL180_MMCI) += arm_pl180_mmci.o
  COBJS-$(CONFIG_MV_SDHCI) += mv_sdhci.o
