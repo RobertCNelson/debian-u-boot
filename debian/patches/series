@@ -4,4 +4,3 @@ kerma-sheevaplug-mvsdio.diff
 openrd-mmc.diff
 no-error-on-set-but-unused-variables.diff
 hurd.diff
-strip-env-tools.diff
