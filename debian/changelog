@@ -1,3 +1,11 @@
+u-boot (2013.01.01-2) experimental; urgency=low
+
+  * More properly enable MMC on GuruPlug.
+  * Use new Efika target names.
+  * Bump to Standards-Version 3.9.4.
+
+ -- Clint Adams <clint@debian.org>  Sun, 24 Mar 2013 21:59:03 -0400
+
 u-boot (2013.01.01-1) experimental; urgency=low
 
   * New upstream version.  closes: #699232.
