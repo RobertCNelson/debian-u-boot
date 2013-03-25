@@ -3,7 +3,7 @@ Section: admin
 Priority: optional
 Maintainer: Clint Adams <clint@debian.org>
 Uploaders: Loïc Minier <lool@debian.org>
-Standards-Version: 3.9.2
+Standards-Version: 3.9.4
 Homepage: http://www.denx.de/wiki/U-Boot/
 Vcs-Git: git://git.debian.org/collab-maint/u-boot.git
 Vcs-Browser: http://git.debian.org/?p=collab-maint/u-boot.git;a=summary
