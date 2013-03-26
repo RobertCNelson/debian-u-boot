@@ -2,7 +2,7 @@ Source: u-boot
 Section: admin
 Priority: optional
 Maintainer: Clint Adams <clint@debian.org>
-Uploaders: Loïc Minier <lool@debian.org>
+Uploaders: Loïc Minier <lool@debian.org>, Micah Anderson <micah@debian.org>
 Standards-Version: 3.9.4
 Homepage: http://www.denx.de/wiki/U-Boot/
 Vcs-Git: git://git.debian.org/collab-maint/u-boot.git

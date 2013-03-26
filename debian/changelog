@@ -1,3 +1,11 @@
+u-boot (2013.01.01-3) experimental; urgency=low
+
+  * Disable unnecessary JFFS2 on GuruPlug
+  * Disable MMC on GuruPlug, devices are not detected, 
+    they show up as USB devices instead
+
+ -- Micah Anderson <micah@debian.org>  Mon, 25 Mar 2013 22:56:32 -0400
+
 u-boot (2013.01.01-2) experimental; urgency=low
 
   * More properly enable MMC on GuruPlug.
