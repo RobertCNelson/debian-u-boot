@@ -30,21 +30,3 @@ Description: companion tools for Das U-Boot bootloader
  This package includes the mkimage program, which allows generation of U-Boot
  images in various formats, and the fw_printenv and fw_setenv programs to read
  and modify U-Boot's environment.
-
-Package: uboot-envtools
-Section: utils
-Architecture: all
-Depends: u-boot-tools
-Description: read/modify the environment for the U-Boot boot loader (transitional package)
- Package to ease upgrading from uboot-envtools to u-boot-tools.
- .
- This package may safely be removed.
-
-Package: uboot-mkimage
-Section: utils
-Architecture: all
-Depends: u-boot-tools
-Description: generate kernel image for U-Boot (transitional package)
- Package to ease upgrading from uboot-mkimage to u-boot-tools.
- .
- This package may safely be removed.
