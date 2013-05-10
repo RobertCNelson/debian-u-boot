@@ -1,7 +1,14 @@
+u-boot (2013.01.01-4) unstable; urgency=low
+
+  * Upload to unstable.
+  * Drop transitional packages uboot-envtools and uboot-mkimage.
+
+ -- Clint Adams <clint@debian.org>  Thu, 09 May 2013 21:41:25 -0400
+
 u-boot (2013.01.01-3) experimental; urgency=low
 
   * Disable unnecessary JFFS2 on GuruPlug
-  * Disable MMC on GuruPlug, devices are not detected, 
+  * Disable MMC on GuruPlug, devices are not detected,
     they show up as USB devices instead
 
  -- Micah Anderson <micah@debian.org>  Mon, 25 Mar 2013 22:56:32 -0400
