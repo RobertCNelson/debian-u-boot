@@ -16,7 +16,6 @@ armhf			wandboard_quad	u-boot.imx
 armhf			wandboard_dl	u-boot.imx
 armhf			wandboard_solo	u-boot.imx
 avr32			hammerhead	u-boot.img
-i386			eNET		u-boot.bin
 mipsel			dbau1100	u-boot.img
 mips			qemu_mips	u-boot.img
 powerpc			ZUMA		u-boot.img
