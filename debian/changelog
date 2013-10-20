@@ -1,3 +1,17 @@
+u-boot (2013.10-1) UNRELEASED; urgency=low
+
+  * New upstream version (Closes: #667680, #726699).
+    - Update mipsel-native-endianness.diff
+  * debian/rules:
+    - Remove various tools/* files on clean target.
+    - Build each platform target and install MLO file if present.
+      (Closes: #687562).
+  * Enable BeagleBone Black and Wandboard platforms.
+  * Add patch to support uEnv.txt and directly loading zimage for Wandboard.
+  * debian/control: Add myself to uploaders.
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Sat, 19 Oct 2013 16:28:25 -0700
+
 u-boot (2013.01.01-4) unstable; urgency=low
 
   * Upload to unstable.
