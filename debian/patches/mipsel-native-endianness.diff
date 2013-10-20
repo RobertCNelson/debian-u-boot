@@ -37,49 +37,12 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
  mips_config.mk             |   26 ++++++++++++++++++++++++++
  10 files changed, 26 insertions(+), 38 deletions(-)
 
---- a/board/dbau1x00/u-boot.lds
-+++ b/board/dbau1x00/u-boot.lds
-@@ -21,10 +21,6 @@
-  * MA 02111-1307 USA
-  */
- 
--/*
--OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
--*/
--OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradlittlemips")
- OUTPUT_ARCH(mips)
- ENTRY(_start)
- SECTIONS
---- a/board/incaip/u-boot.lds
-+++ b/board/incaip/u-boot.lds
-@@ -21,10 +21,6 @@
-  * MA 02111-1307 USA
-  */
- 
--/*
--OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
--*/
--OUTPUT_FORMAT("elf32-tradbigmips", "elf32-tradbigmips", "elf32-tradlittlemips")
- OUTPUT_ARCH(mips)
- ENTRY(_start)
- SECTIONS
---- a/board/pb1x00/u-boot.lds
-+++ b/board/pb1x00/u-boot.lds
-@@ -21,10 +21,6 @@
-  * MA 02111-1307 USA
-  */
- 
--/*
--OUTPUT_FORMAT("elf32-bigmips", "elf32-bigmips", "elf32-bigmips")
--*/
--OUTPUT_FORMAT("elf32-tradlittlemips", "elf32-tradbigmips", "elf32-tradlittlemips")
- OUTPUT_ARCH(mips)
- ENTRY(_start)
- SECTIONS
---- a/examples/standalone/mips.lds
-+++ b/examples/standalone/mips.lds
-@@ -21,10 +21,6 @@
-  * MA 02111-1307 USA
+Index: u-boot/examples/standalone/mips.lds
+===================================================================
+--- u-boot.orig/examples/standalone/mips.lds	2013-10-17 12:15:25.000000000 -0700
++++ u-boot/examples/standalone/mips.lds	2013-10-19 17:04:58.463166717 -0700
+@@ -5,10 +5,6 @@
+  * SPDX-License-Identifier:	GPL-2.0+
   */
  
 -/*
@@ -89,10 +52,12 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
  OUTPUT_ARCH(mips)
  SECTIONS
  {
---- a/arch/mips/config.mk
-+++ b/arch/mips/config.mk
-@@ -21,7 +21,7 @@
- # MA 02111-1307 USA
+Index: u-boot/arch/mips/config.mk
+===================================================================
+--- u-boot.orig/arch/mips/config.mk	2013-10-17 12:15:23.000000000 -0700
++++ u-boot/arch/mips/config.mk	2013-10-19 17:04:58.463166717 -0700
+@@ -5,7 +5,7 @@
+ # SPDX-License-Identifier:	GPL-2.0+
  #
  
 -CROSS_COMPILE ?= mips_4KC-
