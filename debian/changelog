@@ -1,4 +1,4 @@
-u-boot (2013.10-1) UNRELEASED; urgency=low
+u-boot (2013.10-1) unstable; urgency=low
 
   * New upstream version (Closes: #667680, #726699).
     - Update mipsel-native-endianness.diff
@@ -6,11 +6,15 @@ u-boot (2013.10-1) UNRELEASED; urgency=low
     - Remove various tools/* files on clean target.
     - Build each platform target and install MLO file if present.
       (Closes: #687562).
+    - Support parallel builds using DEB_BUILD_OPTIONS=parallel=N.
   * Enable BeagleBone Black and Wandboard platforms.
   * Add patch to support uEnv.txt and directly loading zimage for Wandboard.
+  * Include env configs u-boot-tools examples (Closes: #631659, #636214).
+  * Only build u-boot on architectures which generate images (Closes: #635050).
+  * Drop i386 builds of u-boot, as the only target (eNET) was removed upstream.
   * debian/control: Add myself to uploaders.
 
- -- Vagrant Cascadian <vagrant@debian.org>  Sat, 19 Oct 2013 16:28:25 -0700
+ -- Vagrant Cascadian <vagrant@debian.org>  Sun, 20 Oct 2013 10:23:55 -0700
 
 u-boot (2013.01.01-4) unstable; urgency=low
 
