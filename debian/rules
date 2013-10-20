@@ -14,6 +14,10 @@ DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
+ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), armel armhf avr32 i386 mips mipsel powerpc sh4))
+u_boot_package := true
+endif
+
 ifneq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
 export CROSS_COMPILE ?= $(DEB_HOST_GNU_TYPE)-
 endif
@@ -41,7 +45,8 @@ build: build-arch build-indep
 build-arch:
 	$(checkdir)
 
-	set -e; sed -n 's/^$(DEB_HOST_ARCH)[[:space:]]\+//p' debian/targets \
+ifeq (true,$(u_boot_package))
+	set -e; set -x; sed -n 's/^$(DEB_HOST_ARCH)[[:space:]]\+//p' debian/targets \
 	    | while read platform target; do \
 	        builddir=`pwd`/debian/build/$$platform; \
 	        installdir=debian/$(package)/usr/lib/$(package)/$$platform; \
@@ -57,6 +62,7 @@ build-arch:
 	            $(INSTALL_FILE) $$builddir/MLO $$installdir/MLO; \
 	        fi ; \
 	done
+endif
 
 ifeq ($(CROSS_COMPILE),)
 	# board-independent tools
@@ -93,6 +99,7 @@ binary-indep:	checkroot
 binary-arch:	checkroot build
 	$(checkdir)
 
+ifeq (true,$(u_boot_package))
 	$(INSTALL_DIR) debian/$(package)/DEBIAN
 
 	$(INSTALL_DIR) debian/$(package)/usr/share/doc/$(package)/
@@ -115,6 +122,7 @@ binary-arch:	checkroot build
 	chmod -R go=rX debian/$(package)
 
 	dpkg --build debian/$(package) ..
+endif
 
 
 	$(INSTALL_DIR) debian/$(tools_package)/DEBIAN
