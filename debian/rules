@@ -75,6 +75,7 @@ clean:
 	rm -f build-arch
 	$(MAKE) distclean
 	rm -rf arch/arm/include/asm/arch arch/arm/include/asm/proc
+	rm -rf tools/mkimage tools/mkenvimage tools/env/fw_printenv
 	rm -rf debian/build
 	rm -f `find . -name "*~"`
 
