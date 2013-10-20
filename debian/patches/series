@@ -5,3 +5,4 @@ openrd-mmc.diff
 no-error-on-set-but-unused-variables.diff
 hurd.diff
 guruplug_mvfs_and_mmc.diff
+0001-wandboard-uEnv.txt-bootz-n-fixes.patch
