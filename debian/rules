@@ -42,12 +42,15 @@ build-arch:
 	        installdir=debian/$(package)/usr/lib/$(package)/$$platform; \
 	        mkdir -p $$builddir; \
 	        $(MAKE) O=$$builddir $${platform}_config; \
-	        $(MAKE) O=$$builddir $$builddir/$$target; \
+	        $(MAKE) O=$$builddir $${platform}; \
 	        $(INSTALL_DIR) $$installdir; \
 	        $(INSTALL_FILE) $$builddir/$$target $$installdir; \
 	        $(INSTALL_FILE) $$builddir/u-boot $$installdir/uboot.elf; \
 	        $(CROSS_COMPILE)strip --remove-section=.comment \
 	            $$installdir/uboot.elf; \
+	        if [ -f $$builddir/MLO ]; then \
+	            $(INSTALL_FILE) $$builddir/MLO $$installdir/MLO; \
+	        fi ; \
 	done
 
 ifeq ($(CROSS_COMPILE),)
