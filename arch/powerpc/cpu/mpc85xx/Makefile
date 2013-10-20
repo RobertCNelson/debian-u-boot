@@ -5,23 +5,7 @@
 # (C) Copyright 2002,2003 Motorola Inc.
 # Xianghua Xiao,X.Xiao@motorola.com
 #
-# See file CREDITS for list of people who contributed to this
-# project.
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of
-# the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307 USA
+# SPDX-License-Identifier:	GPL-2.0+
 #
 
 include $(TOPDIR)/config.mk
@@ -62,6 +46,7 @@ COBJS-$(CONFIG_MPC8568) += ddr-gen2.o
 COBJS-$(CONFIG_MPC8544) += ddr-gen2.o
 
 # supports ddr1/2/3
+COBJS-$(CONFIG_PPC_C29X)	+= ddr-gen3.o
 COBJS-$(CONFIG_MPC8572) += ddr-gen3.o
 COBJS-$(CONFIG_MPC8536) += ddr-gen3.o
 COBJS-$(CONFIG_MPC8569)	+= ddr-gen3.o
@@ -73,6 +58,7 @@ COBJS-$(CONFIG_P1014)	+= ddr-gen3.o
 COBJS-$(CONFIG_P1020)	+= ddr-gen3.o
 COBJS-$(CONFIG_P1021)	+= ddr-gen3.o
 COBJS-$(CONFIG_P1022)	+= ddr-gen3.o
+COBJS-$(CONFIG_P1023)	+= ddr-gen3.o
 COBJS-$(CONFIG_P1024)	+= ddr-gen3.o
 COBJS-$(CONFIG_P1025)	+= ddr-gen3.o
 COBJS-$(CONFIG_P2010)	+= ddr-gen3.o
@@ -83,8 +69,12 @@ COBJS-$(CONFIG_PPC_P4080)	+= ddr-gen3.o
 COBJS-$(CONFIG_PPC_P5020)	+= ddr-gen3.o
 COBJS-$(CONFIG_PPC_P5040)	+= ddr-gen3.o
 COBJS-$(CONFIG_PPC_T4240)	+= ddr-gen3.o
+COBJS-$(CONFIG_PPC_T4160)	+= ddr-gen3.o
+COBJS-$(CONFIG_PPC_B4420)	+= ddr-gen3.o
 COBJS-$(CONFIG_PPC_B4860)	+= ddr-gen3.o
 COBJS-$(CONFIG_BSC9131)		+= ddr-gen3.o
+COBJS-$(CONFIG_BSC9132)		+= ddr-gen3.o
+COBJS-$(CONFIG_PPC_T1040)	+= ddr-gen3.o
 
 COBJS-$(CONFIG_CPM2)	+= ether_fcc.o
 COBJS-$(CONFIG_OF_LIBFDT) += fdt.o
@@ -100,7 +90,10 @@ COBJS-$(CONFIG_PPC_P4080) += p4080_ids.o
 COBJS-$(CONFIG_PPC_P5020) += p5020_ids.o
 COBJS-$(CONFIG_PPC_P5040) += p5040_ids.o
 COBJS-$(CONFIG_PPC_T4240) += t4240_ids.o
+COBJS-$(CONFIG_PPC_T4160) += t4240_ids.o
+COBJS-$(CONFIG_PPC_B4420) += b4860_ids.o
 COBJS-$(CONFIG_PPC_B4860) += b4860_ids.o
+COBJS-$(CONFIG_PPC_T1040) += t1040_ids.o
 
 COBJS-$(CONFIG_QE)	+= qe_io.o
 COBJS-$(CONFIG_CPM2)	+= serial_scc.o
@@ -108,6 +101,7 @@ COBJS-$(CONFIG_SYS_FSL_QORIQ_CHASSIS1) += fsl_corenet_serdes.o
 COBJS-$(CONFIG_SYS_FSL_QORIQ_CHASSIS2) += fsl_corenet2_serdes.o
 
 # SoC specific SERDES support
+COBJS-$(CONFIG_PPC_C29X)	+= c29x_serdes.o
 COBJS-$(CONFIG_MPC8536) += mpc8536_serdes.o
 COBJS-$(CONFIG_MPC8544) += mpc8544_serdes.o
 COBJS-$(CONFIG_MPC8548) += mpc8548_serdes.o
@@ -134,7 +128,11 @@ COBJS-$(CONFIG_PPC_P4080) += p4080_serdes.o
 COBJS-$(CONFIG_PPC_P5020) += p5020_serdes.o
 COBJS-$(CONFIG_PPC_P5040) += p5040_serdes.o
 COBJS-$(CONFIG_PPC_T4240) += t4240_serdes.o
+COBJS-$(CONFIG_PPC_T4160) += t4240_serdes.o
+COBJS-$(CONFIG_PPC_B4420) += b4860_serdes.o
 COBJS-$(CONFIG_PPC_B4860) += b4860_serdes.o
+COBJS-$(CONFIG_BSC9132) += bsc9132_serdes.o
+COBJS-$(CONFIG_PPC_T1040) += t1040_serdes.o
 
 COBJS-y	+= cpu.o
 COBJS-y	+= cpu_init.o

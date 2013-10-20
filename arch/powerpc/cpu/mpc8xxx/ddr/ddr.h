@@ -86,7 +86,8 @@ void fsl_ddr_set_lawbar(
 		unsigned int memctl_interleaved,
 		unsigned int ctrl_num);
 
-unsigned long long fsl_ddr_interactive(fsl_ddr_info_t *pinfo);
+int fsl_ddr_interactive_env_var_exists(void);
+unsigned long long fsl_ddr_interactive(fsl_ddr_info_t *pinfo, int var_is_set);
 void fsl_ddr_get_spd(generic_spd_eeprom_t *ctrl_dimms_spd,
 			   unsigned int ctrl_num);
 
@@ -95,7 +96,7 @@ unsigned int check_fsl_memctl_config_regs(const fsl_ddr_cfg_regs_t *ddr);
 
 /* processor specific function */
 void fsl_ddr_set_memctl_regs(const fsl_ddr_cfg_regs_t *regs,
-				   unsigned int ctrl_num);
+				   unsigned int ctrl_num, int step);
 
 /* board specific function */
 int fsl_ddr_get_dimm_params(dimm_params_t *pdimm,

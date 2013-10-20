@@ -25,10 +25,6 @@ void fsl_ddr_set_lawbar(
 		unsigned int ctrl_num);
 void fsl_ddr_set_intl3r(const unsigned int granule_size);
 
-/* processor specific function */
-extern void fsl_ddr_set_memctl_regs(const fsl_ddr_cfg_regs_t *regs,
-				   unsigned int ctrl_num);
-
 #if defined(SPD_EEPROM_ADDRESS) || \
     defined(SPD_EEPROM_ADDRESS1) || defined(SPD_EEPROM_ADDRESS2) || \
     defined(SPD_EEPROM_ADDRESS3) || defined(SPD_EEPROM_ADDRESS4)
@@ -186,7 +182,7 @@ const char * step_to_string(unsigned int step) {
 	return step_string_tbl[s];
 }
 
-unsigned long long step_assign_addresses(fsl_ddr_info_t *pinfo,
+static unsigned long long __step_assign_addresses(fsl_ddr_info_t *pinfo,
 			  unsigned int dbw_cap_adj[])
 {
 	int i, j;
@@ -354,15 +350,22 @@ unsigned long long step_assign_addresses(fsl_ddr_info_t *pinfo,
 	return total_mem;
 }
 
+/* Use weak function to allow board file to override the address assignment */
+__attribute__((weak, alias("__step_assign_addresses")))
+unsigned long long step_assign_addresses(fsl_ddr_info_t *pinfo,
+			  unsigned int dbw_cap_adj[]);
+
 unsigned long long
 fsl_ddr_compute(fsl_ddr_info_t *pinfo, unsigned int start_step,
 				       unsigned int size_only)
 {
 	unsigned int i, j;
 	unsigned long long total_mem = 0;
+	int assert_reset;
 
 	fsl_ddr_cfg_regs_t *ddr_reg = pinfo->fsl_ddr_config_reg;
 	common_timing_params_t *timing_params = pinfo->common_timing_params;
+	assert_reset = board_need_mem_reset();
 
 	/* data bus width capacity adjust shift amount */
 	unsigned int dbw_capacity_adjust[CONFIG_NUM_DDR_CONTROLLERS];
@@ -457,7 +460,20 @@ fsl_ddr_compute(fsl_ddr_info_t *pinfo, unsigned int start_step,
 					timing_params[i].all_DIMMs_registered,
 					&pinfo->memctl_opts[i],
 					pinfo->dimm_params[i], i);
+			/*
+			 * For RDIMMs, JEDEC spec requires clocks to be stable
+			 * before reset signal is deasserted. For the boards
+			 * using fixed parameters, this function should be
+			 * be called from board init file.
+			 */
+			if (timing_params[i].all_DIMMs_registered)
+				assert_reset = 1;
 		}
+		if (assert_reset) {
+			debug("Asserting mem reset\n");
+			board_assert_mem_reset();
+		}
+
 	case STEP_ASSIGN_ADDRESSES:
 		/* STEP 5:  Assign addresses to chip selects */
 		check_interleaving_options(pinfo);
@@ -499,7 +515,13 @@ fsl_ddr_compute(fsl_ddr_info_t *pinfo, unsigned int start_step,
 				fsl_ddr_cfg_regs_t *reg = &ddr_reg[i];
 				if (reg->cs[j].config & 0x80000000) {
 					unsigned int end;
-					end = reg->cs[j].bnds & 0xFFF;
+					/*
+					 * 0xfffffff is a special value we put
+					 * for unused bnds
+					 */
+					if (reg->cs[j].bnds == 0xffffffff)
+						continue;
+					end = reg->cs[j].bnds & 0xffff;
 					if (end > max_end) {
 						max_end = end;
 					}
@@ -526,30 +548,50 @@ phys_size_t fsl_ddr_sdram(void)
 	unsigned int law_memctl = LAW_TRGT_IF_DDR_1;
 	unsigned long long total_memory;
 	fsl_ddr_info_t info;
+	int deassert_reset;
 
 	/* Reset info structure. */
 	memset(&info, 0, sizeof(fsl_ddr_info_t));
 
 	/* Compute it once normally. */
 #ifdef CONFIG_FSL_DDR_INTERACTIVE
-	if (getenv("ddr_interactive"))
-		total_memory = fsl_ddr_interactive(&info);
-	else
+	if (tstc() && (getc() == 'd')) {	/* we got a key press of 'd' */
+		total_memory = fsl_ddr_interactive(&info, 0);
+	} else if (fsl_ddr_interactive_env_var_exists()) {
+		total_memory = fsl_ddr_interactive(&info, 1);
+	} else
 #endif
 		total_memory = fsl_ddr_compute(&info, STEP_GET_SPD, 0);
 
 	/* setup 3-way interleaving before enabling DDRC */
-	switch (info.memctl_opts[0].memctl_interleaving_mode) {
-	case FSL_DDR_3WAY_1KB_INTERLEAVING:
-	case FSL_DDR_3WAY_4KB_INTERLEAVING:
-	case FSL_DDR_3WAY_8KB_INTERLEAVING:
-		fsl_ddr_set_intl3r(info.memctl_opts[0].memctl_interleaving_mode);
-		break;
-	default:
-		break;
+	if (info.memctl_opts[0].memctl_interleaving) {
+		switch (info.memctl_opts[0].memctl_interleaving_mode) {
+		case FSL_DDR_3WAY_1KB_INTERLEAVING:
+		case FSL_DDR_3WAY_4KB_INTERLEAVING:
+		case FSL_DDR_3WAY_8KB_INTERLEAVING:
+			fsl_ddr_set_intl3r(
+				info.memctl_opts[0].memctl_interleaving_mode);
+			break;
+		default:
+			break;
+		}
 	}
 
-	/* Program configuration registers. */
+	/*
+	 * Program configuration registers.
+	 * JEDEC specs requires clocks to be stable before deasserting reset
+	 * for RDIMMs. Clocks start after chip select is enabled and clock
+	 * control register is set. During step 1, all controllers have their
+	 * registers set but not enabled. Step 2 proceeds after deasserting
+	 * reset through board FPGA or GPIO.
+	 * For non-registered DIMMs, initialization can go through but it is
+	 * also OK to follow the same flow.
+	 */
+	deassert_reset = board_need_mem_reset();
+	for (i = 0; i < CONFIG_NUM_DDR_CONTROLLERS; i++) {
+		if (info.common_timing_params[i].all_DIMMs_registered)
+			deassert_reset = 1;
+	}
 	for (i = 0; i < CONFIG_NUM_DDR_CONTROLLERS; i++) {
 		debug("Programming controller %u\n", i);
 		if (info.common_timing_params[i].ndimms_present == 0) {
@@ -557,8 +599,22 @@ phys_size_t fsl_ddr_sdram(void)
 					"skipping programming\n", i);
 			continue;
 		}
-
-		fsl_ddr_set_memctl_regs(&(info.fsl_ddr_config_reg[i]), i);
+		/*
+		 * The following call with step = 1 returns before enabling
+		 * the controller. It has to finish with step = 2 later.
+		 */
+		fsl_ddr_set_memctl_regs(&(info.fsl_ddr_config_reg[i]), i,
+					deassert_reset ? 1 : 0);
+	}
+	if (deassert_reset) {
+		/* Use board FPGA or GPIO to deassert reset signal */
+		debug("Deasserting mem reset\n");
+		board_deassert_mem_reset();
+		for (i = 0; i < CONFIG_NUM_DDR_CONTROLLERS; i++) {
+			/* Call with step = 2 to continue initialization */
+			fsl_ddr_set_memctl_regs(&(info.fsl_ddr_config_reg[i]),
+						i, 2);
+		}
 	}
 
 	/* program LAWs */
@@ -627,7 +683,8 @@ phys_size_t fsl_ddr_sdram(void)
 #if !defined(CONFIG_PHYS_64BIT)
 	/* Check for 4G or more.  Bad. */
 	if (total_memory >= (1ull << 32)) {
-		printf("Detected %lld MB of memory\n", total_memory >> 20);
+		puts("Detected ");
+		print_size(total_memory, " of memory\n");
 		printf("       This U-Boot only supports < 4G of DDR\n");
 		printf("       You could rebuild it with CONFIG_PHYS_64BIT\n");
 		printf("       "); /* re-align to match init_func_ram print */

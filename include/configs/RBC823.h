@@ -5,23 +5,7 @@
  * Modified by Udi Finkelstein udif@udif.com
  * For the RBC823 board.
  *
- * See file CREDITS for list of people who contributed to this
- * project.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License as
- * published by the Free Software Foundation; either version 2 of
- * the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- * MA 02111-1307 USA
+ * SPDX-License-Identifier:	GPL-2.0+
  */
 
 /*
@@ -47,6 +31,7 @@
 #endif
 #define CONFIG_KEYBOARD		1	/* This board has a custom keybpard */
 #define CONFIG_LCD		1	/* use LCD controller ...	*/
+#define CONFIG_MPC8XX_LCD
 #define CONFIG_HITACHI_SP19X001_Z1A	/* The LCD type we use */
 
 #define	CONFIG_8xx_CONS_SMC2	1	/* Console is on SMC2		*/
@@ -277,8 +262,8 @@
  */
 #define SCCR_MASK	SCCR_EBDF11
 #define CONFIG_SYS_SCCR	(SCCR_RTDIV   | SCCR_RTSEL    | SCCR_CRQEN    | \
-		         SCCR_PRQEN   | SCCR_EBDF00   | \
-		         SCCR_COM01   | SCCR_DFSYNC00 | SCCR_DFBRG00  | \
+			 SCCR_PRQEN   | SCCR_EBDF00   | \
+			 SCCR_COM01   | SCCR_DFSYNC00 | SCCR_DFBRG00  | \
 			 SCCR_DFNL000 | SCCR_DFNH000  | SCCR_DFLCD001 | \
 			 SCCR_DFALCD00)
 
@@ -359,7 +344,7 @@
 
 #define CONFIG_SYS_OR1_PRELIM	(CONFIG_SYS_PRELIM_OR_AM | CONFIG_SYS_OR_TIMING_MSYS)
 #define CONFIG_SYS_BR1_PRELIM	((FLASH_BASE1_PRELIM & BR_BA_MSK) | BR_MS_UPMB | \
-		          BR_PS_8 | BR_V)
+			  BR_PS_8 | BR_V)
 
 /*
  * BR4 and OR4 (SDRAM)

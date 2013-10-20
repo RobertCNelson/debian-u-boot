@@ -44,7 +44,6 @@ compute_cas_latency_ddr3(const dimm_params_t *dimm_params,
 		printf("DDR clock (MCLK cycle %u ps) is faster than "
 			"the slowest DIMM(s) (tCKmin %u ps) can support.\n",
 			mclk_ps, tCKmin_X_ps);
-		return 1;
 	}
 	/* determine the acutal cas latency */
 	caslat_actual = (tAAmin_ps + mclk_ps - 1) / mclk_ps;
@@ -60,7 +59,6 @@ compute_cas_latency_ddr3(const dimm_params_t *dimm_params,
 	if (caslat_actual * mclk_ps > 20000) {
 		printf("The choosen cas latency %d is too large\n",
 			caslat_actual);
-		return 1;
 	}
 	outpdimm->lowest_common_SPD_caslat = caslat_actual;
 
@@ -220,12 +218,16 @@ compute_lowest_common_dimm_parameters(const dimm_params_t *dimm_params,
 		if (dimm_params[i].n_ranks) {
 			if (dimm_params[i].registered_dimm) {
 				temp1 = 1;
+#ifndef CONFIG_SPL_BUILD
 				printf("Detected RDIMM %s\n",
 					dimm_params[i].mpart);
+#endif
 			} else {
 				temp2 = 1;
+#ifndef CONFIG_SPL_BUILD
 				printf("Detected UDIMM %s\n",
 					dimm_params[i].mpart);
+#endif
 			}
 		}
 	}

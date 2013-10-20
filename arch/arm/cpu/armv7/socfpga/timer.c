@@ -1,18 +1,7 @@
 /*
  *  Copyright (C) 2012 Altera Corporation <www.altera.com>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * SPDX-License-Identifier:	GPL-2.0+
  */
 
 #include <common.h>
@@ -80,16 +69,16 @@ ulong get_timer_masked(void)
 {
 	/* current tick value */
 	ulong now = read_timer() / (CONFIG_TIMER_CLOCK_KHZ/CONFIG_SYS_HZ);
-	if (gd->lastinc >= now) {
+	if (gd->arch.lastinc >= now) {
 		/* normal mode (non roll) */
 		/* move stamp forward with absolute diff ticks */
-		gd->tbl += gd->lastinc - now;
+		gd->arch.tbl += gd->arch.lastinc - now;
 	} else {
 		/* we have overflow of the count down timer */
-		gd->tbl += TIMER_LOAD_VAL - gd->lastinc + now;
+		gd->arch.tbl += TIMER_LOAD_VAL - gd->arch.lastinc + now;
 	}
-	gd->lastinc = now;
-	return gd->tbl;
+	gd->arch.lastinc = now;
+	return gd->arch.tbl;
 }
 
 /*
@@ -98,7 +87,8 @@ ulong get_timer_masked(void)
 void reset_timer(void)
 {
 	/* capture current decrementer value time */
-	gd->lastinc = read_timer() / (CONFIG_TIMER_CLOCK_KHZ/CONFIG_SYS_HZ);
+	gd->arch.lastinc = read_timer() /
+				(CONFIG_TIMER_CLOCK_KHZ / CONFIG_SYS_HZ);
 	/* start "advancing" time stamp from 0 */
-	gd->tbl = 0;
+	gd->arch.tbl = 0;
 }
