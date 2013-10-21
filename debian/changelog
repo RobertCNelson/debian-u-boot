@@ -1,3 +1,14 @@
+u-boot (2013.10-2) unstable; urgency=low
+
+  * debian/rules:
+    - Switch back to explicitly building the specified target.
+    - Allow building multiple targets per platform.
+  * debian/targets:
+    - Build the spl/u-boot-spl.bin target on several armhf platforms, which 
+      generates the MLO file.
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Mon, 21 Oct 2013 11:33:01 -0700
+
 u-boot (2013.10-1) unstable; urgency=low
 
   * New upstream version (Closes: #667680, #726699).
