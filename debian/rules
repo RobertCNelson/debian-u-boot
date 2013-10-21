@@ -46,7 +46,7 @@ build-arch:
 	$(checkdir)
 
 ifeq (true,$(u_boot_package))
-	set -e; set -x; sed -n 's/^$(DEB_HOST_ARCH)[[:space:]]\+//p' debian/targets \
+	set -e; sed -n 's/^$(DEB_HOST_ARCH)[[:space:]]\+//p' debian/targets \
 	    | while read platform targets; do \
 		for target in $$targets ; do \
 	        builddir=`pwd`/debian/build/$$platform; \
