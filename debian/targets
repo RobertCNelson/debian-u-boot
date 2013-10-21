@@ -7,11 +7,11 @@ armel			openrd_ultimate	u-boot.kwb
 armel			sheevaplug	u-boot.kwb
 armhf			mx51_efikamx	u-boot.imx
 armhf			mx51_efikasb	u-boot.imx
-armhf			igep0020	u-boot.bin
-armhf			omap3_beagle	u-boot.bin
-armhf			omap4_panda	u-boot.bin
+armhf			igep0020	u-boot.bin spl/u-boot-spl.bin
+armhf			omap3_beagle	u-boot.bin spl/u-boot-spl.bin
+armhf			omap4_panda	u-boot.bin spl/u-boot-spl.bin
 armhf			mx53loco	u-boot.imx
-armhf			am335x_boneblack u-boot.img
+armhf			am335x_boneblack u-boot.img spl/u-boot-spl.bin
 armhf			wandboard_quad	u-boot.imx
 armhf			wandboard_dl	u-boot.imx
 armhf			wandboard_solo	u-boot.imx
