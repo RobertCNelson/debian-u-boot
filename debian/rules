@@ -47,12 +47,12 @@ build-arch:
 
 ifeq (true,$(u_boot_package))
 	set -e; set -x; sed -n 's/^$(DEB_HOST_ARCH)[[:space:]]\+//p' debian/targets \
-	    | while read platform target; do \
+	    | while read platform targets; do \
+		for target in $$targets ; do \
 	        builddir=`pwd`/debian/build/$$platform; \
 	        installdir=debian/$(package)/usr/lib/$(package)/$$platform; \
 	        mkdir -p $$builddir; \
 	        $(MAKE) O=$$builddir $${platform}_config; \
-	        $(MAKE) O=$$builddir $${platform}; \
 		$(MAKE) O=$$builddir $$builddir/$$target; \
 	        $(INSTALL_DIR) $$installdir; \
 	        $(INSTALL_FILE) $$builddir/$$target $$installdir; \
@@ -62,6 +62,7 @@ ifeq (true,$(u_boot_package))
 	        if [ -f $$builddir/MLO ]; then \
 	            $(INSTALL_FILE) $$builddir/MLO $$installdir/MLO; \
 	        fi ; \
+		done ; \
 	done
 endif
 
