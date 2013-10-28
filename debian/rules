@@ -14,7 +14,7 @@ DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
-ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), armel armhf avr32 mips mipsel powerpc sh4))
+ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), armel armhf avr32 mips powerpc sh4))
 u_boot_package := true
 endif
 
