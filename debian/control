@@ -19,6 +19,7 @@ Description: A boot loader for embedded systems
 
 Package: u-boot-tools
 Architecture: any
+Multi-Arch: foreign
 Depends: ${shlibs:Depends}
 Breaks: uboot-envtools (<< 20081215-3~),
         uboot-mkimage (<= 0.4build1),
