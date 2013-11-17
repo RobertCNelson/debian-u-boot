@@ -1,3 +1,17 @@
+u-boot (2013.10-3) unstable; urgency=low
+
+  * Move build of dbau1100 from mipsel to mips, which fixes FTBFS on mipsel,
+    due to dbau1100 being big-endian.
+  * Disable mipsel builds of u-boot, as it no longer has any targets.
+  * Add patch to specify default mmc partition to use when loading uEnv.txt
+    on BeagleBone Black.
+  * Add patch to support raw initrds on BeagleBone Black.
+  * Mark u-boot-tools as Multi-Arch: foreign.
+  * Mark u-boot as Multi-Arch: same.
+  * Update lintian overrides with list of current platforms.
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Sun, 17 Nov 2013 00:09:32 -0800
+
 u-boot (2013.10-2) unstable; urgency=low
 
   * debian/rules:
