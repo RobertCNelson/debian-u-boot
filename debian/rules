@@ -116,7 +116,7 @@ ifeq (true,$(u_boot_package))
 	$(INSTALL_FILE) debian/lintian.overrides \
 	    debian/$(package)/usr/share/lintian/overrides/$(package)
 
-	gzip -9f `find debian/$(package)/usr/share/doc -type f ! -name "copyright"`
+	gzip -9fn `find debian/$(package)/usr/share/doc -type f ! -name "copyright"`
 	dpkg-gencontrol -ldebian/changelog -isp -p$(package) -Tdebian/$(package).substvars -Pdebian/$(package)
 	cd debian/$(package) && find * -type f ! -regex '^DEBIAN/.*' -print0 | xargs -r0 md5sum > DEBIAN/md5sums
 
