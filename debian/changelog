@@ -1,3 +1,13 @@
+u-boot (2014.01-1) unstable; urgency=low
+
+  * New upstream version. 
+  * Updated patches. 
+  * debian/watch: Update to catch -rc versions.
+  * debian/control: Update Vcs-* headers.
+  * u-boot-tools: Strip comment sections from mkimage and fw_printenv.
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Tue, 11 Feb 2014 15:11:47 -0800
+
 u-boot (2013.10-3) unstable; urgency=low
 
   * Move build of dbau1100 from mipsel to mips, which fixes FTBFS on mipsel,
