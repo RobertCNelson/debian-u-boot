@@ -72,10 +72,12 @@ ifeq ($(CROSS_COMPILE),)
 	touch include/config.h
 	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
 	    tools
+	$(CROSS_COMPILE)strip --remove-section=.comment tools/mkimage
 	$(INSTALL_PROGRAM) tools/mkimage debian/$(tools_package)/usr/bin/
 	# only build env tools if we have Linux MTD headers
 ifeq ($(has_mtd_user),1)
 	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip env
+	$(CROSS_COMPILE)strip --remove-section=.comment tools/env/fw_printenv
 	$(INSTALL_PROGRAM) tools/env/fw_printenv debian/$(tools_package)/usr/bin/
 	ln -sf fw_printenv debian/$(tools_package)/usr/bin/fw_setenv
 endif
