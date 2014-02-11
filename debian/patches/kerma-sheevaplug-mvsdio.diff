@@ -19,9 +19,11 @@ Changes in v1:
  include/configs/sheevaplug.h                  |   65 ++-
  6 files changed, 1124 insertions(+), 9 deletions(-)
 
---- a/arch/arm/include/asm/arch-kirkwood/kirkwood.h
-+++ b/arch/arm/include/asm/arch-kirkwood/kirkwood.h
-@@ -55,6 +55,7 @@
+Index: u-boot/arch/arm/include/asm/arch-kirkwood/kirkwood.h
+===================================================================
+--- u-boot.orig/arch/arm/include/asm/arch-kirkwood/kirkwood.h	2014-01-06 20:20:07.000000000 -0800
++++ u-boot/arch/arm/include/asm/arch-kirkwood/kirkwood.h	2014-01-17 18:26:25.732406923 -0800
+@@ -39,6 +39,7 @@
  #define KW_EGIGA0_BASE			(KW_REGISTER(0x72000))
  #define KW_EGIGA1_BASE			(KW_REGISTER(0x76000))
  #define KW_SATA_BASE			(KW_REGISTER(0x80000))
@@ -29,18 +31,22 @@ Changes in v1:
  
  /* Kirkwood Sata controller has two ports */
  #define KW_SATA_PORT0_OFFSET		0x2000
---- a/drivers/mmc/Makefile
-+++ b/drivers/mmc/Makefile
-@@ -38,6 +38,7 @@
- COBJS-$(CONFIG_MMC_SPI) += mmc_spi.o
- COBJS-$(CONFIG_ARM_PL180_MMCI) += arm_pl180_mmci.o
- COBJS-$(CONFIG_MV_SDHCI) += mv_sdhci.o
-+COBJS-$(CONFIG_MV_SDIO) += mv_sdio.o
- COBJS-$(CONFIG_MXC_MMC) += mxcmmc.o
- COBJS-$(CONFIG_MXS_MMC) += mxsmmc.o
- COBJS-$(CONFIG_OMAP_HSMMC) += omap_hsmmc.o
---- /dev/null
-+++ b/drivers/mmc/mv_sdio.c
+Index: u-boot/drivers/mmc/Makefile
+===================================================================
+--- u-boot.orig/drivers/mmc/Makefile	2014-01-17 18:14:48.000000000 -0800
++++ u-boot/drivers/mmc/Makefile	2014-01-17 18:27:42.756788917 -0800
+@@ -15,6 +15,7 @@
+ obj-$(CONFIG_MMC_SPI) += mmc_spi.o
+ obj-$(CONFIG_ARM_PL180_MMCI) += arm_pl180_mmci.o
+ obj-$(CONFIG_MV_SDHCI) += mv_sdhci.o
++obj-$(CONFIG_MV_SDIO) += mv_sdio.o
+ obj-$(CONFIG_MXC_MMC) += mxcmmc.o
+ obj-$(CONFIG_MXS_MMC) += mxsmmc.o
+ obj-$(CONFIG_OMAP_HSMMC) += omap_hsmmc.o
+Index: u-boot/drivers/mmc/mv_sdio.c
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ u-boot/drivers/mmc/mv_sdio.c	2014-01-17 18:26:25.736406947 -0800
 @@ -0,0 +1,747 @@
 +/*
 + * (C) Copyright 2003
@@ -789,8 +795,10 @@ Changes in v1:
 +
 +#endif	/* CONFIG_MMC */
 +
---- /dev/null
-+++ b/drivers/mmc/mv_sdio.h
+Index: u-boot/drivers/mmc/mv_sdio.h
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ u-boot/drivers/mmc/mv_sdio.h	2014-01-17 18:26:25.740406962 -0800
 @@ -0,0 +1,296 @@
 +/*
 + * Copyright (C) 2008 Marvell Semiconductors, All Rights Reserved.
@@ -1088,9 +1096,11 @@ Changes in v1:
 +} mv_sd_cid_t;
 +
 +#endif /* _MVSDIO_INCLUDE */
---- a/include/configs/sheevaplug.h
-+++ b/include/configs/sheevaplug.h
-@@ -25,10 +25,12 @@
+Index: u-boot/include/configs/sheevaplug.h
+===================================================================
+--- u-boot.orig/include/configs/sheevaplug.h	2014-01-17 18:23:48.000000000 -0800
++++ u-boot/include/configs/sheevaplug.h	2014-01-17 18:26:25.744406985 -0800
+@@ -9,10 +9,12 @@
  #ifndef _CONFIG_SHEEVAPLUG_H
  #define _CONFIG_SHEEVAPLUG_H
  
@@ -1104,7 +1114,7 @@ Changes in v1:
  
  /*
   * High Level Configuration Options (easy to change)
-@@ -48,6 +50,7 @@
+@@ -32,6 +34,7 @@
  #define CONFIG_CMD_ENV
  #define CONFIG_CMD_IDE
  #define CONFIG_CMD_MII
@@ -1112,7 +1122,7 @@ Changes in v1:
  #define CONFIG_CMD_NAND
  #define CONFIG_CMD_PING
  #define CONFIG_CMD_USB
-@@ -79,16 +82,18 @@
+@@ -63,16 +66,18 @@
   */
  #define CONFIG_BOOTCOMMAND		"${x_bootcmd_kernel}; "	\
  	"setenv bootargs ${x_bootargs} ${x_bootargs_root}; "	\
@@ -1139,7 +1149,7 @@ Changes in v1:
  
  /*
   * Ethernet Driver configuration
-@@ -99,6 +104,14 @@
+@@ -83,6 +88,14 @@
  #endif /* CONFIG_CMD_NET */
  
  /*

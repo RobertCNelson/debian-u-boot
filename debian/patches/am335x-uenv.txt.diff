@@ -4,17 +4,17 @@ Based on patch by Robert Nelson <robertcnelson@gmail.com>
 
 Index: u-boot/include/configs/am335x_evm.h
 ===================================================================
---- u-boot.orig/include/configs/am335x_evm.h	2013-10-26 08:39:53.000000000 -0700
-+++ u-boot/include/configs/am335x_evm.h	2013-10-28 16:53:36.476301322 -0700
-@@ -70,6 +70,7 @@
- 	"dfu_alt_info_mmc=" DFU_ALT_INFO_MMC "\0" \
- 	"dfu_alt_info_emmc=rawemmc mmc 0 3751936\0" \
+--- u-boot.orig/include/configs/am335x_evm.h	2014-01-17 18:28:12.000000000 -0800
++++ u-boot/include/configs/am335x_evm.h	2014-01-17 18:28:45.629100642 -0800
+@@ -66,6 +66,7 @@
+ 	"console=ttyO0,115200n8\0" \
+ 	"optargs=\0" \
  	"mmcdev=0\0" \
 +	"mmcpart=1\0" \
  	"mmcroot=/dev/mmcblk0p2 ro\0" \
  	"mmcrootfstype=ext4 rootwait\0" \
  	"rootpath=/export/rootfs\0" \
-@@ -97,7 +98,7 @@
+@@ -93,7 +94,7 @@
  		"nfsroot=${serverip}:${rootpath},${nfsopts} rw " \
  		"ip=dhcp\0" \
  	"bootenv=uEnv.txt\0" \
@@ -22,4 +22,4 @@ Index: u-boot/include/configs/am335x_evm.h
 +	"loadbootenv=load mmc ${mmcdev}:${mmcpart} ${loadaddr} ${bootenv}\0" \
  	"importbootenv=echo Importing environment from mmc ...; " \
  		"env import -t $loadaddr $filesize\0" \
- 	"dfu_alt_info_ram=" DFU_ALT_INFO_RAM "\0" \
+ 	"ramargs=setenv bootargs console=${console} " \
