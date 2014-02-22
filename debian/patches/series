@@ -8,3 +8,4 @@ guruplug_mvfs_and_mmc.diff
 0001-wandboard-uEnv.txt-bootz-n-fixes.patch
 ti_armv7_common-support_raw_initrd.diff
 am335x-uenv.txt.diff
+rpi-ext-raw-initrd
