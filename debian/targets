@@ -4,6 +4,7 @@ armel			dockstar	u-boot.kwb
 armel			dreamplug	u-boot.kwb
 armel			guruplug	u-boot.kwb
 armel			openrd_ultimate	u-boot.kwb
+armel			rpi_b		u-boot.bin
 armel			sheevaplug	u-boot.kwb
 armhf			mx51_efikamx	u-boot.imx
 armhf			mx51_efikasb	u-boot.imx
