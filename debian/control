@@ -1,8 +1,8 @@
 Source: u-boot
 Section: admin
 Priority: optional
-Maintainer: Clint Adams <clint@debian.org>
-Uploaders: Loïc Minier <lool@debian.org>, Micah Anderson <micah@debian.org>, Vagrant Cascadian <vagrant@debian.org>
+Maintainer: Vagrant Cascadian <vagrant@debian.org>
+Uploaders: Loïc Minier <lool@debian.org>, Clint Adams <clint@debian.org>
 Build-Depends: dctrl-tools
 Standards-Version: 3.9.4
 Homepage: http://www.denx.de/wiki/U-Boot/
