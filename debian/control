@@ -19,7 +19,7 @@ Description: A boot loader for embedded systems
  NIOS, and Microblaze.
 
 Package: u-boot-tools
-Architecture: any
+Architecture: linux-any
 Multi-Arch: foreign
 Depends: ${shlibs:Depends}
 Breaks: uboot-envtools (<< 20081215-3~),
