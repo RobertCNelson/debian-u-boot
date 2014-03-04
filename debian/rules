@@ -13,8 +13,9 @@ tools_package := u-boot-tools
 DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+U_BOOT_ARCHITECTURES ?= $(shell grep-dctrl -F Package -X u-boot --show-field Architecture debian/control --no-field-names)
 
-ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), armel armhf avr32 mips powerpc sh4))
+ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), $(U_BOOT_ARCHITECTURES)))
 u_boot_package := true
 endif
 
