@@ -1,3 +1,16 @@
+u-boot (2014.01-2) unstable; urgency=medium
+
+  * Set Maintainer to Vagrant Cascadian (Closes: #738446).
+  * Remove Micah Anderson from uploaders.
+  * Add Clint Adams <clint@debian.org> to uploaders.
+  * Use grep-dctrl to pull architecture list from debian/control, rather than
+    hardcoding architectures in debian/rules.
+  * u-boot-tools: Set architecture to linux-any (Closes: #730833).
+  * Build raspberry pi (rpi_b) image on armel.
+    - Patch to to enable EXT2/EXT4 support and raw initrds.
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Tue, 04 Mar 2014 14:13:22 -0800
+
 u-boot (2014.01-1) unstable; urgency=low
 
   * New upstream version. 
