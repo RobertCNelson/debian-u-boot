@@ -6,6 +6,9 @@ u-boot (2014.01-3) UNRELEASED; urgency=medium
       mode
     - debian/patches/imx6-spl-support.diff: Add support for SPL on
       i.MX6-based systems    
+    - debian/patches/cubox-support.diff, tools/logos/solidrun.bmp: Add
+      support for the CuBox-i.
+  * Build the cubox target.
 
  -- Steve Langasek <vorlon@debian.org>  Fri, 07 Mar 2014 22:03:54 -0800
 
