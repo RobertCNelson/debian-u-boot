@@ -9,3 +9,4 @@ guruplug_mvfs_and_mmc.diff
 ti_armv7_common-support_raw_initrd.diff
 am335x-uenv.txt.diff
 rpi-ext-raw-initrd
+spl-sata-support.diff

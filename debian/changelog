@@ -1,3 +1,12 @@
+u-boot (2014.01-3) UNRELEASED; urgency=medium
+
+  * Patches taken from https://github.com/rabeeh/u-boot-imx6.git to support
+    the SolidRun CuBox-i series:
+    - debian/patches/spl-sata-support.diff: Add support for SATA in SPL
+      mode
+
+ -- Steve Langasek <vorlon@debian.org>  Fri, 07 Mar 2014 22:03:54 -0800
+
 u-boot (2014.01-2) unstable; urgency=medium
 
   * Set Maintainer to Vagrant Cascadian (Closes: #738446).
