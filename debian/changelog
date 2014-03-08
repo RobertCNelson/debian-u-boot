@@ -4,6 +4,8 @@ u-boot (2014.01-3) UNRELEASED; urgency=medium
     the SolidRun CuBox-i series:
     - debian/patches/spl-sata-support.diff: Add support for SATA in SPL
       mode
+    - debian/patches/imx6-spl-support.diff: Add support for SPL on
+      i.MX6-based systems    
 
  -- Steve Langasek <vorlon@debian.org>  Fri, 07 Mar 2014 22:03:54 -0800
 
