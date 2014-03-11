@@ -2814,12 +2814,23 @@ index 0000000..14efcae
 +#endif
 +
 +#endif			       /* __CONFIG_H * */
+diff --git a/include/configs/mx6_common.h b/include/configs/mx6_common.h
+index 514d634..5e3c151 100644
+--- a/include/configs/mx6_common.h
++++ b/include/configs/mx6_common.h
+@@ -22,4 +22,6 @@
+ #define CONFIG_ARM_ERRATA_751472
+ #define CONFIG_BOARD_POSTCLK_INIT
+ 
++#define CONFIG_USB_MAX_CONTROLLER_COUNT 2
++
+ #endif
 diff --git a/include/configs/mx6_cubox-i.h b/include/configs/mx6_cubox-i.h
 new file mode 100644
-index 0000000..eaa05ce
+index 0000000..970e971
 --- /dev/null
 +++ b/include/configs/mx6_cubox-i.h
-@@ -0,0 +1,349 @@
+@@ -0,0 +1,360 @@
 +/*
 + * Copyright (C) 2013 Freescale Semiconductor, Inc.
 + * Copyright (C) 2013 SolidRun ltd.
@@ -2984,6 +2995,8 @@ index 0000000..eaa05ce
 +        "fdt_high=0xffffffff\0" \
 +        "initrd_high=0xffffffff\0" \
 +        "fdt_addr=0x18000000\0" \
++        "ramdiskaddr=0x11800000\0" \
++        "ramdisk=uInitrd\0" \
 +        "boot_fdt=try\0" \
 +        "ip_dyn=yes\0" \
 +        "mmcdev=" __stringify(CONFIG_SYS_MMC_ENV_DEV) "\0" \
@@ -3006,7 +3019,7 @@ index 0000000..eaa05ce
 +        "mmcargs=setenv bootargs console=${console},${baudrate} " \
 +                "root=${mmcroot};\0" \
 +        "loadbootscript=" \
-+                "load mmc ${mmcdev}:${mmcpart} ${loadaddr} ${script};\0" \
++                "load mmc ${mmcdev}:${mmcpart} ${loadaddr} ${file_prefix}${script};\0" \
 +        "bootscript=echo Running bootscript from mmc ...; " \
 +                "source;\0" \
 +        "autodetectfdt=if test ${cpu} = 6SOLO || test ${cpu} = 6DL; then " \
@@ -3026,19 +3039,26 @@ index 0000000..eaa05ce
 +                     "${get_cmd} ${fdt_addr} ${fdt_file}; " \
 +		"fi;\0 " \
 +        "loadbootfile=load mmc ${mmcdev}:${mmcpart} ${loadaddr} ${file_prefix}${bootfile};\0" \
++        "loadramdisk=if test -n ${ramdisk}; then " \
++                         "if load mmc ${mmcdev}:${mmcpart} ${ramdiskaddr} ${file_prefix}${ramdisk}; then; else " \
++                             "setenv ramdiskaddr -; " \
++                         "fi; " \
++                     "else " \
++                     "   setenv ramdiskaddr -; " \
++                     "fi;\0" \
 +        "importbootenv=echo Importing environment from mmc${mmcdev} ...; " \
 +                "env import -t ${loadaddr} ${filesize};\0" \
 +        "autobootfdt=echo Booting ${boot_file}; " \
 +                "if test ${boot_file} = zImage; then " \
-+		    "bootz ${loadaddr} - ${fdt_addr}; " \
++		    "bootz ${loadaddr} ${ramdiskaddr} ${fdt_addr}; " \
 +		"else " \
-+		    "bootm ${loadaddr} - ${fdt_addr}; " \
++		    "bootm ${loadaddr} ${ramdiskaddr} ${fdt_addr}; " \
 +		"fi;\0 " \
 +        "autoboot=echo Booting ${boot_file}; " \
 +		"if test ${boot_file} = zImage; then " \
-+		    "bootz; " \
++		    "bootz ${loadaddr} ${ramdiskaddr}; " \
 +		"else " \
-+		    "bootm; " \
++		    "bootm ${loadaddr} ${ramdiskaddr}; " \
 +		"fi;\0 " \
 +	"bootit=setenv boot_file ${bootfile}; " \
 +                "if test ${boot_file} = zImage; then " \
@@ -3102,12 +3122,14 @@ index 0000000..eaa05ce
 +                                   "setenv origbootfile auto; " \
 +                                   "setenv bootfile zImage; " \
 +                                   "if run loadbootfile; then " \
++                                        "run loadramdisk; " \
 +                                        "run mmcboot; " \
 +                                   "else " \
 +                                        "setenv bootfile uImage; " \
 +                                   "fi; " \
 +                           "fi; " \
 +			   "if run loadbootfile; then " \
++				   "run loadramdisk; " \
 +				   "run mmcboot; " \
 +			   "else " \
 +				   "setenv bootfile ${origbootfile}; " \
@@ -3182,3 +3204,7 @@ index 4356b23..f33572c 100644
  			htab, htab->filled, htab->size,
  			rv, name, value);
  	} while ((dp < data + size) && *dp);	/* size check needed for text */
+diff --git a/tools/logos/solidrun.bmp b/tools/logos/solidrun.bmp
+new file mode 100644
+index 0000000..93db1f8
+Binary files /dev/null and b/tools/logos/solidrun.bmp differ
