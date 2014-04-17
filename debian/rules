@@ -54,7 +54,7 @@ ifeq (true,$(u_boot_package))
 	        installdir=debian/$(package)/usr/lib/$(package)/$$platform; \
 	        mkdir -p $$builddir; \
 	        $(MAKE) O=$$builddir $${platform}_config; \
-		$(MAKE) O=$$builddir $$builddir/$$target; \
+		$(MAKE) O=$$builddir $$target; \
 	        $(INSTALL_DIR) $$installdir; \
 	        $(INSTALL_FILE) $$builddir/$$target $$installdir; \
 	        $(INSTALL_FILE) $$builddir/u-boot $$installdir/uboot.elf; \
