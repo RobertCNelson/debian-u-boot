@@ -1,4 +1,4 @@
 version=3
 
 opts=uversionmangle=s/-rc/~rc/g \
-ftp://ftp.denx.de/pub/u-boot/ u-boot-([\d\.].*)\.tar\.bz2
+http://ftp.denx.de/pub/u-boot/ u-boot-([\d\.].*)\.tar\.bz2
