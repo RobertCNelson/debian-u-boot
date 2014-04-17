@@ -70,9 +70,8 @@ endif
 ifeq ($(CROSS_COMPILE),)
 	# board-independent tools
 	$(INSTALL_DIR) debian/$(tools_package)/usr/bin/
-	touch include/config.h
 	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
-	    tools
+	    tools-only
 	$(CROSS_COMPILE)strip --remove-section=.comment tools/mkimage
 	$(INSTALL_PROGRAM) tools/mkimage debian/$(tools_package)/usr/bin/
 	# only build env tools if we have Linux MTD headers
@@ -82,7 +81,6 @@ ifeq ($(has_mtd_user),1)
 	$(INSTALL_PROGRAM) tools/env/fw_printenv debian/$(tools_package)/usr/bin/
 	ln -sf fw_printenv debian/$(tools_package)/usr/bin/fw_setenv
 endif
-	rm include/config.h
 endif
 
 	touch $@
