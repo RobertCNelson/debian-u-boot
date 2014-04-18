@@ -1,4 +1,4 @@
-u-boot (2014.01-3) UNRELEASED; urgency=medium
+u-boot (2014.04-1) UNRELEASED; urgency=medium
 
   * Patches taken from https://github.com/rabeeh/u-boot-imx6.git to support
     the SolidRun CuBox-i series:

@@ -4,10 +4,10 @@ Description: SolidRun CuBox-i support
  Taken from https://github.com/rabeeh/u-boot-imx6.git
 
 diff --git a/arch/arm/cpu/armv7/mx6/soc.c b/arch/arm/cpu/armv7/mx6/soc.c
-index 0208cba..b5189ea 100644
+index 1725279..9cd183c 100644
 --- a/arch/arm/cpu/armv7/mx6/soc.c
 +++ b/arch/arm/cpu/armv7/mx6/soc.c
-@@ -270,6 +270,7 @@ void s_init(void)
+@@ -311,6 +311,7 @@ void s_init(void)
  	int is_6q = is_cpu_type(MXC_CPU_MX6Q);
  	u32 mask480;
  	u32 mask528;
@@ -15,7 +15,7 @@ index 0208cba..b5189ea 100644
  
  	/* Due to hardware limitation, on MX6Q we need to gate/ungate all PFDs
  	 * to make sure PFD is working right, otherwise, PFDs may
-@@ -290,10 +291,18 @@ void s_init(void)
+@@ -331,10 +332,18 @@ void s_init(void)
  	 */
  	if (is_6q)
  		mask528 |= ANATOP_PFD_CLKGATE_MASK(2);
@@ -38,7 +38,7 @@ index 0208cba..b5189ea 100644
  }
  
  #ifdef CONFIG_IMX_HDMI
-@@ -310,6 +319,9 @@ void imx_enable_hdmi_phy(void)
+@@ -351,6 +360,9 @@ void imx_enable_hdmi_phy(void)
  	udelay(3000);
  	reg |= HDMI_PHY_CONF0_GEN2_TXPWRON_MASK;
  	writeb(reg, &hdmi->phy_conf0);
@@ -1793,10 +1793,10 @@ index 0000000..c061885
 +echo "Error loading kernel image"
 diff --git a/board/solidrun/mx6_cubox-i/mx6_cubox-i_spl.c b/board/solidrun/mx6_cubox-i/mx6_cubox-i_spl.c
 new file mode 100644
-index 0000000..b5a77cd
+index 0000000..53e44ed
 --- /dev/null
 +++ b/board/solidrun/mx6_cubox-i/mx6_cubox-i_spl.c
-@@ -0,0 +1,574 @@
+@@ -0,0 +1,575 @@
 +/*
 + * Author: Tungyi Lin <tungyilin1127@gmail.com>
 + *
@@ -2316,6 +2316,7 @@ index 0000000..b5a77cd
 +
 +void spl_board_init(void)
 +{
++	get_clocks();
 +	setup_boot_device();
 +}
 +
@@ -2372,13 +2373,13 @@ index 0000000..b5a77cd
 +#endif
 +
 diff --git a/boards.cfg b/boards.cfg
-index a8336cc..68daa45 100644
+index b4203f1..f4baf83 100644
 --- a/boards.cfg
 +++ b/boards.cfg
-@@ -310,6 +310,15 @@ Active  arm         armv7          mx6         freescale       mx6sabresd
- Active  arm         armv7          mx6         freescale       mx6slevk            mx6slevk                             mx6slevk:IMX_CONFIG=board/freescale/mx6slevk/imximage.cfg,MX6SL                                                                   Fabio Estevam <fabio.estevam@freescale.com>
- Active  arm         armv7          mx6         barco           titanium            titanium                             titanium:IMX_CONFIG=board/barco/titanium/imximage.cfg                                                                         Stefan Roese <sr@denx.de>
- Active  arm         armv7          mx6         solidrun        hummingboard        hummingboard_solo                           hummingboard:IMX_CONFIG=board/solidrun/hummingboard/solo.cfg,MX6S,DDR_MB=512        Jon Nettleton <jon.nettleton@gmail.com>
+@@ -328,6 +328,15 @@ Active  arm         armv7          mx6         gateworks       gw_ventana
+ Active  arm         armv7          mx6         gateworks       gw_ventana          gwventanaq1g                         gw_ventana:IMX_CONFIG=board/gateworks/gw_ventana/gw_ventana.cfg,MX6Q,DDR_MB=1024                                                  Tim Harvey <tharvey@gateworks.com>
+ Active  arm         armv7          mx6         gateworks       gw_ventana          gwventanaq1gspi                      gw_ventana:IMX_CONFIG=board/gateworks/gw_ventana/gw_ventana.cfg,MX6Q,DDR_MB=1024,SPI_FLASH                                        Tim Harvey <tharvey@gateworks.com>
+ Active  arm         armv7          mx6         solidrun        hummingboard        hummingboard_solo                    hummingboard:IMX_CONFIG=board/solidrun/hummingboard/solo.cfg,MX6S,DDR_MB=512                                                      Jon Nettleton <jon.nettleton@gmail.com>
 +Active  arm         armv7          mx6         solidrun        mx6_c1              mx6_c1solo                           mx6_c1:IMX_CONFIG=board/solidrun/mx6_c1/mx6_c1solo.cfg,MX6S,DDR_MB=512
 +Active  arm         armv7          mx6         solidrun        mx6_c1              mx6_c1dl                             mx6_c1:IMX_CONFIG=board/solidrun/mx6_c1/mx6_c1dl.cfg,MX6DL,DDR_MB=1024
 +Active  arm         armv7          mx6         solidrun        mx6_c1              mx6_c1d                              mx6_c1:IMX_CONFIG=board/solidrun/mx6_c1/mx6_c1d.cfg,MX6Q,DDR_MB=1024
@@ -2392,7 +2393,7 @@ index a8336cc..68daa45 100644
  Active  arm         armv7          omap3       -               pandora             omap3_pandora                        -                                                                                                                                 Grazvydas Ignotas <notasas@gmail.com>
  Active  arm         armv7          omap3       8dtech          eco5pk              eco5pk                               -                                                                                                                                 Raphael Assenat <raph@8d.com>
 diff --git a/drivers/net/fec_mxc.c b/drivers/net/fec_mxc.c
-index 3b2b995..a4bb005 100644
+index 4cefda4..8178d4a 100644
 --- a/drivers/net/fec_mxc.c
 +++ b/drivers/net/fec_mxc.c
 @@ -117,8 +117,10 @@ static int fec_mdio_read(struct ethernet_regs *eth, uint8_t phyAddr,
@@ -2406,7 +2407,7 @@ index 3b2b995..a4bb005 100644
  	return val;
  }
  
-@@ -161,8 +163,10 @@ static int fec_mdio_write(struct ethernet_regs *eth, uint8_t phyAddr,
+@@ -165,8 +167,10 @@ static int fec_mdio_write(struct ethernet_regs *eth, uint8_t phyAddr,
  	 * clear MII interrupt bit
  	 */
  	writel(FEC_IEVENT_MII, &eth->ievent);
@@ -2417,7 +2418,7 @@ index 3b2b995..a4bb005 100644
  
  	return 0;
  }
-@@ -714,9 +718,11 @@ static int fec_send(struct eth_device *dev, void *packet, int length)
+@@ -718,9 +722,11 @@ static int fec_send(struct eth_device *dev, void *packet, int length)
  	if (readw(&fec->tbd_base[fec->tbd_index].status) & FEC_TBD_READY)
  		ret = -EINVAL;
  
@@ -2429,7 +2430,7 @@ index 3b2b995..a4bb005 100644
  	/* for next transmission use the other buffer */
  	if (fec->tbd_index)
  		fec->tbd_index = 0;
-@@ -748,7 +754,9 @@ static int fec_recv(struct eth_device *dev)
+@@ -752,7 +758,9 @@ static int fec_recv(struct eth_device *dev)
  	 */
  	ievent = readl(&fec->eth->ievent);
  	writel(ievent, &fec->eth->ievent);
@@ -2439,7 +2440,7 @@ index 3b2b995..a4bb005 100644
  	if (ievent & FEC_IEVENT_BABR) {
  		fec_halt(dev);
  		fec_init(dev, fec->bd);
-@@ -789,7 +797,9 @@ static int fec_recv(struct eth_device *dev)
+@@ -793,7 +801,9 @@ static int fec_recv(struct eth_device *dev)
  	invalidate_dcache_range(addr, addr + size);
  
  	bd_status = readw(&rbd->status);
@@ -2449,7 +2450,7 @@ index 3b2b995..a4bb005 100644
  
  	if (!(bd_status & FEC_RBD_EMPTY)) {
  		if ((bd_status & FEC_RBD_LAST) && !(bd_status & FEC_RBD_ERR) &&
-@@ -844,7 +854,9 @@ static int fec_recv(struct eth_device *dev)
+@@ -848,7 +858,9 @@ static int fec_recv(struct eth_device *dev)
  		fec_rx_task_enable(fec);
  		fec->rbd_index = (fec->rbd_index + 1) % FEC_RBD_NUM;
  	}
@@ -2461,7 +2462,7 @@ index 3b2b995..a4bb005 100644
  }
 diff --git a/include/configs/mx6_c1.h b/include/configs/mx6_c1.h
 new file mode 100644
-index 0000000..14efcae
+index 0000000..3a3635f
 --- /dev/null
 +++ b/include/configs/mx6_c1.h
 @@ -0,0 +1,349 @@
@@ -2481,7 +2482,7 @@ index 0000000..14efcae
 +#include "mx6_common.h"
 +#include <asm/arch/imx-regs.h>
 +#include <asm/imx-common/gpio.h>
-+#include <asm/sizes.h>
++#include <linux/sizes.h>
 +
 +#undef DEBUG
 +
@@ -2815,19 +2816,19 @@ index 0000000..14efcae
 +
 +#endif			       /* __CONFIG_H * */
 diff --git a/include/configs/mx6_common.h b/include/configs/mx6_common.h
-index 514d634..5e3c151 100644
+index 8a8920f..12ef5c7 100644
 --- a/include/configs/mx6_common.h
 +++ b/include/configs/mx6_common.h
-@@ -22,4 +22,6 @@
- #define CONFIG_ARM_ERRATA_751472
- #define CONFIG_BOARD_POSTCLK_INIT
+@@ -29,4 +29,6 @@
+ #define CONFIG_SYS_PL310_BASE	L2_PL310_BASE
+ #endif
  
 +#define CONFIG_USB_MAX_CONTROLLER_COUNT 2
 +
  #endif
 diff --git a/include/configs/mx6_cubox-i.h b/include/configs/mx6_cubox-i.h
 new file mode 100644
-index 0000000..970e971
+index 0000000..49b029f
 --- /dev/null
 +++ b/include/configs/mx6_cubox-i.h
 @@ -0,0 +1,360 @@
@@ -2847,7 +2848,7 @@ index 0000000..970e971
 +#include "mx6_common.h"
 +#include <asm/arch/imx-regs.h>
 +#include <asm/imx-common/gpio.h>
-+#include <asm/sizes.h>
++#include <linux/sizes.h>
 +
 +#include "imx6_spl.h"
 +

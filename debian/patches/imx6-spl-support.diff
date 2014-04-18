@@ -258,12 +258,12 @@ index 0000000..7af65f2
 +
 +#endif	/* __ASM_ARCH_SPL_H__ */
 diff --git a/arch/arm/include/asm/arch-mx6/sys_proto.h b/arch/arm/include/asm/arch-mx6/sys_proto.h
-index 17125a6..5713ca9 100644
+index 38851a1..3c45ad8 100644
 --- a/arch/arm/include/asm/arch-mx6/sys_proto.h
 +++ b/arch/arm/include/asm/arch-mx6/sys_proto.h
-@@ -10,6 +10,21 @@
- 
+@@ -11,6 +11,21 @@
  #include <asm/imx-common/regs-common.h>
+ #include "../arch-imx/cpu.h"
  
 +enum boot_device {
 +        MX6_SD0_BOOT,
@@ -280,60 +280,87 @@ index 17125a6..5713ca9 100644
 +        MX6_BOOT_DEV_NUM = MX6_UNKNOWN_BOOT,
 +};
 +
- #define MXC_CPU_MX51		0x51
- #define MXC_CPU_MX53		0x53
- #define MXC_CPU_MX6SL		0x60
+ #define is_soc_rev(rev)	((get_cpu_rev() & 0xFF) - rev)
+ u32 get_cpu_rev(void);
+ 
 diff --git a/common/spl/spl_mmc.c b/common/spl/spl_mmc.c
-index fc2f226..a8ba137 100644
+index fa6f891..847d840 100644
 --- a/common/spl/spl_mmc.c
 +++ b/common/spl/spl_mmc.c
-@@ -141,16 +141,34 @@ void spl_mmc_load_image(void)
- 		hang();
+@@ -93,26 +93,26 @@ void spl_mmc_load_image(void)
  	}
  
-+
  	boot_mode = spl_boot_mode();
 -	if (boot_mode == MMCSD_MODE_RAW) {
+-		debug("boot mode - RAW\n");
+-#ifdef CONFIG_SPL_OS_BOOT
+-		if (spl_start_uboot() || mmc_load_image_raw_os(mmc))
 +	switch (boot_mode) {
 +		case MMCSD_MODE_RAW:
 +		case MMCSD_MODE_ANY:
-+#ifdef CONFIG_SPL_OS_BOOT
++#ifdef CONFIG_SUPPORT_EMMC_BOOT
++		case MMCSD_MODE_EMMCBOOT:
+ #endif
+-		err = mmc_load_image_raw(mmc,
+-			CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR);
+ #ifdef CONFIG_SPL_FAT_SUPPORT
+-	} else if (boot_mode == MMCSD_MODE_FAT) {
+-		debug("boot mode - FAT\n");
+-#ifdef CONFIG_SPL_OS_BOOT
+-		if (spl_start_uboot() || spl_load_image_fat_os(&mmc->block_dev,
+-								CONFIG_SYS_MMC_SD_FAT_BOOT_PARTITION))
 +		case MMCSD_MODE_FAT:
-+#endif
+ #endif
+-		err = spl_load_image_fat(&mmc->block_dev,
+-					CONFIG_SYS_MMC_SD_FAT_BOOT_PARTITION,
+-					CONFIG_SPL_FAT_LOAD_PAYLOAD_NAME);
 +			break;
 +		default:
 +#ifdef CONFIG_SPL_LIBCOMMON_SUPPORT
 +			puts("spl: wrong MMC boot mode\n");
-+#endif
+ #endif
 +			hang();
 +			break;
 +	}
 +
-+	if (boot_mode == MMCSD_MODE_RAW || boot_mode == MMCSD_MODE_ANY) {
- 		debug("boot mode - RAW\n");
+ #ifdef CONFIG_SUPPORT_EMMC_BOOT
+-	} else if (boot_mode == MMCSD_MODE_EMMCBOOT) {
++	if (boot_mode == MMCSD_MODE_EMMCBOOT) {
+ 		/*
+ 		 * We need to check what the partition is configured to.
+ 		 * 1 and 2 match up to boot0 / boot1 and 7 is user data
+@@ -129,18 +129,31 @@ void spl_mmc_load_image(void)
+ #endif
+ 			hang();
+ 		}
++	}
++#endif
++	if (boot_mode == MMCSD_MODE_RAW || boot_mode == MMCSD_MODE_ANY
++	    || boot_mode == MMCSD_MODE_EMMCBOOT)
++	{
++		debug("boot mode - RAW\n");
  #ifdef CONFIG_SPL_OS_BOOT
  		if (spl_start_uboot() || mmc_load_image_raw_os(mmc))
  #endif
  		err = mmc_load_image_raw(mmc,
- 					 CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR);
+ 			CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR);
 +	}
- #ifdef CONFIG_SPL_FAT_SUPPORT
--	} else if (boot_mode == MMCSD_MODE_FAT) {
++#ifdef CONFIG_SPL_FAT_SUPPORT
 +	if (boot_mode == MMCSD_MODE_FAT || (boot_mode == MMCSD_MODE_ANY && err))
 +	{
- 		debug("boot mode - FAT\n");
- 
- 		err = fat_register_device(&mmc->block_dev,
-@@ -166,13 +184,8 @@ void spl_mmc_load_image(void)
- 		if (spl_start_uboot() || mmc_load_image_fat_os(mmc))
++		debug("boot mode - FAT\n");
++#ifdef CONFIG_SPL_OS_BOOT
++		if (spl_start_uboot() || spl_load_image_fat_os(&mmc->block_dev,
++								CONFIG_SYS_MMC_SD_FAT_BOOT_PARTITION))
  #endif
- 		err = mmc_load_image_fat(mmc, CONFIG_SPL_FAT_LOAD_PAYLOAD_NAME);
--#endif
 -	} else {
 -#ifdef CONFIG_SPL_LIBCOMMON_SUPPORT
 -		puts("spl: wrong MMC boot mode\n");
 -#endif
 -		hang();
++		err = spl_load_image_fat(&mmc->block_dev,
++					CONFIG_SYS_MMC_SD_FAT_BOOT_PARTITION,
++					CONFIG_SPL_FAT_LOAD_PAYLOAD_NAME);
  	}
 +#endif
  
@@ -666,14 +693,14 @@ index 0000000..7ad4c90
 +
 +#endif
 diff --git a/include/spl.h b/include/spl.h
-index b5c6a1d..6f227f3 100644
+index a7e41da..dd80a81 100644
 --- a/include/spl.h
 +++ b/include/spl.h
-@@ -15,6 +15,7 @@
- #define MMCSD_MODE_UNDEFINED	0
+@@ -17,6 +17,7 @@
  #define MMCSD_MODE_RAW		1
  #define MMCSD_MODE_FAT		2
-+#define MMCSD_MODE_ANY		3
+ #define MMCSD_MODE_EMMCBOOT	3
++#define MMCSD_MODE_ANY		4
  
  struct spl_image_info {
  	const char *name;
