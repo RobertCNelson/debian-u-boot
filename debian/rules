@@ -65,9 +65,6 @@ ifeq (true,$(u_boot_package))
 	        $(INSTALL_FILE) $$builddir/u-boot $$installdir/uboot.elf; \
 	        $(CROSS_COMPILE)strip --remove-section=.comment \
 	            $$installdir/uboot.elf; \
-	        if [ -f $$builddir/MLO ]; then \
-	            $(INSTALL_FILE) $$builddir/MLO $$installdir/MLO; \
-	        fi ; \
 		done ; \
 	done
 endif
