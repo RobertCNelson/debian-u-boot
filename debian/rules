@@ -49,23 +49,23 @@ build-arch:
 ifeq (true,$(u_boot_package))
 	set -e; sed -n 's/^$(DEB_HOST_ARCH)[[:space:]]\+//p' debian/targets \
 	    | while read platform targets; do \
-		for target in $$targets ; do \
 	        builddir=`pwd`/debian/build/$$platform; \
 	        installdir=debian/$(package)/usr/lib/$(package)/$$platform; \
 	        mkdir -p $$builddir; \
+		for target in $$targets ; do \
 	        $(MAKE) O=$$builddir $${platform}_config; \
 		$(MAKE) O=$$builddir $$target; \
+	        $(INSTALL_DIR) $$installdir; \
+	        $(INSTALL_FILE) $$builddir/$$target $$installdir; \
+		done ; \
+	        $(INSTALL_FILE) $$builddir/u-boot $$installdir/uboot.elf; \
+	        $(CROSS_COMPILE)strip --remove-section=.comment \
+	            $$installdir/uboot.elf; \
 		$(MAKE) O=$$builddir HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip env ; \
 		$(CROSS_COMPILE)strip --remove-section=.comment $$builddir/tools/env/fw_printenv ; \
 	        $(INSTALL_DIR) debian/$(tools_package)/usr/bin/; \
 		$(INSTALL_PROGRAM) $$builddir/tools/env/fw_printenv debian/$(tools_package)/usr/bin/ ; \
 		ln -sf fw_printenv debian/$(tools_package)/usr/bin/fw_setenv ; \
-	        $(INSTALL_DIR) $$installdir; \
-	        $(INSTALL_FILE) $$builddir/$$target $$installdir; \
-	        $(INSTALL_FILE) $$builddir/u-boot $$installdir/uboot.elf; \
-	        $(CROSS_COMPILE)strip --remove-section=.comment \
-	            $$installdir/uboot.elf; \
-		done ; \
 	done
 endif
 
