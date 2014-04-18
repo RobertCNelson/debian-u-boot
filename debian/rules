@@ -54,7 +54,12 @@ ifeq (true,$(u_boot_package))
 	        installdir=debian/$(package)/usr/lib/$(package)/$$platform; \
 	        mkdir -p $$builddir; \
 	        $(MAKE) O=$$builddir $${platform}_config; \
-		$(MAKE) O=$$builddir $$builddir/$$target; \
+		$(MAKE) O=$$builddir $$target; \
+		$(MAKE) O=$$builddir HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip env ; \
+		$(CROSS_COMPILE)strip --remove-section=.comment $$builddir/tools/env/fw_printenv ; \
+	        $(INSTALL_DIR) debian/$(tools_package)/usr/bin/; \
+		$(INSTALL_PROGRAM) $$builddir/tools/env/fw_printenv debian/$(tools_package)/usr/bin/ ; \
+		ln -sf fw_printenv debian/$(tools_package)/usr/bin/fw_setenv ; \
 	        $(INSTALL_DIR) $$installdir; \
 	        $(INSTALL_FILE) $$builddir/$$target $$installdir; \
 	        $(INSTALL_FILE) $$builddir/u-boot $$installdir/uboot.elf; \
@@ -70,19 +75,10 @@ endif
 ifeq ($(CROSS_COMPILE),)
 	# board-independent tools
 	$(INSTALL_DIR) debian/$(tools_package)/usr/bin/
-	touch include/config.h
 	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
-	    tools
+	    tools-only
 	$(CROSS_COMPILE)strip --remove-section=.comment tools/mkimage
 	$(INSTALL_PROGRAM) tools/mkimage debian/$(tools_package)/usr/bin/
-	# only build env tools if we have Linux MTD headers
-ifeq ($(has_mtd_user),1)
-	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip env
-	$(CROSS_COMPILE)strip --remove-section=.comment tools/env/fw_printenv
-	$(INSTALL_PROGRAM) tools/env/fw_printenv debian/$(tools_package)/usr/bin/
-	ln -sf fw_printenv debian/$(tools_package)/usr/bin/fw_setenv
-endif
-	rm include/config.h
 endif
 
 	touch $@

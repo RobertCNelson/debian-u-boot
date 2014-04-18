@@ -39,8 +39,8 @@ Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
 
 Index: u-boot/examples/standalone/mips.lds
 ===================================================================
---- u-boot.orig/examples/standalone/mips.lds	2013-10-17 12:15:25.000000000 -0700
-+++ u-boot/examples/standalone/mips.lds	2013-10-19 17:04:58.463166717 -0700
+--- u-boot.orig/examples/standalone/mips.lds	2014-04-17 10:56:49.706810490 -0700
++++ u-boot/examples/standalone/mips.lds	2014-04-17 10:56:49.706810490 -0700
 @@ -5,10 +5,6 @@
   * SPDX-License-Identifier:	GPL-2.0+
   */
@@ -54,14 +54,16 @@ Index: u-boot/examples/standalone/mips.lds
  {
 Index: u-boot/arch/mips/config.mk
 ===================================================================
---- u-boot.orig/arch/mips/config.mk	2013-10-17 12:15:23.000000000 -0700
-+++ u-boot/arch/mips/config.mk	2013-10-19 17:04:58.463166717 -0700
-@@ -5,7 +5,7 @@
+--- u-boot.orig/arch/mips/config.mk	2014-04-17 10:56:49.706810490 -0700
++++ u-boot/arch/mips/config.mk	2014-04-17 10:57:03.190556791 -0700
+@@ -5,10 +5,6 @@
  # SPDX-License-Identifier:	GPL-2.0+
  #
  
--CROSS_COMPILE ?= mips_4KC-
-+#CROSS_COMPILE ?= mips_4KC-
- 
+-ifeq ($(CROSS_COMPILE),)
+-CROSS_COMPILE := mips_4KC-
+-endif
+-
  # Handle special prefix in ELDK 4.0 toolchain
  ifneq (,$(findstring 4KCle,$(CROSS_COMPILE)))
+ ENDIANNESS := -EL
