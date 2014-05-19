@@ -1,0 +1,17 @@
+Enable booting of zImage/vmlinuz and initrd without requiring the use of
+mkimage to create uImage/uInitrd.
+
+Index: u-boot/include/configs/nokia_rx51.h
+===================================================================
+--- u-boot.orig/include/configs/nokia_rx51.h	2014-05-13 15:05:59.000000000 -0700
++++ u-boot/include/configs/nokia_rx51.h	2014-05-13 15:07:43.213088875 -0700
+@@ -136,6 +136,9 @@
+ #define CONFIG_CMD_BOOTMENU		/* ANSI terminal Boot Menu */
+ #define CONFIG_CMD_CLEAR		/* ANSI terminal clear screen command */
+ 
++#define CONFIG_CMD_BOOTZ       /* boot zImage                  */
++#define CONFIG_SUPPORT_RAW_INITRD
++
+ #ifdef ONENAND_SUPPORT
+ 
+ #define CONFIG_CMD_ONENAND		/* ONENAND support */
