@@ -1,16 +1,29 @@
-u-boot (2014.04-1) UNRELEASED; urgency=medium
+u-boot (2014.04-1) unstable; urgency=low
 
+  [ Steve Langasek ]
   * Patches taken from https://github.com/rabeeh/u-boot-imx6.git to support
     the SolidRun CuBox-i series:
-    - debian/patches/spl-sata-support.diff: Add support for SATA in SPL
-      mode
-    - debian/patches/imx6-spl-support.diff: Add support for SPL on
-      i.MX6-based systems    
-    - debian/patches/cubox-support.diff, tools/logos/solidrun.bmp: Add
-      support for the CuBox-i.
-  * Build the cubox target.
+    - debian/patches/spl-sata-support.diff:
+      Add support for SATA in SPL mode
+    - debian/patches/imx6-spl-support.diff:
+      Add support for SPL on i.MX6-based systems
+    - debian/patches/cubox-support.diff, tools/logos/solidrun.bmp:
+      Add support for the CuBox-i.
+  * Build the mx6_cubox-i target (Closes: #741127).
 
- -- Steve Langasek <vorlon@debian.org>  Fri, 07 Mar 2014 22:03:54 -0800
+  [ Vagrant Cascadian ]
+  * Add Nokia nokia_rx51 (n900) to targets to build.
+    - Patch n900 build to support bootz and raw initrds.
+  * debian/rules: Fix building of targets for v2014.04.
+    - Move fw_printenv creation into board-specific targets.
+    - Build target "tools-only".
+    - Drop special-casing of MLO, add MLO to debian/targets.
+  * debian/patches/cubox-i-raw-initrd.diff:
+    - Patch to support raw initrd on cubox-i. 
+  * debian/watch: Use http.
+  * debian/control: Bump Standards-Version to 3.9.5, no changes needed.
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Tue, 20 May 2014 10:04:56 -0700
 
 u-boot (2014.01-2) unstable; urgency=medium
 
