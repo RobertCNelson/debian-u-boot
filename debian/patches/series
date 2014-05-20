@@ -12,3 +12,4 @@ spl-sata-support.diff
 imx6-spl-support.diff
 cubox-support.diff
 n900-bootz-raw-initrd.diff
+cubox-i-raw-initrd.diff
