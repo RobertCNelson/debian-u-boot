@@ -13,3 +13,4 @@ imx6-spl-support.diff
 cubox-support.diff
 n900-bootz-raw-initrd.diff
 cubox-i-raw-initrd.diff
+no-force-CROSS_COMPILE-powerpc.diff
