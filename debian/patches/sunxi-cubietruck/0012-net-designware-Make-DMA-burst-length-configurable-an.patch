@@ -1,0 +1,64 @@
+From 49692c5f517d8e44ed9db0de778728fe7d2a300c Mon Sep 17 00:00:00 2001
+From: Ian Campbell <ijc@hellion.org.uk>
+Date: Thu, 8 May 2014 22:26:35 +0100
+Subject: [PATCH 12/12] net/designware: Make DMA burst length configurable and
+ reduce by default
+
+The correct value for this setting can vary across SoCs and boards, so make it
+configurable.
+
+Also reduce the default value to 8, which is the same default as used in the
+Linux driver.
+
+Signed-off-by: Ian Campbell <ijc@hellion.org.uk>
+Cc: Alexey Brodkin <abrodkin@synopsys.com>
+---
+ drivers/net/designware.c |  2 +-
+ drivers/net/designware.h | 12 ++++++------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/net/designware.c b/drivers/net/designware.c
+index fa816bf..7186e3b 100644
+--- a/drivers/net/designware.c
++++ b/drivers/net/designware.c
+@@ -249,7 +249,7 @@ static int dw_eth_init(struct eth_device *dev, bd_t *bis)
+ 	rx_descs_init(dev);
+ 	tx_descs_init(dev);
+ 
+-	writel(FIXEDBURST | PRIORXTX_41 | BURST_16, &dma_p->busmode);
++	writel(FIXEDBURST | PRIORXTX_41 | DMA_PBL, &dma_p->busmode);
+ 
+ 	writel(readl(&dma_p->opmode) | FLUSHTXFIFO | STOREFORWARD,
+ 	       &dma_p->opmode);
+diff --git a/drivers/net/designware.h b/drivers/net/designware.h
+index de2fdcb..ce51102 100644
+--- a/drivers/net/designware.h
++++ b/drivers/net/designware.h
+@@ -77,18 +77,18 @@ struct eth_dma_regs {
+ 
+ #define DW_DMA_BASE_OFFSET	(0x1000)
+ 
++/* Default DMA Burst length */
++#ifndef CONFIG_DW_GMAC_DEFAULT_DMA_PBL
++#define CONFIG_DW_GMAC_DEFAULT_DMA_PBL 8
++#endif
++
+ /* Bus mode register definitions */
+ #define FIXEDBURST		(1 << 16)
+ #define PRIORXTX_41		(3 << 14)
+ #define PRIORXTX_31		(2 << 14)
+ #define PRIORXTX_21		(1 << 14)
+ #define PRIORXTX_11		(0 << 14)
+-#define BURST_1			(1 << 8)
+-#define BURST_2			(2 << 8)
+-#define BURST_4			(4 << 8)
+-#define BURST_8			(8 << 8)
+-#define BURST_16		(16 << 8)
+-#define BURST_32		(32 << 8)
++#define DMA_PBL			(CONFIG_DW_GMAC_DEFAULT_DMA_PBL<<8)
+ #define RXHIGHPRIO		(1 << 1)
+ #define DMAMAC_SRST		(1 << 0)
+ 
+-- 
+2.0.0.rc2
+

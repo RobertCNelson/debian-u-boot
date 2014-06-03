@@ -1,0 +1,74 @@
+From 1857075a7f00ff0a62b13170a78c70ff94e30f96 Mon Sep 17 00:00:00 2001
+From: Ian Campbell <ijc@hellion.org.uk>
+Date: Wed, 14 May 2014 19:30:29 +0100
+Subject: [PATCH 11/12] net/designware: reorder struct dw_eth_dev to pack more
+ efficiently.
+
+On Thu, 2014-05-08 at 22:26 +0100, Ian Campbell wrote:
+> The {r,t}xbuffs fields also need to be aligned. Previously this was done
+> implicitly because they immediately followed the descriptor tables. Make this
+> explicit and also move to the head of the struct.
+
+Looks like I managed to not actually commit the move of the field to the
+head of the struct! v3.1 follows....
+
+Ian.
+
+8<------------
+
+>From 2937ba01841887317f6792709ed57cb86b5fc0cd Mon Sep 17 00:00:00 2001
+From: Ian Campbell <ijc@hellion.org.uk>
+Date: Thu, 1 May 2014 19:45:15 +0100
+Subject: [PATCH] net/designware: reorder struct dw_eth_dev to pack more
+ efficiently.
+
+The {tx,rx}_mac_descrtable fields are aligned to ARCH_DMA_MINALIGN, which could
+be 256 or even larger. That means there is a potentially huge hole in the
+struct before those fields, so move them to the front where they are better
+packed.
+
+Moving them to the front also helps ensure that so long as dw_eth_dev is
+properly aligned (which it is since "net/designware: ensure device private data
+is DMA aligned.") the {tx,rx}_mac_descrtable will be too, or at least avoids
+having to worry too much about compiler specifics.
+
+The {r,t}xbuffs fields also need to be aligned. Previously this was done
+implicitly because they immediately followed the descriptor tables. Make this
+explicit and also move to the head of the struct.
+
+Signed-off-by: Ian Campbell <ijc@hellion.org.uk>
+Cc: Alexey Brodkin <abrodkin@synopsys.com>
+Tested-by: Siarhei Siamashka <siarhei.siamashka@gmail.com>
+Reviewed-by: Siarhei Siamashka <siarhei.siamashka@gmail.com>
+---
+ drivers/net/designware.h | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/net/designware.h b/drivers/net/designware.h
+index 382b0c7..de2fdcb 100644
+--- a/drivers/net/designware.h
++++ b/drivers/net/designware.h
+@@ -215,15 +215,14 @@ struct dmamacdescr {
+ #endif
+ 
+ struct dw_eth_dev {
+-	u32 interface;
+-	u32 tx_currdescnum;
+-	u32 rx_currdescnum;
+-
+ 	struct dmamacdescr tx_mac_descrtable[CONFIG_TX_DESCR_NUM];
+ 	struct dmamacdescr rx_mac_descrtable[CONFIG_RX_DESCR_NUM];
++	char txbuffs[TX_TOTAL_BUFSIZE] __aligned(ARCH_DMA_MINALIGN);
++	char rxbuffs[RX_TOTAL_BUFSIZE] __aligned(ARCH_DMA_MINALIGN);
+ 
+-	char txbuffs[TX_TOTAL_BUFSIZE];
+-	char rxbuffs[RX_TOTAL_BUFSIZE];
++	u32 interface;
++	u32 tx_currdescnum;
++	u32 rx_currdescnum;
+ 
+ 	struct eth_mac_regs *mac_regs_p;
+ 	struct eth_dma_regs *dma_regs_p;
+-- 
+2.0.0.rc2
+
