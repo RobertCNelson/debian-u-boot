@@ -26,3 +26,4 @@ sunxi-cubietruck/0009-net-designware-ensure-device-private-data-is-DMA-ali.patch
 sunxi-cubietruck/0010-net-designware-ensure-cache-invalidations-are-aligne.patch
 sunxi-cubietruck/0011-net-designware-reorder-struct-dw_eth_dev-to-pack-mor.patch
 sunxi-cubietruck/0012-net-designware-Make-DMA-burst-length-configurable-an.patch
+am335x-bootscript.diff
