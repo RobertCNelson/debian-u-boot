@@ -7,6 +7,7 @@ armel			openrd_ultimate	u-boot.kwb
 armel			rpi_b		u-boot.bin
 armel			sheevaplug	u-boot.kwb
 armhf			Cubietruck	u-boot-sunxi-with-spl.bin
+armhf			Cubietruck_FEL	u-boot.bin spl/u-boot-spl.bin
 armhf			am335x_boneblack u-boot.img spl/u-boot-spl.bin MLO
 armhf			igep0020	u-boot.bin spl/u-boot-spl.bin MLO
 armhf			mx51_efikamx	u-boot.imx
