@@ -4,22 +4,14 @@ Based on patch by Robert Nelson <robertcnelson@gmail.com>
 
 Index: u-boot/include/configs/am335x_evm.h
 ===================================================================
---- u-boot.orig/include/configs/am335x_evm.h	2014-04-17 10:38:48.490839496 -0700
-+++ u-boot/include/configs/am335x_evm.h	2014-04-17 10:38:48.490839496 -0700
-@@ -76,6 +76,7 @@
- 		"name=rootfs,start=2MiB,size=-,uuid=${uuid_gpt_rootfs}\0" \
- 	"optargs=\0" \
- 	"mmcdev=0\0" \
-+	"mmcpart=1\0" \
- 	"mmcroot=/dev/mmcblk0p2 ro\0" \
- 	"mmcrootfstype=ext4 rootwait\0" \
- 	"rootpath=/export/rootfs\0" \
-@@ -103,7 +104,7 @@
+--- u-boot.orig/include/configs/am335x_evm.h
++++ u-boot/include/configs/am335x_evm.h
+@@ -103,7 +103,7 @@
  		"nfsroot=${serverip}:${rootpath},${nfsopts} rw " \
  		"ip=dhcp\0" \
  	"bootenv=uEnv.txt\0" \
 -	"loadbootenv=load mmc ${mmcdev} ${loadaddr} ${bootenv}\0" \
-+	"loadbootenv=load mmc ${mmcdev}:${mmcpart} ${loadaddr} ${bootenv}\0" \
++	"loadbootenv=load mmc ${bootpart} ${loadaddr} ${bootenv}\0" \
  	"importbootenv=echo Importing environment from mmc ...; " \
  		"env import -t $loadaddr $filesize\0" \
  	"ramargs=setenv bootargs console=${console} " \

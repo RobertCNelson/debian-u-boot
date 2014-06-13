@@ -4,19 +4,19 @@ Index: u-boot/include/configs/am335x_evm.h
 ===================================================================
 --- u-boot.orig/include/configs/am335x_evm.h
 +++ u-boot/include/configs/am335x_evm.h
-@@ -114,6 +114,11 @@
+@@ -113,6 +113,11 @@
  	"loadramdisk=load mmc ${mmcdev} ${rdaddr} ramdisk.gz\0" \
  	"loadimage=load mmc ${bootpart} ${loadaddr} ${bootdir}/${bootfile}\0" \
  	"loadfdt=load mmc ${bootpart} ${fdtaddr} ${bootdir}/${fdtfile}\0" \
 +	"script=boot.scr\0" \
 +	"loadbootscript=" \
-+		"load mmc ${mmcdev}:${mmcpart} ${loadaddr} ${script};\0" \
++		"load mmc ${bootpart} ${loadaddr} ${script};\0" \
 +	"bootscript=echo Running bootscript from mmc ...; " \
 +		"source ${loadaddr}\0" \
  	"mmcloados=run mmcargs; " \
  		"if test ${boot_fdt} = yes || test ${boot_fdt} = try; then " \
  			"if run loadfdt; then " \
-@@ -139,6 +144,15 @@
+@@ -138,6 +143,15 @@
  				"echo Running uenvcmd ...;" \
  				"run uenvcmd;" \
  			"fi;" \
