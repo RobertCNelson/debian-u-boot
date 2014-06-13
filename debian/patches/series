@@ -27,3 +27,4 @@ sunxi-cubietruck/0010-net-designware-ensure-cache-invalidations-are-aligne.patch
 sunxi-cubietruck/0011-net-designware-reorder-struct-dw_eth_dev-to-pack-mor.patch
 sunxi-cubietruck/0012-net-designware-Make-DMA-burst-length-configurable-an.patch
 am335x-bootscript.diff
+am335x-try-boot-from-first-partition.diff

@@ -1,0 +1,21 @@
+Attempt booting from the first partition on each device if the second
+partition doesn't have any of the expected boot files.
+
+Index: u-boot/include/configs/am335x_evm.h
+===================================================================
+--- u-boot.orig/include/configs/am335x_evm.h
++++ u-boot/include/configs/am335x_evm.h
+@@ -191,9 +191,13 @@
+ #define CONFIG_BOOTCOMMAND \
+ 	"run findfdt; " \
+ 	"run mmcboot;" \
++	"setenv bootpart 0:1; " \
++	"run mmcboot;" \
+ 	"setenv mmcdev 1; " \
+ 	"setenv bootpart 1:2; " \
+ 	"run mmcboot;" \
++	"setenv bootpart 1:1; " \
++	"run mmcboot;" \
+ 	"run nandboot;"
+ 
+ /* NS16550 Configuration */
