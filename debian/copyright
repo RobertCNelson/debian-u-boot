@@ -1,6 +1,11 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Das U-Boot
 Source: ftp://ftp.denx.de/pub/u-boot/
+Files-Excluded: *fpgadata*
+ arch/powerpc/cpu/mpc8xx/upatch.c
+ board/dave/PPChameleonEVB/fpgadata.c 
+ board/netta/dsp.c
+ drivers/dma/MCD_tasks.c
 
 Files: *
 Copyright: 2000-2013 Wolfgang Denk <wd@denx.de>
