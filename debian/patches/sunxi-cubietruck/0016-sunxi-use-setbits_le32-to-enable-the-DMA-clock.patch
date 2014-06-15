@@ -1,0 +1,24 @@
+From: Ian Campbell <ijc@hellion.org.uk>
+Date: Thu, 5 Jun 2014 19:00:16 +0100
+Subject: sunxi: use setbits_le32 to enable the DMA clock
+
+Signed-off-by: Ian Campbell <ijc@hellion.org.uk>
+Acked-by: Hans de Goede <hdegoede@redhat.com>
+---
+ arch/arm/cpu/armv7/sunxi/clock_sun4i.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/arch/arm/cpu/armv7/sunxi/clock_sun4i.c b/arch/arm/cpu/armv7/sunxi/clock_sun4i.c
+index 5a7da3c..b8b16cf 100644
+--- a/arch/arm/cpu/armv7/sunxi/clock_sun4i.c
++++ b/arch/arm/cpu/armv7/sunxi/clock_sun4i.c
+@@ -36,8 +36,7 @@ void clock_init_safe(void)
+ 	       CPU_CLK_SRC_PLL1 << CPU_CLK_SRC_SHIFT,
+ 	       &ccm->cpu_ahb_apb0_cfg);
+ #ifdef CONFIG_SUN7I
+-	writel(0x1 << AHB_GATE_OFFSET_DMA | readl(&ccm->ahb_gate0),
+-	       &ccm->ahb_gate0);
++	setbits_le32(&ccm->ahb_gate0, 0x1 << AHB_GATE_OFFSET_DMA);
+ #endif
+ 	writel(PLL6_CFG_DEFAULT, &ccm->pll6_cfg);
+ }

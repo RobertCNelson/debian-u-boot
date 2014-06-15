@@ -1,0 +1,31 @@
+From: Ian Campbell <ijc@hellion.org.uk>
+Date: Thu, 5 Jun 2014 19:00:12 +0100
+Subject: AHCI: Increase link timeout to 200ms
+
+In 73545f75b66d "ahci: wait longer for link" I increased the
+timeout to 40ms based on the observed behaviour of a WD disk on a
+Cubietruck. Since then Karsten Merker and myself have both
+observed timeouts with HGST disks (Karsten on Cubietruck, me on
+Cubieboard2). Increasing the timeout to ~175ms fixes this, so go
+to 200ms for a bit of headroom.
+
+Signed-off-by: Ian Campbell <ijc@hellion.org.uk>
+Acked-by: Hans de Goede <hdegoede@redhat.com>
+Cc: Karsten Merker <merker@debian.org>
+---
+ drivers/block/ahci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/block/ahci.c b/drivers/block/ahci.c
+index c8f6573..4df8046 100644
+--- a/drivers/block/ahci.c
++++ b/drivers/block/ahci.c
+@@ -41,7 +41,7 @@ u16 *ataid[AHCI_MAX_PORTS];
+ #define WAIT_MS_SPINUP	20000
+ #define WAIT_MS_DATAIO	5000
+ #define WAIT_MS_FLUSH	5000
+-#define WAIT_MS_LINKUP	40
++#define WAIT_MS_LINKUP	200
+ 
+ static inline u32 ahci_port_base(u32 base, u32 port)
+ {

@@ -26,5 +26,10 @@ sunxi-cubietruck/0009-net-designware-ensure-device-private-data-is-DMA-ali.patch
 sunxi-cubietruck/0010-net-designware-ensure-cache-invalidations-are-aligne.patch
 sunxi-cubietruck/0011-net-designware-reorder-struct-dw_eth_dev-to-pack-mor.patch
 sunxi-cubietruck/0012-net-designware-Make-DMA-burst-length-configurable-an.patch
+sunxi-cubietruck/0013-AHCI-Increase-link-timeout-to-200ms.patch
+sunxi-cubietruck/0014-board_r-run-scsi-init-on-ARM-too.patch
+sunxi-cubietruck/0015-sunxi-add-gpio-driver.patch
+sunxi-cubietruck/0016-sunxi-use-setbits_le32-to-enable-the-DMA-clock.patch
+sunxi-cubietruck/0017-ahci-provide-sunxi-SATA-driver-using-AHCI-platform-f.patch
 am335x-bootscript.diff
 am335x-try-boot-from-first-partition.diff
