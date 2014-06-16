@@ -1,3 +1,33 @@
+u-boot (2014.04+dfsg1-1) unstable; urgency=medium
+
+  [ Vagrant Cascadian ]
+  * Repack upstream tarball to remove files containing firmware without
+    sources (Closes: #750912).
+
+  * Add patches for Cubietruck from upstream.
+  * Add Cubietruck and Cubietruck_FEL targets (Closes: #750473).
+
+  * Add support for bootscripts to BeagleBone Black.
+    - Support loading files from either first or second partition.
+
+  * Modified wandboard patches:
+    - Add support for bootscripts.
+    - Support both fat and ext filesystems by consistantly using the "load"
+      command.
+    - Try loading bootscript from /boot/ as a fallback if not found in /.
+
+  * Update debian/copyright to use copyright format 1.0.
+    - Document which files are removed in debian/copyright.
+  * Update debian/watch to handle +dfsg version.
+  * Update lintian overrides:
+    - Ignore 'u-boot: statically-linked-binary'.
+    - Include new u-boot targets.
+
+  [ Andreas Henriksson ]
+  * Add patches for sunxi AHCI driver (Cubietruck) (Closes: #750473).
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Sun, 15 Jun 2014 21:03:40 -0700
+
 u-boot (2014.04-2) unstable; urgency=medium
 
   * Fix FTBFS on powerpc by not setting CROSS_COMPILE when empty. 
