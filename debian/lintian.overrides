@@ -1,88 +1,88 @@
 # These are not really shared libraries, they're binary bootloaders.
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/dockstar/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/dreamplug/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/guruplug/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/openrd_ultimate/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/rpi_b/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/sheevaplug/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/Cubietruck/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/Cubietruck_FEL/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/am335x_boneblack/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/igep0020/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/mx51_efikamx/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/mx51_efikasb/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/mx53loco/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/mx6_cubox-i/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/nokia_rx51/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/omap3_beagle/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/omap4_panda/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/wandboard_dl/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/wandboard_quad/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/wandboard_solo/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/hammerhead/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/dbau1100/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/qemu_mips/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/ZUMA/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/r2dplus/uboot.elf
-u-boot: shared-lib-without-dependency-information usr/lib/u-boot/sh7785lcr_32bit/uboot.elf
+u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/dockstar/uboot.elf
+u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/dreamplug/uboot.elf
+u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/guruplug/uboot.elf
+u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/openrd_ultimate/uboot.elf
+u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/rpi_b/uboot.elf
+u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/sheevaplug/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/Cubietruck/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/Cubietruck_FEL/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/am335x_boneblack/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/igep0020/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/mx51_efikamx/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/mx51_efikasb/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/mx53loco/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/mx6_cubox-i/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/nokia_rx51/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/omap3_beagle/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/omap4_panda/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/wandboard_dl/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/wandboard_quad/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/wandboard_solo/uboot.elf
+u-boot [avr32]: shared-lib-without-dependency-information usr/lib/u-boot/hammerhead/uboot.elf
+u-boot [mips]: shared-lib-without-dependency-information usr/lib/u-boot/dbau1100/uboot.elf
+u-boot [mips]: shared-lib-without-dependency-information usr/lib/u-boot/qemu_mips/uboot.elf
+u-boot [powerpc]: shared-lib-without-dependency-information usr/lib/u-boot/ZUMA/uboot.elf
+u-boot [sh4]: shared-lib-without-dependency-information usr/lib/u-boot/r2dplus/uboot.elf
+u-boot [sh4]: shared-lib-without-dependency-information usr/lib/u-boot/sh7785lcr_32bit/uboot.elf
 
 # There are no file conflicts across architectures for u-boot, as each
 # target is only installed on a single architecture. In theory, some
 # targets could be built on multiple architectures, but could instead install
 # the package for the architecture needed.
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/dockstar/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/dreamplug/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/guruplug/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/openrd_ultimate/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/rpi_b/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/sheevaplug/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubietruck/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubietruck_FEL/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/am335x_boneblack/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/igep0020/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/mx51_efikamx/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/mx51_efikasb/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/mx53loco/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/mx6_cubox-i/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/nokia_rx51/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/omap3_beagle/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/omap4_panda/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/wandboard_dl/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/wandboard_quad/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/wandboard_solo/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/hammerhead/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/dbau1100/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/qemu_mips/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/ZUMA/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/r2dplus/uboot.elf
-u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/sh7785lcr_32bit/uboot.elf
+u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/dockstar/uboot.elf
+u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/dreamplug/uboot.elf
+u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/guruplug/uboot.elf
+u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/openrd_ultimate/uboot.elf
+u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/rpi_b/uboot.elf
+u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/sheevaplug/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubietruck/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubietruck_FEL/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/am335x_boneblack/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/igep0020/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/mx51_efikamx/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/mx51_efikasb/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/mx53loco/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/mx6_cubox-i/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/nokia_rx51/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/omap3_beagle/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/omap4_panda/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/wandboard_dl/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/wandboard_quad/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/wandboard_solo/uboot.elf
+u-boot [avr32]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/hammerhead/uboot.elf
+u-boot [mips]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/dbau1100/uboot.elf
+u-boot [mips]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/qemu_mips/uboot.elf
+u-boot [powerpc]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/ZUMA/uboot.elf
+u-boot [sh4]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/r2dplus/uboot.elf
+u-boot [sh4]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/sh7785lcr_32bit/uboot.elf
 
 # These bootloaders need to be statically linked.
-u-boot: statically-linked-binary usr/lib/u-boot/dockstar/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/dreamplug/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/guruplug/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/openrd_ultimate/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/rpi_b/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/sheevaplug/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/Cubietruck/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/Cubietruck_FEL/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/am335x_boneblack/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/igep0020/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/mx51_efikamx/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/mx51_efikasb/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/mx53loco/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/mx6_cubox-i/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/nokia_rx51/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/omap3_beagle/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/omap4_panda/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/wandboard_dl/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/wandboard_quad/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/wandboard_solo/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/hammerhead/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/dbau1100/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/qemu_mips/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/ZUMA/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/r2dplus/uboot.elf
-u-boot: statically-linked-binary usr/lib/u-boot/sh7785lcr_32bit/uboot.elf
+u-boot [armel]: statically-linked-binary usr/lib/u-boot/dockstar/uboot.elf
+u-boot [armel]: statically-linked-binary usr/lib/u-boot/dreamplug/uboot.elf
+u-boot [armel]: statically-linked-binary usr/lib/u-boot/guruplug/uboot.elf
+u-boot [armel]: statically-linked-binary usr/lib/u-boot/openrd_ultimate/uboot.elf
+u-boot [armel]: statically-linked-binary usr/lib/u-boot/rpi_b/uboot.elf
+u-boot [armel]: statically-linked-binary usr/lib/u-boot/sheevaplug/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/Cubietruck/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/Cubietruck_FEL/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/am335x_boneblack/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/igep0020/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/mx51_efikamx/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/mx51_efikasb/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/mx53loco/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/mx6_cubox-i/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/nokia_rx51/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/omap3_beagle/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/omap4_panda/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/wandboard_dl/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/wandboard_quad/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/wandboard_solo/uboot.elf
+u-boot [avr32]: statically-linked-binary usr/lib/u-boot/hammerhead/uboot.elf
+u-boot [mips]: statically-linked-binary usr/lib/u-boot/dbau1100/uboot.elf
+u-boot [mips]: statically-linked-binary usr/lib/u-boot/qemu_mips/uboot.elf
+u-boot [powerpc]: statically-linked-binary usr/lib/u-boot/ZUMA/uboot.elf
+u-boot [sh4]: statically-linked-binary usr/lib/u-boot/r2dplus/uboot.elf
+u-boot [sh4]: statically-linked-binary usr/lib/u-boot/sh7785lcr_32bit/uboot.elf
 
 u-boot: description-synopsis-starts-with-article
