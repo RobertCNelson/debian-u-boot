@@ -3,13 +3,15 @@
 target_file=debian/targets
 lintian_overrides=debian/lintian.overrides
 
-targets=$(awk '/^[a-z0-9]/{print $2}' ${target_file})
+targets=$(awk '/^[a-z0-9]/{print $1","$2}' ${target_file})
 
 cat >${lintian_overrides}<<EOF
 # These are not really shared libraries, they're binary bootloaders.
 EOF
 for target in $targets ; do
-	echo "u-boot: shared-lib-without-dependency-information usr/lib/u-boot/${target}/uboot.elf"
+	arch=$(echo ${target} | cut -d , -f 1)
+	target=$(echo ${target} | cut -d , -f 2)
+	echo "u-boot [${arch}]: shared-lib-without-dependency-information usr/lib/u-boot/${target}/uboot.elf"
 done >> ${lintian_overrides}
 
 cat >>${lintian_overrides}<<EOF
@@ -20,7 +22,9 @@ cat >>${lintian_overrides}<<EOF
 # the package for the architecture needed.
 EOF
 for target in $targets ; do
-	echo "u-boot: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/${target}/uboot.elf"
+	arch=$(echo ${target} | cut -d , -f 1)
+	target=$(echo ${target} | cut -d , -f 2)
+	echo "u-boot [${arch}]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/${target}/uboot.elf"
 done >> ${lintian_overrides}
 
 cat >>${lintian_overrides}<<EOF
@@ -28,7 +32,9 @@ cat >>${lintian_overrides}<<EOF
 # These bootloaders need to be statically linked.
 EOF
 for target in $targets ; do
-	echo "u-boot: statically-linked-binary usr/lib/u-boot/${target}/uboot.elf"
+	arch=$(echo ${target} | cut -d , -f 1)
+	target=$(echo ${target} | cut -d , -f 2)
+	echo "u-boot [${arch}]: statically-linked-binary usr/lib/u-boot/${target}/uboot.elf"
 done >> ${lintian_overrides}
 
 cat >>${lintian_overrides}<<EOF
