@@ -280,14 +280,14 @@ Index: u-boot/boards.cfg
 ===================================================================
 --- u-boot.orig/boards.cfg
 +++ u-boot/boards.cfg
-@@ -376,6 +376,7 @@ Active  arm         armv7          rmobi
- Active  arm         armv7          s5pc1xx     samsung         goni                s5p_goni                              -                                                                                                                                 Przemyslaw Marczak <p.marczak@samsung.com>
- Active  arm         armv7          s5pc1xx     samsung         smdkc100            smdkc100                              -                                                                                                                                 Minkyu Kang <mk7.kang@samsung.com>
- Active  arm         armv7          socfpga     altera          socfpga             socfpga_cyclone5                      -                                                                                                                                 -
+@@ -380,6 +380,7 @@ Active  arm         armv7          rmobi
+ Active  arm         armv7          s5pc1xx     samsung         goni                s5p_goni                             -                                                                                                                                 Mateusz Zalega <m.zalega@samsung.com>
+ Active  arm         armv7          s5pc1xx     samsung         smdkc100            smdkc100                             -                                                                                                                                 Minkyu Kang <mk7.kang@samsung.com>
+ Active  arm         armv7          socfpga     altera          socfpga             socfpga_cyclone5                     -                                                                                                                                 -
 +Active  arm         armv7          sunxi       -               sunxi               Cubieboard                            sun4i:CUBIEBOARD,SPL                                                                                                              Hans de Goede <hdegoede@redhat.com>
  Active  arm         armv7          sunxi       -               sunxi               Cubietruck                            sun7i:CUBIETRUCK,SPL,SUNXI_GMAC,RGMII,AHCI,SATAPWR=SUNXI_GPH(12)                                                     Ian Campbell <ijc@hellion.org.uk>:Hans de Goede <hdegoede@redhat.com>
- Active  arm         armv7          sunxi       -               sunxi               Cubietruck_FEL                        sun7i:CUBIETRUCK,SPL_FEL,SUNXI_GMAC,RGMII,,AHCI,SATAPWR=SUNXI_GPH(12)                                                Ian Campbell <ijc@hellion.org.uk>:Hans de Goede <hdegoede@redh
- Active  arm         armv7          u8500       st-ericsson     snowball            snowball                              -                                                                                                                                 Mathieu Poirier <mathieu.poirier@linaro.org>
+ Active  arm         armv7          sunxi       -               sunxi               Cubietruck_FEL                        sun7i:CUBIETRUCK,SPL_FEL,SUNXI_GMAC,RGMII,,AHCI,SATAPWR=SUNXI_GPH(12)                                                Ian Campbell <ijc@hellion.org.uk>:Hans de Goede <hdegoede@redhat.com>
+ Active  arm         armv7          u8500       st-ericsson     snowball            snowball                             -                                                                                                                                 Mathieu Poirier <mathieu.poirier@linaro.org>
 Index: u-boot/include/configs/sun4i.h
 ===================================================================
 --- /dev/null
