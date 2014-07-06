@@ -1,11 +1,13 @@
---- a/arch/x86/cpu/config.mk
-+++ b/arch/x86/cpu/config.mk
-@@ -23,7 +23,7 @@
+Index: u-boot/arch/x86/cpu/config.mk
+===================================================================
+--- u-boot.orig/arch/x86/cpu/config.mk
++++ u-boot/arch/x86/cpu/config.mk
+@@ -7,7 +7,7 @@
  
  CROSS_COMPILE ?= i386-linux-
  
--PLATFORM_CPPFLAGS += -DCONFIG_X86 -D__I386__ -march=i386 -Werror
-+PLATFORM_CPPFLAGS += -DCONFIG_X86 -D__I386__ -march=i386 -Werror -Wno-error=unused-but-set-variable
+-PLATFORM_CPPFLAGS += -DCONFIG_X86 -D__I386__ -Werror
++PLATFORM_CPPFLAGS += -DCONFIG_X86 -D__I386__ -Werror -Wno-error=unused-but-set-variable
  
  # DO NOT MODIFY THE FOLLOWING UNLESS YOU REALLY KNOW WHAT YOU ARE DOING!
  LDPPFLAGS += -DRESET_SEG_START=0xffff0000

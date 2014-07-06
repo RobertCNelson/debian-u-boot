@@ -21,7 +21,7 @@ Index: u-boot/include/configs/wandboard.h
 ===================================================================
 --- u-boot.orig/include/configs/wandboard.h
 +++ u-boot/include/configs/wandboard.h
-@@ -68,6 +68,8 @@
+@@ -76,6 +76,8 @@
  #define CONFIG_BOUNCE_BUFFER
  #define CONFIG_CMD_EXT2
  #define CONFIG_CMD_FAT
@@ -30,10 +30,10 @@ Index: u-boot/include/configs/wandboard.h
  #define CONFIG_DOS_PARTITION
  
  /* Ethernet Configuration */
-@@ -136,12 +138,16 @@
- 		"fi\0" \
- 	"mmcargs=setenv bootargs console=${console},${baudrate} " \
- 		"root=${mmcroot}\0" \
+@@ -172,12 +174,16 @@
+ 			"echo '- no FWBADAPT-7WVGA-LCD-F07A-0102 display';" \
+ 		"fi; " \
+ 		"setenv bootargs ${bootargs} ${fbmem}\0" \
 +	"loadbootenv=load mmc ${mmcdev}:${mmcpart} ${loadaddr} uEnv.txt\0" \
 +	"importbootenv=echo Importing environment from mmc (uEnv.txt)...; " \
 +		"env import -t $loadaddr $filesize\0" \
@@ -50,7 +50,7 @@ Index: u-boot/include/configs/wandboard.h
  	"mmcboot=echo Booting from mmc ...; " \
  		"run mmcargs; " \
  		"if test ${boot_fdt} = yes || test ${boot_fdt} = try; then " \
-@@ -183,16 +189,32 @@
+@@ -219,16 +225,32 @@
  		"fi;\0"
  
  #define CONFIG_BOOTCOMMAND \
@@ -93,7 +93,7 @@ Index: u-boot/include/configs/wandboard.h
  
  /* Miscellaneous configurable options */
  #define CONFIG_SYS_LONGHELP
-@@ -233,6 +255,7 @@
+@@ -269,6 +291,7 @@
  
  #define CONFIG_OF_LIBFDT
  #define CONFIG_CMD_BOOTZ
