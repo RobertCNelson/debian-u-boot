@@ -18,6 +18,7 @@ armhf			mx6_cubox-i	u-boot.img spl/u-boot-spl.bin SPL
 armhf			nokia_rx51	u-boot.bin
 armhf			omap3_beagle	u-boot.bin spl/u-boot-spl.bin MLO
 armhf			omap4_panda	u-boot.bin spl/u-boot-spl.bin MLO
+armhf			udoo_quad	u-boot.imx
 armhf			wandboard_dl	u-boot.imx
 armhf			wandboard_quad	u-boot.imx
 armhf			wandboard_solo	u-boot.imx
