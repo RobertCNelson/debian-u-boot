@@ -259,6 +259,7 @@
 /* PMIC */
 #define CONFIG_POWER
 #define CONFIG_POWER_I2C
+#define CONFIG_POWER_TPS65090
 
 /* Ethernet Controllor Driver */
 #ifdef CONFIG_CMD_NET
@@ -287,5 +288,7 @@
 #define CONFIG_CMD_TIME
 
 #define CONFIG_CMD_BOOTZ
+
+#define CONFIG_CMD_GPIO
 
 #endif	/* __CONFIG_H */
