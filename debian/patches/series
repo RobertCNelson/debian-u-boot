@@ -22,6 +22,7 @@ sunxi-cubietruck/0017-ahci-provide-sunxi-SATA-driver-using-AHCI-platform-f.patch
 sunxi-cubietruck/0018-sunxi-Remove-mmc-DMA-support.patch
 am335x-bootscript.diff
 am335x-try-boot-from-first-partition.diff
+udoo_quad-support.patch
 
 sunxi-cubieboard/0001-sunxi-Add-sun4i-support.patch
 sunxi-cubieboard/0003-net-Rename-and-cleanup-sunxi-Allwinner-emac-driver.patch
