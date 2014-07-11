@@ -1,8 +1,13 @@
-This partially depends on the kerma sheevaplug stuff.
+This partially depends on the kerma-sheevaplug-mvsdio patch.
 
---- a/include/configs/openrd.h
-+++ b/include/configs/openrd.h
-@@ -65,6 +65,7 @@
+Updated version provided by drEagle <drEagle@DOUKKI.NET>:
+https://lists.debian.org/debian-arm/2014/07/msg00041.html
+
+Index: u-boot/include/configs/openrd.h
+===================================================================
+--- u-boot.orig/include/configs/openrd.h
++++ u-boot/include/configs/openrd.h
+@@ -49,6 +49,7 @@
  #define CONFIG_CMD_DHCP
  #define CONFIG_CMD_ENV
  #define CONFIG_CMD_MII
@@ -10,13 +15,41 @@ This partially depends on the kerma sheevaplug stuff.
  #define CONFIG_CMD_NAND
  #define CONFIG_CMD_PING
  #define CONFIG_CMD_USB
-@@ -139,4 +140,9 @@
+@@ -123,4 +124,11 @@
  #define CONFIG_SYS_ATA_IDE1_OFFSET	MV_SATA_PORT1_OFFSET
  #endif /*CONFIG_MVSATA_IDE*/
  
 +#ifdef CONFIG_CMD_MMC
 +#define CONFIG_MMC
-+#define CONFIG_MV_SDIO
++#define CONFIG_GENERIC_MMC
++#define CONFIG_MRVL_MMC
++#define CONFIG_SYS_MMC_BASE KW_SDIO_BASE
 +#endif /* CONFIG_CMD_MMC */
 +
  #endif /* _CONFIG_OPENRD_BASE_H */
+Index: u-boot/board/Marvell/openrd/openrd.c
+===================================================================
+--- u-boot.orig/board/Marvell/openrd/openrd.c
++++ u-boot/board/Marvell/openrd/openrd.c
+@@ -17,6 +17,9 @@
+ #include <asm/arch/kirkwood.h>
+ #include <asm/arch/mpp.h>
+ #include "openrd.h"
++#ifdef CONFIG_MRVL_MMC
++#include <mrvl_mmc.h>
++#endif /* CONFIG_MRVL_MMC */
+ 
+ DECLARE_GLOBAL_DATA_PTR;
+ 
+@@ -159,3 +162,11 @@ void reset_phy(void)
+ #endif
+ }
+ #endif /* CONFIG_RESET_PHY_R */
++
++#ifdef CONFIG_MRVL_MMC
++int board_mmc_init(bd_t *bis)
++{
++       mrvl_mmc_init(bis);
++       return 0;
++}
++#endif /* CONFIG_MRVL_MMC */
