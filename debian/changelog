@@ -1,3 +1,11 @@
+u-boot (2014.07~rc4+dfsg1-1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Updated patches for sheevaplug MMC and SATA support.
+  * Updated openrd patches to use MMC driver.
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Sat, 12 Jul 2014 17:24:51 -0700
+
 u-boot (2014.04+dfsg1-2) unstable; urgency=medium
 
   * Enable udoo_quad target, with patch improving the udoo_quad boot
