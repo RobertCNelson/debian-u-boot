@@ -5,6 +5,7 @@ u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/guruplu
 u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/openrd_ultimate/uboot.elf
 u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/rpi_b/uboot.elf
 u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/sheevaplug/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/Cubieboard/uboot.elf
 u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/Cubietruck/uboot.elf
 u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/Cubietruck_FEL/uboot.elf
 u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/am335x_boneblack/uboot.elf
@@ -16,6 +17,7 @@ u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/mx6_cub
 u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/nokia_rx51/uboot.elf
 u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/omap3_beagle/uboot.elf
 u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/omap4_panda/uboot.elf
+u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/udoo_quad/uboot.elf
 u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/wandboard_dl/uboot.elf
 u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/wandboard_quad/uboot.elf
 u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/wandboard_solo/uboot.elf
@@ -36,6 +38,7 @@ u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boo
 u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/openrd_ultimate/uboot.elf
 u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/rpi_b/uboot.elf
 u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/sheevaplug/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubieboard/uboot.elf
 u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubietruck/uboot.elf
 u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubietruck_FEL/uboot.elf
 u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/am335x_boneblack/uboot.elf
@@ -47,6 +50,7 @@ u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boo
 u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/nokia_rx51/uboot.elf
 u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/omap3_beagle/uboot.elf
 u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/omap4_panda/uboot.elf
+u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/udoo_quad/uboot.elf
 u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/wandboard_dl/uboot.elf
 u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/wandboard_quad/uboot.elf
 u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/wandboard_solo/uboot.elf
@@ -64,6 +68,7 @@ u-boot [armel]: statically-linked-binary usr/lib/u-boot/guruplug/uboot.elf
 u-boot [armel]: statically-linked-binary usr/lib/u-boot/openrd_ultimate/uboot.elf
 u-boot [armel]: statically-linked-binary usr/lib/u-boot/rpi_b/uboot.elf
 u-boot [armel]: statically-linked-binary usr/lib/u-boot/sheevaplug/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/Cubieboard/uboot.elf
 u-boot [armhf]: statically-linked-binary usr/lib/u-boot/Cubietruck/uboot.elf
 u-boot [armhf]: statically-linked-binary usr/lib/u-boot/Cubietruck_FEL/uboot.elf
 u-boot [armhf]: statically-linked-binary usr/lib/u-boot/am335x_boneblack/uboot.elf
@@ -75,6 +80,7 @@ u-boot [armhf]: statically-linked-binary usr/lib/u-boot/mx6_cubox-i/uboot.elf
 u-boot [armhf]: statically-linked-binary usr/lib/u-boot/nokia_rx51/uboot.elf
 u-boot [armhf]: statically-linked-binary usr/lib/u-boot/omap3_beagle/uboot.elf
 u-boot [armhf]: statically-linked-binary usr/lib/u-boot/omap4_panda/uboot.elf
+u-boot [armhf]: statically-linked-binary usr/lib/u-boot/udoo_quad/uboot.elf
 u-boot [armhf]: statically-linked-binary usr/lib/u-boot/wandboard_dl/uboot.elf
 u-boot [armhf]: statically-linked-binary usr/lib/u-boot/wandboard_quad/uboot.elf
 u-boot [armhf]: statically-linked-binary usr/lib/u-boot/wandboard_solo/uboot.elf
