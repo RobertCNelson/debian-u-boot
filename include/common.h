@@ -28,10 +28,8 @@ typedef volatile unsigned char	vu_char;
 #endif
 #if defined(CONFIG_8xx)
 #include <asm/8xx_immap.h>
-#if defined(CONFIG_MPC852)	|| defined(CONFIG_MPC852T)	|| \
-    defined(CONFIG_MPC859)	|| defined(CONFIG_MPC859T)	|| \
-    defined(CONFIG_MPC859DSL)	|| \
-    defined(CONFIG_MPC866)	|| defined(CONFIG_MPC866T)	|| \
+#if defined(CONFIG_MPC859)	|| defined(CONFIG_MPC859T)	|| \
+    defined(CONFIG_MPC866)	|| \
     defined(CONFIG_MPC866P)
 # define CONFIG_MPC866_FAMILY 1
 #elif defined(CONFIG_MPC870) \
@@ -499,8 +497,6 @@ extern ssize_t spi_read	 (uchar *, int, uchar *, int);
 extern ssize_t spi_write (uchar *, int, uchar *, int);
 #endif
 
-void rpxlite_init (void);
-
 #ifdef CONFIG_HERMES
 /* $(BOARD)/hermes.c */
 void hermes_start_lxt980 (int speed);
@@ -687,9 +683,6 @@ ulong get_PERCLK3(void);
 ulong	get_bus_freq  (ulong);
 int get_serial_clock(void);
 
-#if defined(CONFIG_MPC83xx) || defined(CONFIG_MPC85xx)
-ulong get_ddr_freq(ulong);
-#endif
 #if defined(CONFIG_MPC85xx)
 typedef MPC85xx_SYS_INFO sys_info_t;
 void	get_sys_info  ( sys_info_t * );
@@ -705,6 +698,8 @@ static inline ulong get_ddr_freq(ulong dummy)
 {
 	return get_bus_freq(dummy);
 }
+#else
+ulong get_ddr_freq(ulong);
 #endif
 
 #if defined(CONFIG_4xx)
