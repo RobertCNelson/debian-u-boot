@@ -39,3 +39,4 @@ udoo_quad-support.patch
 sunxi-cubieboard/0001-sunxi-Add-sun4i-support.patch
 sunxi-cubieboard/0003-net-Rename-and-cleanup-sunxi-Allwinner-emac-driver.patch
 sunxi-cubieboard/0004-sunxi-Add-emac-glue-enable-emac-on-the-cubieboard.patch
+mx53loco
