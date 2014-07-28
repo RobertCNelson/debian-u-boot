@@ -10,7 +10,7 @@ Vcs-Git: git://anonscm.debian.org/collab-maint/u-boot.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/u-boot.git;a=summary
 
 Package: u-boot
-Architecture: armel armhf avr32 mips powerpc sh4
+Architecture: armel armhf avr32 mips sh4
 Multi-Arch: same
 Description: A boot loader for embedded systems
  Das U-Boot is a cross-platform bootloader for embedded systems,
