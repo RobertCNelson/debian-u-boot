@@ -1,3 +1,12 @@
+u-boot (2014.04+dfsg1-3) unstable; urgency=medium
+
+  * Add patch for mx53loco that enables support for ext4, the "load" command,
+    and using bootz with raw initrds.
+  * Remove ZUMA platform and drop powerpc from u-boot architectures
+    (Closes: #754610).
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Mon, 28 Jul 2014 15:30:26 -0700
+
 u-boot (2014.04+dfsg1-2) unstable; urgency=medium
 
   * Enable udoo_quad target, with patch improving the udoo_quad boot
