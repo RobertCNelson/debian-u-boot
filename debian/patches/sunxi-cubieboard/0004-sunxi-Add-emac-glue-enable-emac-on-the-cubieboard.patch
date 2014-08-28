@@ -34,8 +34,8 @@ Index: u-boot/boards.cfg
 ===================================================================
 --- u-boot.orig/boards.cfg
 +++ u-boot/boards.cfg
-@@ -376,7 +376,7 @@ Active  arm         armv7          rmobi
- Active  arm         armv7          s5pc1xx     samsung         goni                s5p_goni                              -                                                                                                                                 Przemyslaw Marczak <p.marczak@samsung.com>
+@@ -377,7 +377,7 @@ Active  arm         armv7          rmobi
+ Active  arm         armv7          s5pc1xx     samsung         goni                s5p_goni                              -                                                                                                                                 Robert Baldyga <r.baldyga@samsung.com>
  Active  arm         armv7          s5pc1xx     samsung         smdkc100            smdkc100                              -                                                                                                                                 Minkyu Kang <mk7.kang@samsung.com>
  Active  arm         armv7          socfpga     altera          socfpga             socfpga_cyclone5                      -                                                                                                                                 -
 -Active  arm         armv7          sunxi       -               sunxi               Cubieboard                            sun4i:CUBIEBOARD,SPL                                                                                                              Hans de Goede <hdegoede@redhat.com>
