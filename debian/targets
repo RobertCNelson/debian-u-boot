@@ -25,6 +25,5 @@ armhf			wandboard_solo	u-boot.imx
 avr32			hammerhead	u-boot.img
 mips			dbau1100	u-boot.img
 mips			qemu_mips	u-boot.img
-powerpc			ZUMA		u-boot.img
 sh4			r2dplus		u-boot.img
 sh4			sh7785lcr_32bit	u-boot.img

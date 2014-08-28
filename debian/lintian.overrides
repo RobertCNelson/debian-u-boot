@@ -24,7 +24,6 @@ u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/wandboa
 u-boot [avr32]: shared-lib-without-dependency-information usr/lib/u-boot/hammerhead/uboot.elf
 u-boot [mips]: shared-lib-without-dependency-information usr/lib/u-boot/dbau1100/uboot.elf
 u-boot [mips]: shared-lib-without-dependency-information usr/lib/u-boot/qemu_mips/uboot.elf
-u-boot [powerpc]: shared-lib-without-dependency-information usr/lib/u-boot/ZUMA/uboot.elf
 u-boot [sh4]: shared-lib-without-dependency-information usr/lib/u-boot/r2dplus/uboot.elf
 u-boot [sh4]: shared-lib-without-dependency-information usr/lib/u-boot/sh7785lcr_32bit/uboot.elf
 
@@ -57,7 +56,6 @@ u-boot [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boo
 u-boot [avr32]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/hammerhead/uboot.elf
 u-boot [mips]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/dbau1100/uboot.elf
 u-boot [mips]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/qemu_mips/uboot.elf
-u-boot [powerpc]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/ZUMA/uboot.elf
 u-boot [sh4]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/r2dplus/uboot.elf
 u-boot [sh4]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/sh7785lcr_32bit/uboot.elf
 
@@ -87,7 +85,6 @@ u-boot [armhf]: statically-linked-binary usr/lib/u-boot/wandboard_solo/uboot.elf
 u-boot [avr32]: statically-linked-binary usr/lib/u-boot/hammerhead/uboot.elf
 u-boot [mips]: statically-linked-binary usr/lib/u-boot/dbau1100/uboot.elf
 u-boot [mips]: statically-linked-binary usr/lib/u-boot/qemu_mips/uboot.elf
-u-boot [powerpc]: statically-linked-binary usr/lib/u-boot/ZUMA/uboot.elf
 u-boot [sh4]: statically-linked-binary usr/lib/u-boot/r2dplus/uboot.elf
 u-boot [sh4]: statically-linked-binary usr/lib/u-boot/sh7785lcr_32bit/uboot.elf
 
