@@ -14,9 +14,9 @@ Index: u-boot/include/configs/sheevaplug.h
  #define CONFIG_CMD_ENV
 +#define CONFIG_CMD_IDE
  #define CONFIG_CMD_MII
+ #define CONFIG_CMD_MMC
  #define CONFIG_CMD_NAND
- #define CONFIG_CMD_PING
-@@ -95,4 +96,15 @@
+@@ -106,4 +107,15 @@
  #define CONFIG_CMD_MTDPARTS
  #define CONFIG_LZO
  

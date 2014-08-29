@@ -6,12 +6,12 @@ Index: u-boot/include/configs/am335x_evm.h
 ===================================================================
 --- u-boot.orig/include/configs/am335x_evm.h
 +++ u-boot/include/configs/am335x_evm.h
-@@ -103,7 +103,7 @@
+@@ -115,7 +115,7 @@
  		"nfsroot=${serverip}:${rootpath},${nfsopts} rw " \
  		"ip=dhcp\0" \
  	"bootenv=uEnv.txt\0" \
 -	"loadbootenv=load mmc ${mmcdev} ${loadaddr} ${bootenv}\0" \
 +	"loadbootenv=load mmc ${bootpart} ${loadaddr} ${bootenv}\0" \
  	"importbootenv=echo Importing environment from mmc ...; " \
- 		"env import -t $loadaddr $filesize\0" \
+ 		"env import -t -r $loadaddr $filesize\0" \
  	"ramargs=setenv bootargs console=${console} " \
