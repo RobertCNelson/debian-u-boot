@@ -70,6 +70,9 @@ ifeq (true,$(u_boot_package))
 endif
 
 ifeq ($(CROSS_COMPILE),)
+	# Avoid requirement for .config
+	mkdir -p include/config
+	touch include/config/auto.conf
 	# board-independent tools
 	$(INSTALL_DIR) debian/$(tools_package)/usr/bin/
 	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
@@ -87,7 +90,7 @@ clean:
 	rm -f build-arch
 	$(MAKE) distclean
 	rm -rf arch/arm/include/asm/arch arch/arm/include/asm/proc
-	rm -rf tools/mkimage tools/mkenvimage tools/env/fw_printenv
+	rm -rf tools/mkimage tools/mkenvimage tools/env/fw_printenv include/config/
 	rm -rf debian/build
 	rm -f `find . -name "*~"`
 
