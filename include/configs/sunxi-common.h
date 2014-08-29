@@ -57,6 +57,18 @@
 #define PHYS_SDRAM_0			CONFIG_SYS_SDRAM_BASE
 #define PHYS_SDRAM_0_SIZE		0x80000000 /* 2 GiB */
 
+#ifdef CONFIG_AHCI
+#define CONFIG_LIBATA
+#define CONFIG_SCSI_AHCI
+#define CONFIG_SCSI_AHCI_PLAT
+#define CONFIG_SUNXI_AHCI
+#define CONFIG_SYS_SCSI_MAX_SCSI_ID	1
+#define CONFIG_SYS_SCSI_MAX_LUN		1
+#define CONFIG_SYS_SCSI_MAX_DEVICE	(CONFIG_SYS_SCSI_MAX_SCSI_ID * \
+					 CONFIG_SYS_SCSI_MAX_LUN)
+#define CONFIG_CMD_SCSI
+#endif
+
 #define CONFIG_CMD_MEMORY
 #define CONFIG_CMD_SETEXPR
 
@@ -70,7 +82,6 @@
 #define CONFIG_CMD_MMC
 #define CONFIG_MMC_SUNXI
 #define CONFIG_MMC_SUNXI_SLOT		0
-#define CONFIG_MMC_SUNXI_USE_DMA
 #define CONFIG_ENV_IS_IN_MMC
 #define CONFIG_SYS_MMC_ENV_DEV		0	/* first detected MMC controller */
 
@@ -128,7 +139,6 @@
 
 #ifdef CONFIG_SPL_FEL
 
-#define CONFIG_SPL
 #define CONFIG_SPL_LDSCRIPT "arch/arm/cpu/armv7/sunxi/u-boot-spl-fel.lds"
 #define CONFIG_SPL_START_S_PATH "arch/arm/cpu/armv7/sunxi"
 #define CONFIG_SPL_TEXT_BASE		0x2000
@@ -162,7 +172,31 @@
 #undef CONFIG_CMD_NET
 #undef CONFIG_CMD_NFS
 
+/* I2C */
+#define CONFIG_SPL_I2C_SUPPORT
+#define CONFIG_SYS_I2C
+#define CONFIG_SYS_I2C_MVTWSI
+#define CONFIG_SYS_I2C_SPEED		400000
+#define CONFIG_SYS_I2C_SLAVE		0x7f
+#define CONFIG_CMD_I2C
+
+/* PMU */
+#if defined CONFIG_AXP152_POWER || defined CONFIG_AXP209_POWER || defined CONFIG_AXP221_POWER
+#define CONFIG_SPL_POWER_SUPPORT
+#endif
+
+#ifndef CONFIG_CONS_INDEX
 #define CONFIG_CONS_INDEX              1       /* UART0 */
+#endif
+
+/* GPIO */
+#define CONFIG_SUNXI_GPIO
+#define CONFIG_CMD_GPIO
+
+/* Ethernet support */
+#ifdef CONFIG_SUNXI_EMAC
+#define CONFIG_MII			/* MII PHY management		*/
+#endif
 
 #ifdef CONFIG_SUNXI_GMAC
 #define CONFIG_DESIGNWARE_ETH		/* GMAC can use designware driver */
@@ -181,12 +215,20 @@
 #define CONFIG_BOOTP_SEND_HOSTNAME
 #endif
 
+#ifdef CONFIG_USB_EHCI
+#define CONFIG_CMD_USB
+#define CONFIG_SYS_USB_EHCI_MAX_ROOT_PORTS 1
+#define CONFIG_USB_STORAGE
+#endif
+
 #if !defined CONFIG_ENV_IS_IN_MMC && \
     !defined CONFIG_ENV_IS_IN_NAND && \
     !defined CONFIG_ENV_IS_IN_FAT && \
     !defined CONFIG_ENV_IS_IN_SPI_FLASH
 #define CONFIG_ENV_IS_NOWHERE
 #endif
+
+#define CONFIG_MISC_INIT_R
 
 #ifndef CONFIG_SPL_BUILD
 #include <config_distro_defaults.h>

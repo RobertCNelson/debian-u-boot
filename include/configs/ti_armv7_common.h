@@ -198,7 +198,6 @@
  */
 #if !defined(CONFIG_NOR_BOOT) && \
 	!(defined(CONFIG_QSPI_BOOT) && defined(CONFIG_AM43XX))
-#define CONFIG_SPL
 #define CONFIG_SPL_FRAMEWORK
 #define CONFIG_SPL_OS_BOOT
 
@@ -243,13 +242,6 @@
 #define CONFIG_SYS_MMCSD_RAW_MODE_ARGS_SECTOR	0x80	/* address 0x10000 */
 #define CONFIG_SYS_MMCSD_RAW_MODE_ARGS_SECTORS	0x80	/* 64KiB */
 
-/* NAND */
-#ifdef CONFIG_NAND
-#define CONFIG_CMD_SPL_NAND_OFS			0x240000 /* end of u-boot */
-#define CONFIG_SYS_NAND_SPL_KERNEL_OFFS		0x280000
-#define CONFIG_CMD_SPL_WRITE_SIZE		0x2000
-#endif
-
 /* spl export command */
 #define CONFIG_CMD_SPL
 #endif
@@ -275,7 +267,6 @@
 #define CONFIG_SPL_NAND_ECC
 #define CONFIG_SPL_MTD_SUPPORT
 #define CONFIG_SYS_NAND_U_BOOT_START	CONFIG_SYS_TEXT_BASE
-#define CONFIG_SYS_NAND_U_BOOT_OFFS	0x80000
 #endif
 #endif /* !CONFIG_NOR_BOOT */
 

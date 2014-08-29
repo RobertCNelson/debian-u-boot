@@ -181,10 +181,6 @@
  */
 
 /* **** PISMO SUPPORT *** */
-
-/* Configure the PISMO */
-#define PISMO1_NAND_SIZE		GPMC_SIZE_128M
-
 #define CONFIG_NAND
 #define CONFIG_NAND_OMAP_GPMC
 #define CONFIG_ENV_IS_IN_NAND
@@ -219,7 +215,6 @@
 #define CONFIG_NET_RETRY_COUNT 10
 
 /* Defines for SPL */
-#define CONFIG_SPL
 #define CONFIG_SPL_FRAMEWORK
 #define CONFIG_SPL_BOARD_INIT
 #define CONFIG_SPL_CONSOLE
