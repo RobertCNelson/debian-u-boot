@@ -53,7 +53,7 @@ ifeq (true,$(u_boot_package))
 	        installdir=debian/$(package)/usr/lib/$(package)/$$platform; \
 	        mkdir -p $$builddir; \
 		for target in $$targets ; do \
-	        $(MAKE) O=$$builddir $${platform}_config; \
+	        $(MAKE) O=$$builddir $${platform}_defconfig; \
 		$(MAKE) O=$$builddir $$target; \
 	        $(INSTALL_DIR) $$installdir; \
 	        $(INSTALL_FILE) $$builddir/$$target $$installdir; \
