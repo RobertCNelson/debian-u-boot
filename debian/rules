@@ -63,9 +63,10 @@ ifeq (true,$(u_boot_package))
 	            $$installdir/uboot.elf; \
 		$(MAKE) O=$$builddir HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip env ; \
 		$(CROSS_COMPILE)strip --remove-section=.comment $$builddir/tools/env/fw_printenv ; \
-	        $(INSTALL_DIR) debian/$(tools_package)/usr/bin/; \
-		$(INSTALL_PROGRAM) $$builddir/tools/env/fw_printenv debian/$(tools_package)/usr/bin/ ; \
-		ln -sf fw_printenv debian/$(tools_package)/usr/bin/fw_setenv ; \
+		installdir_tools=debian/$(tools_package)/usr/lib/$(package)/$$platform; \
+		$(INSTALL_DIR) $$installdir_tools; \
+		$(INSTALL_PROGRAM) $$builddir/tools/env/fw_printenv $$installdir_tools ; \
+		ln -sf fw_printenv $$installdir_tools/fw_setenv ; \
 	done
 endif
 
