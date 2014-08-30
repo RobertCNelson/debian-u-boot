@@ -6,6 +6,7 @@ armel			guruplug	u-boot.kwb
 armel			openrd_ultimate	u-boot.kwb
 armel			rpi_b		u-boot.bin
 armel			sheevaplug	u-boot.kwb
+armhf			Bananapi	u-boot-sunxi-with-spl.bin
 armhf			Cubieboard	u-boot-sunxi-with-spl.bin
 armhf			Cubietruck	u-boot-sunxi-with-spl.bin
 armhf			Cubietruck_FEL	u-boot.bin spl/u-boot-spl.bin
