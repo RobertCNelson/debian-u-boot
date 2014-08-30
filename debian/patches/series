@@ -14,17 +14,7 @@ am335x-uenv.txt.diff
 n900-bootz-raw-initrd.diff
 #cubox-i-raw-initrd.diff
 no-force-CROSS_COMPILE-powerpc.diff
-sunxi-cubietruck/0013-AHCI-Increase-link-timeout-to-200ms.patch
-sunxi-cubietruck/0014-board_r-run-scsi-init-on-ARM-too.patch
-sunxi-cubietruck/0015-sunxi-add-gpio-driver.patch
-sunxi-cubietruck/0016-sunxi-use-setbits_le32-to-enable-the-DMA-clock.patch
-sunxi-cubietruck/0017-ahci-provide-sunxi-SATA-driver-using-AHCI-platform-f.patch
-sunxi-cubietruck/0018-sunxi-Remove-mmc-DMA-support.patch
 am335x-bootscript.diff
 am335x-try-boot-from-first-partition.diff
 udoo_quad-support.patch
-
-sunxi-cubieboard/0001-sunxi-Add-sun4i-support.patch
-sunxi-cubieboard/0003-net-Rename-and-cleanup-sunxi-Allwinner-emac-driver.patch
-sunxi-cubieboard/0004-sunxi-Add-emac-glue-enable-emac-on-the-cubieboard.patch
 mx53loco
