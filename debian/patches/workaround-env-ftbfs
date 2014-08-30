@@ -1,0 +1,12 @@
+Index: u-boot/tools/env/fw_env.c
+===================================================================
+--- u-boot.orig/tools/env/fw_env.c
++++ u-boot/tools/env/fw_env.c
+@@ -20,6 +20,7 @@
+ #include <sys/ioctl.h>
+ #include <sys/stat.h>
+ #include <unistd.h>
++#include <linux/kconfig.h>
+ 
+ #ifdef MTD_OLD
+ # include <stdint.h>
