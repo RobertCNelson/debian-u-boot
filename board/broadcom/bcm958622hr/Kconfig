@@ -1,4 +1,4 @@
-if TARGET_HIGHBANK
+if TARGET_BCM958622HR
 
 config SYS_CPU
 	string
@@ -6,14 +6,18 @@ config SYS_CPU
 
 config SYS_BOARD
 	string
-	default "highbank"
+	default "bcm_ep"
+
+config SYS_VENDOR
+	string
+	default "broadcom"
 
 config SYS_SOC
 	string
-	default "highbank"
+	default "bcmnsp"
 
 config SYS_CONFIG_NAME
 	string
-	default "highbank"
+	default "bcm_ep_board"
 
 endif
