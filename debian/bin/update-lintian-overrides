@@ -6,15 +6,6 @@ lintian_overrides=debian/lintian.overrides
 targets=$(awk '/^[a-z0-9]/{print $1","$2}' ${target_file})
 
 cat >${lintian_overrides}<<EOF
-# These are not really shared libraries, they're binary bootloaders.
-EOF
-for target in $targets ; do
-	arch=$(echo ${target} | cut -d , -f 1)
-	target=$(echo ${target} | cut -d , -f 2)
-	echo "u-boot [${arch}]: shared-lib-without-dependency-information usr/lib/u-boot/${target}/uboot.elf"
-done >> ${lintian_overrides}
-
-cat >>${lintian_overrides}<<EOF
 
 # There are no file conflicts across architectures for u-boot, as each
 # target is only installed on a single architecture. In theory, some

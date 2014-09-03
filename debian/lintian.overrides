@@ -1,31 +1,3 @@
-# These are not really shared libraries, they're binary bootloaders.
-u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/dockstar/uboot.elf
-u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/dreamplug/uboot.elf
-u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/guruplug/uboot.elf
-u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/openrd_ultimate/uboot.elf
-u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/rpi_b/uboot.elf
-u-boot [armel]: shared-lib-without-dependency-information usr/lib/u-boot/sheevaplug/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/Bananapi/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/Cubieboard/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/Cubietruck/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/Cubietruck_FEL/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/am335x_boneblack/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/igep0020/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/mx51_efikamx/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/mx51_efikasb/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/mx53loco/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/nokia_rx51/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/omap3_beagle/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/omap4_panda/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/udoo_quad/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/wandboard_dl/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/wandboard_quad/uboot.elf
-u-boot [armhf]: shared-lib-without-dependency-information usr/lib/u-boot/wandboard_solo/uboot.elf
-u-boot [avr32]: shared-lib-without-dependency-information usr/lib/u-boot/hammerhead/uboot.elf
-u-boot [mips]: shared-lib-without-dependency-information usr/lib/u-boot/dbau1100/uboot.elf
-u-boot [mips]: shared-lib-without-dependency-information usr/lib/u-boot/qemu_mips/uboot.elf
-u-boot [sh4]: shared-lib-without-dependency-information usr/lib/u-boot/r2dplus/uboot.elf
-u-boot [sh4]: shared-lib-without-dependency-information usr/lib/u-boot/sh7785lcr_32bit/uboot.elf
 
 # There are no file conflicts across architectures for u-boot, as each
 # target is only installed on a single architecture. In theory, some
