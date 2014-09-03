@@ -4,7 +4,6 @@ Source: ftp://ftp.denx.de/pub/u-boot/
 Files-Excluded: *fpgadata*
  arch/powerpc/cpu/mpc8xx/upatch.c
  board/dave/PPChameleonEVB/fpgadata.c 
- board/netta/dsp.c
  drivers/dma/MCD_tasks.c
 
 Files: *
