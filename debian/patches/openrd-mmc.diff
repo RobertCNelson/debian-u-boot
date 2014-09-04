@@ -3,30 +3,6 @@ This partially depends on the kerma-sheevaplug-mvsdio patch.
 Updated version provided by drEagle <drEagle@DOUKKI.NET>:
 https://lists.debian.org/debian-arm/2014/07/msg00041.html
 
-Index: u-boot/include/configs/openrd.h
-===================================================================
---- u-boot.orig/include/configs/openrd.h
-+++ u-boot/include/configs/openrd.h
-@@ -49,6 +49,7 @@
- #define CONFIG_CMD_DHCP
- #define CONFIG_CMD_ENV
- #define CONFIG_CMD_MII
-+#define CONFIG_CMD_MMC
- #define CONFIG_CMD_NAND
- #define CONFIG_CMD_PING
- #define CONFIG_CMD_USB
-@@ -123,4 +124,11 @@
- #define CONFIG_SYS_ATA_IDE1_OFFSET	MV_SATA_PORT1_OFFSET
- #endif /*CONFIG_MVSATA_IDE*/
- 
-+#ifdef CONFIG_CMD_MMC
-+#define CONFIG_MMC
-+#define CONFIG_GENERIC_MMC
-+#define CONFIG_MRVL_MMC
-+#define CONFIG_SYS_MMC_BASE KW_SDIO_BASE
-+#endif /* CONFIG_CMD_MMC */
-+
- #endif /* _CONFIG_OPENRD_BASE_H */
 Index: u-boot/board/Marvell/openrd/openrd.c
 ===================================================================
 --- u-boot.orig/board/Marvell/openrd/openrd.c
