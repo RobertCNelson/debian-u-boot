@@ -1,3 +1,27 @@
+u-boot (2014.10~rc2+dfsg1-1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  
+  * Update debian/patches:
+    - Remove Cubieboard and Cubietruck patches, applied upstream.
+    - Remove kerma-sheevaplug-mvsdio patch, applied upstream.
+    - Update openrd-mmc patch, partially applied upstream.
+    - Add patch to workaround failure when building env tools.
+  
+  * [armhf] Add Bananapi target.
+
+  * debian/rules:
+    - Install fw_printenv and fw_setenv symlink in platform-specific dir.
+    - Create include/config/auto.conf to allow tools-only target to build.
+    - Update to use defconfig target rather than config target.
+  
+  * debian/copyright:
+    - Update Files-Excluded as some files were removed upstream.
+  
+  * Updated lintian overrides.
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Wed, 03 Sep 2014 23:28:59 -0700
+
 u-boot (2014.07+dfsg1-1) unstable; urgency=medium
 
   * New upstream version.
