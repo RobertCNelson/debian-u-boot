@@ -1,0 +1,10 @@
+#!/bin/sh
+DEB_HOST_ARCH=$(dpkg-architecture -qDEB_HOST_ARCH)
+sed -n "s/^$DEB_HOST_ARCH[[:space:]]//p" debian/targets | while read platform targets ; do
+    source_dir=debian/build/${platform}
+    dest_dir=/usr/lib/u-boot/${platform}/
+    for target in ${targets} ; do
+    	echo $source_dir/$target $dest_dir
+    done
+    echo $source_dir/uboot.elf $dest_dir
+done
