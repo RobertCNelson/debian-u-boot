@@ -8,11 +8,11 @@ guruplug_mvfs_and_mmc.diff
 0001-wandboard-uEnv.txt-bootz-n-fixes.patch
 ti_armv7_common-support_raw_initrd.diff
 am335x-uenv.txt.diff
-#spl-sata-support.diff
-#imx6-spl-support.diff
-#cubox-support.diff
+spl-sata-support.diff
+imx6-spl-support.diff
+cubox-support.diff
 n900-bootz-raw-initrd.diff
-#cubox-i-raw-initrd.diff
+cubox-i-raw-initrd.diff
 no-force-CROSS_COMPILE-powerpc.diff
 sunxi-cubietruck/0013-AHCI-Increase-link-timeout-to-200ms.patch
 sunxi-cubietruck/0014-board_r-run-scsi-init-on-ARM-too.patch

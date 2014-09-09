@@ -55,234 +55,38 @@ index 0000000..5e93b34
 +		__bss_end = .;
 +	} >.sdram
 +}
-diff --git a/arch/arm/include/asm/arch-mx6/mx6_ddr_regs.h b/arch/arm/include/asm/arch-mx6/mx6_ddr_regs.h
-new file mode 100644
-index 0000000..6aa0cbe
---- /dev/null
-+++ b/arch/arm/include/asm/arch-mx6/mx6_ddr_regs.h
-@@ -0,0 +1,165 @@
-+/*
-+ * Copyright (C) 2013 TechNexion Inc.
-+ *
-+ * Author: Edward Lin <linuxfae@technexion.com>
-+ *
-+ * SPDX-License-Identifier:	GPL-2.0+
-+ */
-+#ifndef __ASM_ARCH_MX6_DDR_REGS_H__
-+#define __ASM_ARCH_MX6_DDR_REGS_H__
-+
-+
-+/* MMDC P0/P1 Registers */
-+struct mmdc_p_regs {
-+	u32 mdctl;
-+	u32 mdpdc;
-+	u32 mdotc;
-+	u32 mdcfg0;
-+	u32 mdcfg1;
-+	u32 mdcfg2;
-+	u32 mdmisc;
-+	u32 mdscr;
-+	u32 mdref;
-+	u32 res1[2];
-+	u32 mdrwd;
-+	u32 mdor;
-+	u32 res2[3];
-+	u32 mdasp;
-+	u32 res3[240];
-+	u32 mapsr;
-+	u32 res4[254];
-+	u32 mpzqhwctrl;
-+	u32 res5[2];
-+	u32 mpwldectrl0;
-+	u32 mpwldectrl1;
-+	u32 res6;
-+	u32 mpodtctrl;
-+	u32 mprddqby0dl;
-+	u32 mprddqby1dl;
-+	u32 mprddqby2dl;
-+	u32 mprddqby3dl;
-+	u32 res7[4];
-+	u32 mpdgctrl0;
-+	u32 mpdgctrl1;
-+	u32 res8;
-+	u32 mprddlctl;
-+	u32 res9;
-+	u32 mpwrdlctl;
-+	u32 res10[25];
-+	u32 mpmur0;
-+};
-+
-+#define MX6DQ_IOM_DDR_BASE	0x020e0500
-+struct mx6qd_iomux_ddr_regs {
-+	u32 res1[3];
-+	u32 dram_sdqs5;
-+	u32 dram_dqm5;
-+	u32 dram_dqm4;
-+	u32 dram_sdqs4;
-+	u32 dram_sdqs3;
-+	u32 dram_dqm3;
-+	u32 dram_sdqs2;
-+	u32 dram_dqm2;
-+	u32 res2[16];
-+	u32 dram_cas;
-+	u32 res3[2];
-+	u32 dram_ras;
-+	u32 dram_reset;
-+	u32 res4[2];
-+	u32 dram_sdclk_0;
-+	u32 dram_sdba2;
-+	u32 dram_sdcke0;
-+	u32 dram_sdclk_1;
-+	u32 dram_sdcke1;
-+	u32 dram_sdodt0;
-+	u32 dram_sdodt1;
-+	u32 res5;
-+	u32 dram_sdqs0;
-+	u32 dram_dqm0;
-+	u32 dram_sdqs1;
-+	u32 dram_dqm1;
-+	u32 dram_sdqs6;
-+	u32 dram_dqm6;
-+	u32 dram_sdqs7;
-+	u32 dram_dqm7;
-+};
-+
-+#define MX6DQ_IOM_GRP_BASE	0x020e0700
-+struct mx6qd_iomux_grp_regs {
-+	u32 res1[18];
-+	u32 grp_b7ds;
-+	u32 grp_addds;
-+	u32 grp_ddrmode_ctl;
-+	u32 res2;
-+	u32 grp_ddrpke;
-+	u32 res3[6];
-+	u32 grp_ddrmode;
-+	u32 res4[3];
-+	u32 grp_b0ds;
-+	u32 grp_b1ds;
-+	u32 grp_ctlds;
-+	u32 res5;
-+	u32 grp_b2ds;
-+	u32 grp_ddr_type;
-+	u32 grp_b3ds;
-+	u32 grp_b4ds;
-+	u32 grp_b5ds;
-+	u32 grp_b6ds;
-+};
-+
-+#define MX6SDL_IOM_DDR_BASE	0x020e0400
-+struct mx6sdl_iomux_ddr_regs {
-+	u32 res1[25];
-+	u32 dram_cas;
-+	u32 res2[2];
-+	u32 dram_dqm0;
-+	u32 dram_dqm1;
-+	u32 dram_dqm2;
-+	u32 dram_dqm3;
-+	u32 dram_dqm4;
-+	u32 dram_dqm5;
-+	u32 dram_dqm6;
-+	u32 dram_dqm7;
-+	u32 dram_ras;
-+	u32 dram_reset;
-+	u32 res3[2];
-+	u32 dram_sdba2;
-+	u32 dram_sdcke0;
-+	u32 dram_sdcke1;
-+	u32 dram_sdclk_0;
-+	u32 dram_sdclk_1;
-+	u32 dram_sdodt0;
-+	u32 dram_sdodt1;
-+	u32 dram_sdqs0;
-+	u32 dram_sdqs1;
-+	u32 dram_sdqs2;
-+	u32 dram_sdqs3;
-+	u32 dram_sdqs4;
-+	u32 dram_sdqs5;
-+	u32 dram_sdqs6;
-+	u32 dram_sdqs7;
-+};
-+
-+#define MX6SDL_IOM_GRP_BASE	0x020e0700
-+struct mx6sdl_iomux_grp_regs {
-+	u32 res1[18];
-+	u32 grp_b7ds;
-+	u32 grp_addds;
-+	u32 grp_ddrmode_ctl;
-+	u32 grp_ddrpke;
-+	u32 res2[2];
-+	u32 grp_ddrmode;
-+	u32 grp_b0ds;
-+	u32 res3;
-+	u32 grp_ctlds;
-+	u32 grp_b1ds;
-+	u32 grp_ddr_type;
-+	u32 grp_b2ds;
-+	u32 grp_b3ds;
-+	u32 grp_b4ds;
-+	u32 grp_b5ds;
-+	u32 res4;
-+	u32 grp_b6ds;
-+};
-+
-+#endif
-diff --git a/arch/arm/include/asm/arch-mx6/spl.h b/arch/arm/include/asm/arch-mx6/spl.h
-new file mode 100644
-index 0000000..7af65f2
---- /dev/null
-+++ b/arch/arm/include/asm/arch-mx6/spl.h
-@@ -0,0 +1,25 @@
-+/*
-+ * Copyright (C) 2013 TechNexion Ltd.
-+ *
-+ * Author: Richard Hu <linuxfae@technexion.com>
-+ *
-+ * See file CREDITS for list of people who contributed to this
-+ * project.
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License as
-+ * published by the Free Software Foundation; either version 2 of
-+ * the License, or (at your option) any later version.
-+ */
-+
-+#ifndef __ASM_ARCH_SPL_H__
-+#define __ASM_ARCH_SPL_H__
-+
-+#define BOOT_DEVICE_MMC1	0
-+#define BOOT_DEVICE_MMC2	1
-+#define BOOT_DEVICE_MMC2_2	2
-+#define BOOT_DEVICE_NAND	3
-+#define BOOT_DEVICE_SATA	4
-+#define BOOT_DEVICE_NONE	5
-+
-+#endif	/* __ASM_ARCH_SPL_H__ */
-diff --git a/arch/arm/include/asm/arch-mx6/sys_proto.h b/arch/arm/include/asm/arch-mx6/sys_proto.h
-index 38851a1..3c45ad8 100644
---- a/arch/arm/include/asm/arch-mx6/sys_proto.h
-+++ b/arch/arm/include/asm/arch-mx6/sys_proto.h
-@@ -11,6 +11,21 @@
- #include <asm/imx-common/regs-common.h>
- #include "../arch-imx/cpu.h"
- 
-+enum boot_device {
-+        MX6_SD0_BOOT,
-+        MX6_SD1_BOOT,
-+        MX6_MMC_BOOT,
-+        MX6_NAND_BOOT,
-+        MX6_SATA_BOOT,
-+        MX6_WEIM_NOR_BOOT,
-+        MX6_ONE_NAND_BOOT,
-+        MX6_PATA_BOOT,
-+        MX6_I2C_BOOT,
-+        MX6_SPI_NOR_BOOT,
-+        MX6_UNKNOWN_BOOT,
-+        MX6_BOOT_DEV_NUM = MX6_UNKNOWN_BOOT,
-+};
-+
- #define is_soc_rev(rev)	((get_cpu_rev() & 0xFF) - rev)
- u32 get_cpu_rev(void);
- 
+diff --git a/arch/arm/imx-common/spl.c b/arch/arm/imx-common/spl.c
+index 9a02a64..30ca9fa 100644
+--- a/arch/arm/imx-common/spl.c
++++ b/arch/arm/imx-common/spl.c
+@@ -46,7 +46,10 @@ u32 spl_boot_device(void)
+ 	/* SD/eSD: 8.5.3, Table 8-15  */
+ 	case 0x4:
+ 	case 0x5:
+-		return BOOT_DEVICE_MMC1;
++		if ((reg & 0x00001000) >> 12)
++			return BOOT_DEVICE_MMC1;
++		else
++			return BOOT_DEVICE_MMC2;
+ 	/* MMC/eMMC: 8.5.3 */
+ 	case 0x6:
+ 	case 0x7:
+@@ -67,11 +70,10 @@ u32 spl_boot_mode(void)
+ 	/* for MMC return either RAW or FAT mode */
+ 	case BOOT_DEVICE_MMC1:
+ 	case BOOT_DEVICE_MMC2:
+-#ifdef CONFIG_SPL_FAT_SUPPORT
+-		return MMCSD_MODE_FAT;
+-#else
+-		return MMCSD_MODE_RAW;
+-#endif
++		return MMCSD_MODE_ANY;
++		break;
++	case BOOT_DEVICE_SATA:
++		return MMCSD_MODE_UNDEFINED;
+ 		break;
+ 	default:
+ 		puts("spl: ERROR:  unsupported device\n");
 diff --git a/common/spl/spl_mmc.c b/common/spl/spl_mmc.c
 index fa6f891..847d840 100644
 --- a/common/spl/spl_mmc.c
@@ -366,17 +170,6 @@ index fa6f891..847d840 100644
  
  	if (err)
  		hang();
-diff --git a/drivers/mtd/nand/Makefile b/drivers/mtd/nand/Makefile
-index 02b149c..de5b461 100644
---- a/drivers/mtd/nand/Makefile
-+++ b/drivers/mtd/nand/Makefile
-@@ -65,5 +65,6 @@ else  # minimal SPL drivers
- obj-$(CONFIG_NAND_FSL_ELBC) += fsl_elbc_spl.o
- obj-$(CONFIG_NAND_FSL_IFC) += fsl_ifc_spl.o
- obj-$(CONFIG_NAND_MXC) += mxc_nand_spl.o
-+obj-$(CONFIG_NAND_MXS) += mxs_nand_spl.o mxs_nand.o
- 
- endif # drivers
 diff --git a/drivers/mtd/nand/mxs_nand.c b/drivers/mtd/nand/mxs_nand.c
 index 036c113..36cfc18 100644
 --- a/drivers/mtd/nand/mxs_nand.c
@@ -396,217 +189,13 @@ index 036c113..36cfc18 100644
  
  /*
 diff --git a/drivers/mtd/nand/mxs_nand_spl.c b/drivers/mtd/nand/mxs_nand_spl.c
-new file mode 100644
-index 0000000..77e3795
---- /dev/null
+index 0e7c364..8bc7147 100644
+--- a/drivers/mtd/nand/mxs_nand_spl.c
 +++ b/drivers/mtd/nand/mxs_nand_spl.c
-@@ -0,0 +1,235 @@
-+/*
-+ * (C) Copyright 2013
-+ * Richard Hu, Technexion Ltd, richard.hu@technexion.com
-+
-+ * (C) Copyright 2006-2008
-+ * Stefan Roese, DENX Software Engineering, sr@denx.de.
-+ *
-+ * SPDX-License-Identifier:	GPL-2.0+
-+ */
-+
-+#include <common.h>
-+#include <nand.h>
-+#include <asm/io.h>
-+#include <linux/mtd/nand_ecc.h>
-+
-+static nand_info_t mtd;
-+static struct nand_chip nand_chip;
-+
-+#define CONFIG_SYS_NAND_RESET_CNT 200000
-+
-+
-+static int nand_command_lp(int block, int page, uint32_t column, u8 command)
-+{
-+	struct nand_chip *chip = mtd.priv;
-+	int page_addr = page + block * CONFIG_SYS_NAND_PAGE_COUNT;
-+	uint32_t rst_sts_cnt = CONFIG_SYS_NAND_RESET_CNT;
-+
-+	/* Emulate NAND_CMD_READOOB */
-+	if (command == NAND_CMD_READOOB) {
-+		column += mtd.writesize;
-+		command = NAND_CMD_READ0;
-+	}
-+
-+	/* Command latch cycle */
-+	chip->cmd_ctrl(&mtd, command & 0xff,
-+		       NAND_NCE | NAND_CLE | NAND_CTRL_CHANGE);
-+
-+	if (column != -1 || page_addr != -1) {
-+		int ctrl = NAND_CTRL_CHANGE | NAND_NCE | NAND_ALE;
-+
-+		/* Serially input address */
-+		if (column != -1) {
-+			/* Adjust columns for 16 bit buswidth */
-+			if (chip->options & NAND_BUSWIDTH_16)
-+				column >>= 1;
-+			chip->cmd_ctrl(&mtd, column, ctrl);
-+			ctrl &= ~NAND_CTRL_CHANGE;
-+			chip->cmd_ctrl(&mtd, column >> 8, ctrl);
-+		}
-+		if (page_addr != -1) {
-+			chip->cmd_ctrl(&mtd, page_addr, ctrl);
-+			chip->cmd_ctrl(&mtd, page_addr >> 8,
-+					NAND_NCE | NAND_ALE);
-+			#ifdef CONFIG_SYS_NAND_5_ADDR_CYCLE
-+			chip->cmd_ctrl(&mtd, page_addr >> 16,
-+					NAND_NCE | NAND_ALE);
-+			#endif
-+		}
-+	}
-+	chip->cmd_ctrl(&mtd, NAND_CMD_NONE, NAND_NCE | NAND_CTRL_CHANGE);
-+
-+	/*
-+	 * Program and erase have their own busy handlers status, sequential
-+	 * in, and deplete1 need no delay.
-+	 */
-+	switch (command) {
-+
-+	case NAND_CMD_CACHEDPROG:
-+	case NAND_CMD_PAGEPROG:
-+	case NAND_CMD_ERASE1:
-+	case NAND_CMD_ERASE2:
-+	case NAND_CMD_SEQIN:
-+	case NAND_CMD_RNDIN:
-+	case NAND_CMD_STATUS:
-+	case NAND_CMD_DEPLETE1:
-+		return;
-+
-+	case NAND_CMD_STATUS_ERROR:
-+	case NAND_CMD_STATUS_ERROR0:
-+	case NAND_CMD_STATUS_ERROR1:
-+	case NAND_CMD_STATUS_ERROR2:
-+	case NAND_CMD_STATUS_ERROR3:
-+		/* Read error status commands require only a short delay */
-+		udelay(chip->chip_delay);
-+		return;
-+
-+	case NAND_CMD_RESET:
-+		if (chip->dev_ready)
-+			break;
-+		udelay(chip->chip_delay);
-+		chip->cmd_ctrl(&mtd, NAND_CMD_STATUS,
-+			       NAND_NCE | NAND_CLE | NAND_CTRL_CHANGE);
-+		chip->cmd_ctrl(&mtd, NAND_CMD_NONE,
-+			       NAND_NCE | NAND_CTRL_CHANGE);
-+		while (!(chip->read_byte(&mtd) & NAND_STATUS_READY) &&
-+			(rst_sts_cnt--));
-+		return;
-+
-+	case NAND_CMD_RNDOUT:
-+		/* No ready / busy check necessary */
-+		chip->cmd_ctrl(&mtd, NAND_CMD_RNDOUTSTART,
-+			       NAND_NCE | NAND_CLE | NAND_CTRL_CHANGE);
-+		chip->cmd_ctrl(&mtd, NAND_CMD_NONE,
-+			       NAND_NCE | NAND_CTRL_CHANGE);
-+		return;
-+
-+	case NAND_CMD_READ0:
-+		chip->cmd_ctrl(&mtd, NAND_CMD_READSTART,
-+			       NAND_NCE | NAND_CLE | NAND_CTRL_CHANGE);
-+		chip->cmd_ctrl(&mtd, NAND_CMD_NONE,
-+			       NAND_NCE | NAND_CTRL_CHANGE);
-+
-+		/* This applies to read commands */
-+	default:
-+		/*
-+		 * If we don't have access to the busy pin, we apply the given
-+		 * command delay.
-+		 */
-+		if (!chip->dev_ready) {
-+			udelay(chip->chip_delay);
-+			return;
-+		}
-+	}
-+
-+	/*
-+	 * Apply this short delay always to ensure that we do wait tWB in
-+	 * any case on any machine.
-+	 */
-+	ndelay(100);
-+
-+	while (!chip->dev_ready(&mtd))
-+	;
-+}
-+
-+
-+static int nand_is_bad_block(int block)
-+{
-+	struct nand_chip *this = mtd.priv;
-+	struct mxs_nand_info *nand_info = nand_chip.priv;
-+	char bad_mark;
-+	
-+	nand_command_lp(block, 0, CONFIG_SYS_NAND_BAD_BLOCK_POS, NAND_CMD_READOOB);
-+	bad_mark = this->read_byte(&mtd);
-+	if (bad_mark != 0xff)	{
-+		printf("nand_is_bad_block: %lx is bad block:%x !!! \r\n", block, bad_mark);
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+static int nand_read_page(int block, int page, void *dst)
-+{
-+	struct nand_chip *this = mtd.priv;
-+
-+	void (*hwctrl)(struct mtd_info *mtd, int cmd,
-+			unsigned int ctrl) = this->cmd_ctrl;
-+
-+	nand_command_lp(block, page, 0, NAND_CMD_READ0);
-+	this->ecc.read_page(&mtd, &nand_chip, dst, 0, page);
-+}
-+
-+
-+int nand_spl_load_image(uint32_t offs, unsigned int size, void *dst)
-+{
-+	unsigned int block, lastblock;
-+	unsigned int page;
-+
-+	/*
-+	 * offs has to be aligned to a page address!
-+	 */
-+	block = offs / CONFIG_SYS_NAND_BLOCK_SIZE;
-+	lastblock = (offs + size - 1) / CONFIG_SYS_NAND_BLOCK_SIZE;
-+	page = (offs % CONFIG_SYS_NAND_BLOCK_SIZE) / CONFIG_SYS_NAND_PAGE_SIZE;
-+
-+	nand_read_page(block, page, dst);
-+
-+	
-+	while (block <= lastblock) {
-+		if (!nand_is_bad_block(block)) {
-+			//
-+			// Skip bad blocks
-+			//
-+			while (page < CONFIG_SYS_NAND_PAGE_COUNT) {
-+				nand_read_page(block, page, dst);
-+				dst += CONFIG_SYS_NAND_PAGE_SIZE;
-+				page++;
-+			}
-+
-+			page = 0;
-+		
-+		} else {
-+			lastblock++;
-+		}
-+		
-+
-+		block++;
-+	}
-+	
-+
-+	return 0;
-+}
-+
-+/* nand_init() - initialize data to make nand usable by SPL */
-+void nand_init(void)
-+{
+@@ -223,9 +223,30 @@ int nand_default_bbt(struct mtd_info *mtd)
+ 
+ void nand_init(void)
+ {
 +	/*
 +	 * Init board specific nand support
 +	 */
@@ -626,72 +215,28 @@ index 0000000..77e3795
 +
 +	nand_chip.buffers = memalign(ARCH_DMA_MINALIGN, sizeof(*nand_chip.buffers));
 +	nand_chip.oob_poi = nand_chip.buffers->databuf + mtd.writesize;	
-+
-+}
-+
+ }
+ 
 +/* Unselect after operation */
-+void nand_deselect(void)
-+{
+ void nand_deselect(void)
+ {
 +	if (nand_chip.select_chip)
 +		nand_chip.select_chip(&mtd, -1);
-+}
-+
+ }
+-
 diff --git a/include/configs/imx6_spl.h b/include/configs/imx6_spl.h
-new file mode 100644
-index 0000000..7ad4c90
---- /dev/null
+index 6fdc438..5746d0b 100644
+--- a/include/configs/imx6_spl.h
 +++ b/include/configs/imx6_spl.h
-@@ -0,0 +1,50 @@
-+/*
-+ * Author: Tungyi Lin <tungyilin1127@gmail.com>
-+ *
-+ * Derived from EDM_CF_IMX6 code by TechNexion,Inc
-+ *
-+ * SPDX-License-Identifier:     GPL-2.0+
-+ */
-+#ifndef __IMX6_SPL_CONFIG_H
-+#define __IMX6_SPL_CONFIG_H
-+#ifdef CONFIG_SPL
-+
-+#define CONFIG_SPL_FRAMEWORK
-+
-+#define	CONFIG_SPL_LDSCRIPT	"arch/arm/cpu/armv7/mx6/u-boot-spl.lds"
-+#define CONFIG_SPL_TEXT_BASE	0x00908000 
-+#define CONFIG_SPL_MAX_SIZE	43008 /* (42 * 1024) */
-+#define CONFIG_SPL_START_S_PATH	"arch/arm/cpu/armv7"
-+#define CONFIG_SPL_STACK	0x0091FFB8
-+
-+#define CONFIG_SPL_LIBCOMMON_SUPPORT
-+#define CONFIG_SPL_LIBGENERIC_SUPPORT
-+#define CONFIG_SPL_SERIAL_SUPPORT
-+
-+#define CONFIG_SPL_GPIO_SUPPORT
-+
-+#define CONFIG_SPL_FAT_SUPPORT
-+
-+#if defined(CONFIG_SPL_FAT_SUPPORT) || defined(CONFIG_SPL_EXT_SUPPORT)
-+#define CONFIG_SYS_MMC_SD_FAT_BOOT_PARTITION	1
-+#define CONFIG_SPL_FAT_LOAD_PAYLOAD_NAME	"u-boot.img"
-+#define CONFIG_SPL_LIBDISK_SUPPORT
-+#endif
-+
-+/* #define CONFIG_SPL_SATA_SUPPORT */
-+
-+#define CONFIG_SPL_MMC_SUPPORT
-+#define CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR	84 /* offset 69KB */
-+#define CONFIG_SYS_U_BOOT_MAX_SIZE_SECTORS	800 /* 400 KB */
-+#define CONFIG_SYS_MONITOR_LEN	(CONFIG_SYS_U_BOOT_MAX_SIZE_SECTORS/2*1024)
-+
-+#define CONFIG_SPL_BOARD_INIT
-+
-+#define CONFIG_SPL_BSS_START_ADDR	0x18200000
-+#define CONFIG_SPL_BSS_MAX_SIZE		0x100000	/* 1 MB */
-+#define CONFIG_SYS_SPL_MALLOC_START	0x18300000
-+#define CONFIG_SYS_SPL_MALLOC_SIZE	0x3200000  /* 50 MB */
-+#define CONFIG_SYS_TEXT_BASE		0x17800000
-+#endif
-+
-+#endif
+@@ -24,7 +24,7 @@
+  *    and some padding thus 'our' max size is really 0x00908000 - 0x00918000
+  *    or 64KB
+  */
+-#define CONFIG_SPL_LDSCRIPT	"arch/arm/cpu/armv7/omap-common/u-boot-spl.lds"
++#define CONFIG_SPL_LDSCRIPT	"arch/arm/cpu/armv7/mx6/u-boot-spl.lds"
+ #define CONFIG_SPL_TEXT_BASE		0x00908000
+ #define CONFIG_SPL_MAX_SIZE		(64 * 1024)
+ #define CONFIG_SPL_START_S_PATH		"arch/arm/cpu/armv7"
 diff --git a/include/spl.h b/include/spl.h
 index a7e41da..dd80a81 100644
 --- a/include/spl.h
