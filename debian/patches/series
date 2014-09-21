@@ -18,3 +18,5 @@ am335x-try-boot-from-first-partition.diff
 udoo_quad-support.patch
 mx53loco
 workaround-env-ftbfs
+
+sunxi/0001-sun7i-Add-support-for-Olimex-A20-OLinuXino-LIME.patch

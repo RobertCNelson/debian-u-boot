@@ -20,6 +20,9 @@ armel	-		sheevaplug	u-boot.kwb
 # Christian Kastner <debian@kvr.at>
 armhf	sunxi		A10-OLinuXino-Lime	u-boot-sunxi-with-spl.bin
 
+# Christian Kastner <debian@kvr.at>
+armhf	sunxi		A20-OLinuXino-Lime	u-boot-sunxi-with-spl.bin
+
 # Ian Campbell <ijc@hellion.org.uk>
 # Vagrant Cascadian <vagrant@debian.org>
 armhf	sunxi		Bananapi	u-boot-sunxi-with-spl.bin
