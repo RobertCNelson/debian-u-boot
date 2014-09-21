@@ -27,6 +27,12 @@ armhf	sunxi		Bananapi	u-boot-sunxi-with-spl.bin
 # Vagrant Cascadian <vagrant@debian.org>
 armhf	sunxi		Cubieboard	u-boot-sunxi-with-spl.bin
 
+# Philip Rinn <rinni@inventati.org>
+# Ian Campbell <ijc@hellion.org.uk>
+# Karsten Merker <merker@debian.org>
+armhf	sunxi		Cubieboard2	u-boot-sunxi-with-spl.bin
+armhf	sunxi		Cubieboard2_FEL	u-boot.bin spl/u-boot-spl.bin
+
 # Ian Campbell <ijc@hellion.org.uk>
 # Robert Nelson <robertcnelson@gmail.com>
 # Karsten Merker <merker@debian.org>
