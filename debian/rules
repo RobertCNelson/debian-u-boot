@@ -26,7 +26,7 @@ LDFLAGS := $(patsubst -Wl$(comma)%,%,$(LDFLAGS))
 override_dh_auto_build:
 ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), $(U_BOOT_ARCHITECTURES)))
 	set -e; sed -n 's/^$(DEB_HOST_ARCH)[[:space:]]\+//p' debian/targets \
-	    | while read platform targets; do \
+	    | while read subarch platform targets; do \
 	        builddir=`pwd`/debian/build/$$platform; \
 	        mkdir -p $$builddir; \
 		for target in $$targets ; do \

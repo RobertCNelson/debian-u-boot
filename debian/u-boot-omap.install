@@ -1,6 +1,6 @@
 #!/bin/sh
 DEB_HOST_ARCH=$(dpkg-architecture -qDEB_HOST_ARCH)
-target_subarch='-'
+target_subarch='omap'
 sed -n "s/^$DEB_HOST_ARCH[[:space:]]//p" debian/targets | while read subarch platform targets ; do
     if [ "$subarch" = "$target_subarch" ]; then
         source_dir=debian/build/${platform}

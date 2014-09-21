@@ -1,28 +1,28 @@
 # DEB_HOST_ARCH		platform	target
 # --------------------------------------------
-armel			dockstar	u-boot.kwb
-armel			dreamplug	u-boot.kwb
-armel			guruplug	u-boot.kwb
-armel			openrd_ultimate	u-boot.kwb
-armel			rpi_b		u-boot.bin
-armel			sheevaplug	u-boot.kwb
-armhf			Bananapi	u-boot-sunxi-with-spl.bin
-armhf			Cubieboard	u-boot-sunxi-with-spl.bin
-armhf			Cubietruck	u-boot-sunxi-with-spl.bin
-armhf			Cubietruck_FEL	u-boot.bin spl/u-boot-spl.bin
-armhf			am335x_boneblack u-boot.img spl/u-boot-spl.bin MLO
-armhf			igep0020	u-boot.bin spl/u-boot-spl.bin MLO
-armhf			mx53loco	u-boot.imx
-armhf			mx6_cubox-i	u-boot.img spl/u-boot-spl.bin SPL
-armhf			nokia_rx51	u-boot.bin
-armhf			omap3_beagle	u-boot.bin spl/u-boot-spl.bin MLO
-armhf			omap4_panda	u-boot.bin spl/u-boot-spl.bin MLO
-armhf			udoo_quad	u-boot.imx
-armhf			wandboard_dl	u-boot.imx
-armhf			wandboard_quad	u-boot.imx
-armhf			wandboard_solo	u-boot.imx
-avr32			hammerhead	u-boot.img
-mips			dbau1100	u-boot.img
-mips			qemu_mips	u-boot.img
-sh4			r2dplus		u-boot.img
-sh4			sh7785lcr_32bit	u-boot.img
+armel	-		dockstar	u-boot.kwb
+armel	-		dreamplug	u-boot.kwb
+armel	-		guruplug	u-boot.kwb
+armel	-		openrd_ultimate	u-boot.kwb
+armel	-		rpi_b		u-boot.bin
+armel	-		sheevaplug	u-boot.kwb
+armhf	sunxi		Bananapi	u-boot-sunxi-with-spl.bin
+armhf	sunxi		Cubieboard	u-boot-sunxi-with-spl.bin
+armhf	sunxi		Cubietruck	u-boot-sunxi-with-spl.bin
+armhf	sunxi		Cubietruck_FEL	u-boot.bin spl/u-boot-spl.bin
+armhf	omap		am335x_boneblack u-boot.img spl/u-boot-spl.bin MLO
+armhf	omap		igep0020	u-boot.bin spl/u-boot-spl.bin MLO
+armhf	imx		mx53loco	u-boot.imx
+#armhf	imx		mx6_cubox-i	u-boot.img spl/u-boot-spl.bin SPL
+armhf	omap		nokia_rx51	u-boot.bin
+armhf	omap		omap3_beagle	u-boot.bin spl/u-boot-spl.bin MLO
+armhf	omap		omap4_panda	u-boot.bin spl/u-boot-spl.bin MLO
+armhf	imx		udoo_quad	u-boot.imx
+armhf	imx		wandboard_dl	u-boot.imx
+armhf	imx		wandboard_quad	u-boot.imx
+armhf	imx		wandboard_solo	u-boot.imx
+avr32	-		hammerhead	u-boot.img
+mips	-		dbau1100	u-boot.img
+mips	-		qemu_mips	u-boot.img
+sh4	-		r2dplus		u-boot.img
+sh4	-		sh7785lcr_32bit	u-boot.img
