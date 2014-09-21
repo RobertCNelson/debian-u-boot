@@ -3,10 +3,10 @@ Description: SPL SATA support
  Taken from https://github.com/rabeeh/u-boot-imx6.git
 
 diff --git a/common/Makefile b/common/Makefile
-index cecd81a..71ba72c 100644
+index de5cce8..2060498 100644
 --- a/common/Makefile
 +++ b/common/Makefile
-@@ -42,6 +42,8 @@ obj-$(CONFIG_ENV_IS_IN_FAT) += env_fat.o
+@@ -60,6 +60,8 @@ obj-$(CONFIG_ENV_IS_IN_FAT) += env_fat.o
  obj-$(CONFIG_ENV_IS_IN_NAND) += env_nand.o
  obj-$(CONFIG_ENV_IS_IN_NVRAM) += env_nvram.o
  obj-$(CONFIG_ENV_IS_IN_ONENAND) += env_onenand.o
@@ -16,10 +16,10 @@ index cecd81a..71ba72c 100644
  obj-$(CONFIG_ENV_IS_IN_REMOTE) += env_remote.o
  obj-$(CONFIG_ENV_IS_IN_UBI) += env_ubi.o
 diff --git a/common/cmd_nvedit.c b/common/cmd_nvedit.c
-index c53601c..a0003e7 100644
+index e6c3395..d36e4b9 100644
 --- a/common/cmd_nvedit.c
 +++ b/common/cmd_nvedit.c
-@@ -47,6 +47,8 @@ DECLARE_GLOBAL_DATA_PTR;
+@@ -49,6 +49,8 @@ DECLARE_GLOBAL_DATA_PTR;
  	!defined(CONFIG_ENV_IS_IN_SPI_FLASH)	&& \
  	!defined(CONFIG_ENV_IS_IN_REMOTE)	&& \
  	!defined(CONFIG_ENV_IS_IN_UBI)		&& \
