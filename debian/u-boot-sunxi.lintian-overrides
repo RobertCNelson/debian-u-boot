@@ -1,0 +1,25 @@
+
+# There are no file conflicts across architectures for u-boot, as each
+# target is only installed on a single architecture. In theory, some
+# targets could be built on multiple architectures, but could instead install
+# the package for the architecture needed.
+u-boot-sunxi [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/A10-OLinuXino-Lime/uboot.elf
+u-boot-sunxi [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/A20-OLinuXino-Lime/uboot.elf
+u-boot-sunxi [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Bananapi/uboot.elf
+u-boot-sunxi [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubieboard/uboot.elf
+u-boot-sunxi [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubieboard2/uboot.elf
+u-boot-sunxi [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubieboard2_FEL/uboot.elf
+u-boot-sunxi [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubietruck/uboot.elf
+u-boot-sunxi [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubietruck_FEL/uboot.elf
+
+# These bootloaders need to be statically linked.
+u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/A10-OLinuXino-Lime/uboot.elf
+u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/A20-OLinuXino-Lime/uboot.elf
+u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/Bananapi/uboot.elf
+u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/Cubieboard/uboot.elf
+u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/Cubieboard2/uboot.elf
+u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/Cubieboard2_FEL/uboot.elf
+u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/Cubietruck/uboot.elf
+u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/Cubietruck_FEL/uboot.elf
+
+u-boot-sunxi: description-synopsis-starts-with-article
