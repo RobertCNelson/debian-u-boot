@@ -30,6 +30,7 @@ override_dh_auto_build:
 		for target in $$targets ; do \
 	        $(MAKE) O=$$builddir $${platform}_defconfig; \
 		$(MAKE) O=$$builddir $$target; \
+		chmod -x $$builddir/$$target; \
 		done ; \
 		install -m 644 $$builddir/u-boot $$builddir/uboot.elf; \
 	        $(CROSS_COMPILE)strip --remove-section=.comment \
