@@ -118,11 +118,9 @@ Files:
  include/splash.h
  include/fdt.h
  include/libfdt.h
- include/configs/T1040RDB.h
  include/configs/controlcenterd.h
  include/configs/mxs.h
  include/configs/T1040QDS.h
- include/configs/T1042RDB_PI.h
  include/tca642x.h
  board/gdsys/p1022/tlb.c
  board/gdsys/p1022/sdhc_boot.c
@@ -135,10 +133,7 @@ Files:
  board/gdsys/common/dp501.h
  common/splash.c
  fs/jffs2/compr_lzo.c
- arch/arm/include/asm/arch-tegra20/usb.h
- arch/arm/include/asm/arch-tegra30/usb.h
  arch/arm/include/asm/arch-am33xx/hardware_ti816x.h
- arch/arm/include/asm/arch-tegra114/usb.h
  arch/arm/cpu/armv7/exynos/dmc_init_exynos4.c
  arch/arm/cpu/armv7/exynos/lowlevel_init.c
  arch/arm/cpu/armv7/exynos/clock_init_exynos4.c
@@ -202,11 +197,10 @@ Copyright: Copyright (C) 2002-2011 Aleph One Ltd.
 License: LGPL-2.1
 
 Files: lib/sha1.c
- include/sha1.h
 Copyright: Copyright (C) 2003-2006  Christophe Devine
 License: LGPL-2.1
 
-Files: include/bzlib.h:  
+Files: include/bzlib.h  
  lib/bzlib_private.h
  lib/bzlib.c
  lib/bzlib_huffman.c
@@ -217,7 +211,7 @@ Copyright: Copyright (C) 1996-2002 Julian R Seward.  All rights reserved.
 License: bzlib-BSD-3
 
 Files: arch/x86/include/asm/arch-coreboot/ipchecksum.h
- arch/x86/cpu/coreboot/ipchecksum.c: BSD (2 clause)
+ arch/x86/cpu/coreboot/ipchecksum.c
 Copyright: Copyright (c) 2001 Charles Mott <cm@linktel.net>
  Copyright (c) 2008 coresystems GmbH
 License: BSD-2
