@@ -25,8 +25,8 @@ Package: u-boot-imx
 Architecture: armhf
 Multi-Arch: same
 Depends: ${misc:Depends}
-Breaks: u-boot (<< 2014.10~rc2+dfsg1-2)
-Replaces: u-boot (<< 2014.10~rc2+dfsg1-2)
+Breaks: u-boot (<< 2014.10~rc2+dfsg1-2~)
+Replaces: u-boot (<< 2014.10~rc2+dfsg1-2~)
 Description: A boot loader for imx systems
  Das U-Boot is a cross-platform bootloader for embedded systems,
  used as the default boot loader by several board vendors.  It is
@@ -40,8 +40,8 @@ Package: u-boot-omap
 Architecture: armhf
 Multi-Arch: same
 Depends: ${misc:Depends}
-Breaks: u-boot (<< 2014.10~rc2+dfsg1-2)
-Replaces: u-boot (<< 2014.10~rc2+dfsg1-2)
+Breaks: u-boot (<< 2014.10~rc2+dfsg1-2~)
+Replaces: u-boot (<< 2014.10~rc2+dfsg1-2~)
 Description: A boot loader for omap systems
  Das U-Boot is a cross-platform bootloader for embedded systems,
  used as the default boot loader by several board vendors.  It is
@@ -56,8 +56,8 @@ Package: u-boot-sunxi
 Architecture: armhf
 Multi-Arch: same
 Depends: ${misc:Depends}
-Breaks: u-boot (<< 2014.10~rc2+dfsg1-2)
-Replaces: u-boot (<< 2014.10~rc2+dfsg1-2)
+Breaks: u-boot (<< 2014.10~rc2+dfsg1-2~)
+Replaces: u-boot (<< 2014.10~rc2+dfsg1-2~)
 Description: A boot loader for sunxi systems
  Das U-Boot is a cross-platform bootloader for embedded systems,
  used as the default boot loader by several board vendors.  It is
