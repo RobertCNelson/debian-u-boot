@@ -1,35 +1,38 @@
 #!/bin/sh
 
 target_file=debian/targets
-lintian_overrides=debian/lintian.overrides
 
-targets=$(awk '/^[a-z0-9]/{print $1","$2}' ${target_file})
+awk '/^[a-z0-9]/{print $2}' ${target_file} | sort -u | while read subarch ; do
+    case ${subarch} in
+        -) package=u-boot ;;
+        *) package=u-boot-${subarch} ;;
+    esac
+    overrides=debian/${package}.lintian-overrides
 
-cat >${lintian_overrides}<<EOF
+    cat >${overrides}<<EOF
 
 # There are no file conflicts across architectures for u-boot, as each
 # target is only installed on a single architecture. In theory, some
 # targets could be built on multiple architectures, but could instead install
 # the package for the architecture needed.
 EOF
-for target in $targets ; do
-	arch=$(echo ${target} | cut -d , -f 1)
-	target=$(echo ${target} | cut -d , -f 2)
-	echo "u-boot [${arch}]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/${target}/uboot.elf"
-done >> ${lintian_overrides}
 
-cat >>${lintian_overrides}<<EOF
+    sed -n "/^[a-z0-9].*[[:space:]]$subarch[[:space:]]/p" ${target_file} | while read arch subarch2 platform targets ; do
+        echo "${package} [${arch}]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/${platform}/uboot.elf"
+    done >> ${overrides}
+
+    cat >>${overrides}<<EOF
 
 # These bootloaders need to be statically linked.
 EOF
-for target in $targets ; do
-	arch=$(echo ${target} | cut -d , -f 1)
-	target=$(echo ${target} | cut -d , -f 2)
-	echo "u-boot [${arch}]: statically-linked-binary usr/lib/u-boot/${target}/uboot.elf"
-done >> ${lintian_overrides}
 
-cat >>${lintian_overrides}<<EOF
+    sed -n "/^[a-z0-9].*[[:space:]]$subarch[[:space:]]/p" ${target_file} | while read arch subarch2 platform targets ; do
+        echo "${package} [${arch}]: statically-linked-binary usr/lib/u-boot/${platform}/uboot.elf"
+    done >> ${overrides}
 
-u-boot: description-synopsis-starts-with-article
+    cat >>${overrides}<<EOF
+
+${package}: description-synopsis-starts-with-article
 EOF
 
+done
