@@ -1,3 +1,28 @@
+u-boot (2014.10~rc2+dfsg1-2~exp1) experimental; urgency=medium
+
+  * Split u-boot package into u-boot-imx, u-boot-omap and u-boot-sunxi
+    packages on armhf.
+
+  * debian/targets:
+    - Enable A10-OLinuXino-Lime target.
+    - Enable Cubieboard2 and Cubieboard2_FEL targets (Closes: #762383).
+    - Enable A20-OLinuXino-LIME target.
+    - Disable mx6_cubox-i
+    - Disable efikamx and efikasb.
+  
+  * debian/patches:
+    - Add patch from upstream to support A20-OLinuXino-LIME.
+    - Disable patches for cubox-i.
+  
+  * debian/rules:
+    - Remove excess conditional architecture check, drop build-dep on
+      dctrl-tools.
+    - Remove executable bit from u-boot targets.
+
+  * Updated lintian overrides.
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Mon, 22 Sep 2014 18:30:12 -0500
+
 u-boot (2014.10~rc2+dfsg1-1) experimental; urgency=medium
 
   * New upstream release candidate.
