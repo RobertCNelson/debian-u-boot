@@ -5,11 +5,12 @@ echo doc/mkimage.1 /usr/share/man/man1/
 # only install on architectures with platform targets.
 DEB_HOST_ARCH=$(dpkg-architecture -qDEB_HOST_ARCH)
 extra_files=false
+extra_sunxi=false
 sed -n "s/^$DEB_HOST_ARCH[[:space:]]//p" debian/targets | while read subarch platform targets ; do
     echo debian/build/${platform}/tools/env/fw_printenv /usr/lib/u-boot/${platform}
     echo debian/build/${platform}/tools/env/fw_setenv /usr/lib/u-boot/${platform}
     # only install extra files once.
-    if [ "$extra_files" = "false" ]; then
+    if [ x"$extra_files" = x"false" ]; then
         extra_files=true
         # manpages
         echo debian/manpages/fw_printenv.8 /usr/share/man/man8/
