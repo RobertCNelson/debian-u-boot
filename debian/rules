@@ -10,7 +10,7 @@ endif
 
 # support parallel build using DEB_BUILD_OPTIONS=parallel=N
 ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
-  MAKEFLAGS += -j$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+  DEB_UBOOT_FLAGS += -j$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
 endif
 
 # the upstream build passes LDFLAGS directly to ld instead of calling gcc for
@@ -29,30 +29,29 @@ override_dh_auto_build:
 	        mkdir -p $$builddir; \
 		for target in $$targets ; do \
 	        $(MAKE) O=$$builddir $${platform}_defconfig; \
-		$(MAKE) O=$$builddir $$target; \
+		$(MAKE) $(DEB_UBOOT_FLAGS) O=$$builddir $$target; \
 		chmod -x $$builddir/$$target; \
 		done ; \
 		install -m 644 $$builddir/u-boot $$builddir/uboot.elf; \
 	        $(CROSS_COMPILE)strip --remove-section=.comment \
 	            $$builddir/uboot.elf; \
-		$(MAKE) O=$$builddir HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip env ; \
+		$(MAKE) $(DEB_UBOOT_FLAGS) O=$$builddir HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip env ; \
 		$(CROSS_COMPILE)strip --remove-section=.comment $$builddir/tools/env/fw_printenv ; \
 		ln -s fw_printenv $$builddir/tools/env/fw_setenv ; \
 	done
 
-ifeq ($(CROSS_COMPILE),)
 	# Avoid requirement for .config
 	mkdir -p include/config
 	touch include/config/auto.conf
 	# board-independent tools
-	$(MAKE) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
+	$(MAKE) $(DEB_UBOOT_FLAGS) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
 	    tools-only
 	$(CROSS_COMPILE)strip --remove-section=.comment tools/mkimage
-endif
 
 override_dh_auto_test:
 	# skip tests.
 
 override_dh_clean:
 	rm -rf debian/build/
+	rm -f include/config/auto.conf
 	dh_clean
