@@ -35,18 +35,21 @@ override_dh_auto_build:
 		install -m 644 $$builddir/u-boot $$builddir/uboot.elf; \
 	        $(CROSS_COMPILE)strip --remove-section=.comment \
 	            $$builddir/uboot.elf; \
-		$(MAKE) $(DEB_UBOOT_FLAGS) O=$$builddir HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip env ; \
-		$(CROSS_COMPILE)strip --remove-section=.comment $$builddir/tools/env/fw_printenv ; \
-		ln -s fw_printenv $$builddir/tools/env/fw_setenv ; \
 	done
 
 	# Avoid requirement for .config
 	mkdir -p include/config
 	touch include/config/auto.conf
+	# Load dummy config
+	make sandbox_defconfig
 	# board-independent tools
 	$(MAKE) $(DEB_UBOOT_FLAGS) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
 	    tools-only
+	$(MAKE) $(DEB_UBOOT_FLAGS) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip env
+	$(CROSS_COMPILE)strip --remove-section=.comment tools/env/fw_printenv
 	$(CROSS_COMPILE)strip --remove-section=.comment tools/mkimage
+	$(CROSS_COMPILE)strip --remove-section=.comment tools/kwboot
+	$(CROSS_COMPILE)strip --remove-section=.comment tools/mksunxiboot
 
 override_dh_auto_test:
 	# skip tests.
