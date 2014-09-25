@@ -1,5 +1,7 @@
 #!/bin/sh
 echo tools/mkimage /usr/bin/
+echo tools/mksunxiboot /usr/bin/
+echo tools/kwboot /usr/bin/
 echo doc/mkimage.1 /usr/share/man/man1/
 
 # only install on architectures with platform targets.
