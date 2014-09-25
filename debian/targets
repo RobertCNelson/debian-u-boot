@@ -1,5 +1,5 @@
-# DEB_HOST_ARCH		platform	target
-# --------------------------------------------
+# DEB_HOST_ARCH		subarch		platform	target
+# ------------------------------------------------------------
 armel	-		dockstar	u-boot.kwb
 
 # Ian Campbell <ijc@hellion.org.uk>
@@ -76,6 +76,9 @@ armhf	imx		wandboard_quad	u-boot.imx
 
 # Robert Nelson <robertcnelson@gmail.com>
 armhf	imx		wandboard_solo	u-boot.imx
+
+# Hector Oron <zumbi@debian.org>
+armhf	imx		nitrogen6q	u-boot.imx
 
 avr32	-		hammerhead	u-boot.img
 
