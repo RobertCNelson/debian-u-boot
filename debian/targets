@@ -1,4 +1,4 @@
-# DEB_HOST_ARCH		platform	target
+# ARCH	subarch		platform	target
 # --------------------------------------------
 armel	-		dockstar	u-boot.kwb
 
