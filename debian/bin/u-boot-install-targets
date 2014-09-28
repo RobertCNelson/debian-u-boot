@@ -1,11 +1,5 @@
 #!/bin/sh
-DEB_HOST_ARCH=$(dpkg-architecture -qDEB_HOST_ARCH)
-target_subarch="$1"
-sed -n "/^$DEB_HOST_ARCH[[:space:]]$target_subarch[[:space:]]/p" debian/targets | while read arch subarch platform targets ; do
-        source_dir=debian/build/${platform}
-        dest_dir=/usr/lib/u-boot/${platform}/
-        for target in ${targets} ; do
-            echo $source_dir/$target $dest_dir
-        done
-        echo $source_dir/uboot.elf $dest_dir
-done
+subarch_install_file="debian/build/targets.${1}"
+if [ -f "${subarch_install_file}" ]; then
+    cat "${subarch_install_file}"
+fi

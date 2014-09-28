@@ -27,15 +27,18 @@ override_dh_auto_build:
 	set -e; sed -n 's/^$(DEB_HOST_ARCH)[[:space:]]\+//p' debian/targets \
 	    | while read subarch platform targets; do \
 	        builddir=debian/build/$$platform; \
+		targets="$$targets uboot.elf" ;\
 	        mkdir -p $$builddir; \
-		for target in $$targets ; do \
-	        $(MAKE) O=$$builddir $${platform}_defconfig; \
-		$(MAKE) $(DEB_UBOOT_FLAGS) O=$$builddir $$target; \
-		chmod -x $$builddir/$$target; \
-		done ; \
+		$(MAKE) O=$$builddir $${platform}_defconfig; \
+		$(MAKE) $(DEB_UBOOT_FLAGS) O=$$builddir all; \
 		install -m 644 $$builddir/u-boot $$builddir/uboot.elf; \
 	        $(CROSS_COMPILE)strip --remove-section=.comment \
 	            $$builddir/uboot.elf; \
+		for target in $$targets; do \
+			chmod -x $$builddir/$$target; \
+			echo $$builddir/$$target /usr/lib/u-boot/$$platform/ \
+				>> debian/build/targets.$$subarch; \
+		done ; \
 	done
 
 	# Avoid requirement for .config
