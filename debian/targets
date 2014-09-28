@@ -34,13 +34,11 @@ armhf	sunxi		Cubieboard	u-boot-sunxi-with-spl.bin
 # Ian Campbell <ijc@hellion.org.uk>
 # Karsten Merker <merker@debian.org>
 armhf	sunxi		Cubieboard2	u-boot-sunxi-with-spl.bin
-armhf	sunxi		Cubieboard2_FEL	u-boot.bin spl/u-boot-spl.bin
 
 # Ian Campbell <ijc@hellion.org.uk>
 # Robert Nelson <robertcnelson@gmail.com>
 # Karsten Merker <merker@debian.org>
 armhf	sunxi		Cubietruck	u-boot-sunxi-with-spl.bin
-armhf	sunxi		Cubietruck_FEL	u-boot.bin spl/u-boot-spl.bin
 
 # Vagrant Cascadian <vagrant@debian.org>
 # Andrew M.A. Cater <amacater@galactic.demon.co.uk>
