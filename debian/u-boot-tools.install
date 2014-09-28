@@ -1,8 +1,10 @@
 #!/bin/sh
-echo tools/mkimage /usr/bin/
-echo tools/mksunxiboot /usr/bin/
-echo tools/kwboot /usr/bin/
-echo tools/env/fw_printenv /usr/bin/
+
+builddir=debian/build/tools
+for tool in mkimage mksunxiboot kwboot env/fw_printenv ; do
+    echo ${builddir}/tools/${tool} /usr/bin/
+done
+
 echo doc/mkimage.1 /usr/share/man/man1/
 
 # manpages

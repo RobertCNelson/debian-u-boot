@@ -22,10 +22,11 @@ LDFLAGS := $(patsubst -Wl$(comma)%,%,$(LDFLAGS))
 %:
 	dh $@ --parallel
 
+override_dh_auto_build: TOOLSDIR := debian/build/tools
 override_dh_auto_build:
 	set -e; sed -n 's/^$(DEB_HOST_ARCH)[[:space:]]\+//p' debian/targets \
 	    | while read subarch platform targets; do \
-	        builddir=`pwd`/debian/build/$$platform; \
+	        builddir=debian/build/$$platform; \
 	        mkdir -p $$builddir; \
 		for target in $$targets ; do \
 	        $(MAKE) O=$$builddir $${platform}_defconfig; \
@@ -38,23 +39,27 @@ override_dh_auto_build:
 	done
 
 	# Avoid requirement for .config
-	mkdir -p include/config
-	touch include/config/auto.conf
+	mkdir -p $(TOOLSDIR)/include/config
+	touch $(TOOLSDIR)/include/config/auto.conf
 	# Load dummy config
-	make sandbox_defconfig
+	make O=$(TOOLSDIR) sandbox_defconfig
 	# board-independent tools
-	$(MAKE) $(DEB_UBOOT_FLAGS) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip \
+	$(MAKE) O=$(TOOLSDIR) $(DEB_UBOOT_FLAGS) \
+		HOSTCC=$(CROSS_COMPILE)gcc \
+		HOSTSTRIP=$(CROSS_COMPILE)strip \
 	    tools-only
-	$(MAKE) $(DEB_UBOOT_FLAGS) HOSTCC=$(CROSS_COMPILE)gcc HOSTSTRIP=$(CROSS_COMPILE)strip env
-	$(CROSS_COMPILE)strip --remove-section=.comment tools/env/fw_printenv
-	$(CROSS_COMPILE)strip --remove-section=.comment tools/mkimage
-	$(CROSS_COMPILE)strip --remove-section=.comment tools/kwboot
-	$(CROSS_COMPILE)strip --remove-section=.comment tools/mksunxiboot
+	$(MAKE) O=$(TOOLSDIR) $(DEB_UBOOT_FLAGS) \
+		HOSTCC=$(CROSS_COMPILE)gcc \
+		HOSTSTRIP=$(CROSS_COMPILE)strip \
+	    env
+	$(CROSS_COMPILE)strip --remove-section=.comment $(TOOLSDIR)/tools/env/fw_printenv
+	$(CROSS_COMPILE)strip --remove-section=.comment $(TOOLSDIR)/tools/mkimage
+	$(CROSS_COMPILE)strip --remove-section=.comment $(TOOLSDIR)/tools/kwboot
+	$(CROSS_COMPILE)strip --remove-section=.comment $(TOOLSDIR)/tools/mksunxiboot
 
 override_dh_auto_test:
 	# skip tests.
 
 override_dh_clean:
 	rm -rf debian/build/
-	rm -f include/config/auto.conf
 	dh_clean
