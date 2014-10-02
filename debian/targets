@@ -16,67 +16,10 @@ armel	-		rpi_b		u-boot.bin
 # drEagle <drEagle@doukki.net>
 armel	-		sheevaplug	u-boot.kwb
 
-# Joey Hess <joeyh@debian.org>
-# Christian Kastner <debian@kvr.at>
-armhf	sunxi		A10-OLinuXino-Lime	u-boot-sunxi-with-spl.bin
-
-# Christian Kastner <debian@kvr.at>
-armhf	sunxi		A20-OLinuXino-Lime	u-boot-sunxi-with-spl.bin
-
-# Ian Campbell <ijc@hellion.org.uk>
-# Vagrant Cascadian <vagrant@debian.org>
-armhf	sunxi		Bananapi	u-boot-sunxi-with-spl.bin
-
-# Vagrant Cascadian <vagrant@debian.org>
-armhf	sunxi		Cubieboard	u-boot-sunxi-with-spl.bin
-
-# Philip Rinn <rinni@inventati.org>
-# Ian Campbell <ijc@hellion.org.uk>
-# Karsten Merker <merker@debian.org>
-armhf	sunxi		Cubieboard2	u-boot-sunxi-with-spl.bin
-
-# Ian Campbell <ijc@hellion.org.uk>
-# Robert Nelson <robertcnelson@gmail.com>
-# Karsten Merker <merker@debian.org>
-armhf	sunxi		Cubietruck	u-boot-sunxi-with-spl.bin
-
-# Vagrant Cascadian <vagrant@debian.org>
-# Andrew M.A. Cater <amacater@galactic.demon.co.uk>
-armhf	omap		am335x_boneblack u-boot.img spl/u-boot-spl.bin MLO
-
-# Robert Nelson <robertcnelson@gmail.com>
-armhf	omap		igep0020	u-boot.bin spl/u-boot-spl.bin MLO
-
-# Robert Nelson <robertcnelson@gmail.com>
-armhf	imx		mx53loco	u-boot.imx
-
 # Steve Langasek <vorlon@debian.org>, CuBox-i4
 # Vagrant Cascadian <vagrant@debian.org>, CuBox-i4
 # Rainer Dorsch <ml@bokomoko.de>, CuBox-i2u (i2u-300-d)
-#armhf	imx		mx6_cubox-i	u-boot.img spl/u-boot-spl.bin SPL
-
-armhf	omap		nokia_rx51	u-boot.bin
-
-# Robert Nelson <robertcnelson@gmail.com>
-armhf	omap		omap3_beagle	u-boot.bin spl/u-boot-spl.bin MLO
-
-# Robert Nelson <robertcnelson@gmail.com>
-armhf	omap		omap4_panda	u-boot.bin spl/u-boot-spl.bin MLO
-
-# Michael Fladischer <michael@fladi.at>
-armhf	imx		udoo_quad	u-boot.imx
-
-# Robert Nelson <robertcnelson@gmail.com>
-armhf	imx		wandboard_dl	u-boot.imx
-
-# Vagrant Cascadian <vagrant@debian.org>
-armhf	imx		wandboard_quad	u-boot.imx
-
-# Robert Nelson <robertcnelson@gmail.com>
-armhf	imx		wandboard_solo	u-boot.imx
-
-# Hector Oron <zumbi@debian.org>
-armhf	imx		nitrogen6q	u-boot.imx
+armhf	imx		mx6_cubox-i	u-boot.img spl/u-boot-spl.bin SPL
 
 avr32	-		hammerhead	u-boot.img
 
