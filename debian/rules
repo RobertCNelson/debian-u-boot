@@ -65,10 +65,12 @@ override_dh_auto_build:
 	$(MAKE) O=$(TOOLSDIR) $(DEB_UBOOT_FLAGS) \
 		HOSTCC=$(CROSS_COMPILE)gcc \
 		HOSTSTRIP=$(CROSS_COMPILE)strip \
+		NO_SDL=1 \
 	    tools-only
 	$(MAKE) O=$(TOOLSDIR) $(DEB_UBOOT_FLAGS) \
 		HOSTCC=$(CROSS_COMPILE)gcc \
 		HOSTSTRIP=$(CROSS_COMPILE)strip \
+		NO_SDL=1 \
 	    env
 	$(CROSS_COMPILE)strip --remove-section=.comment $(TOOLSDIR)/tools/env/fw_printenv
 	$(CROSS_COMPILE)strip --remove-section=.comment $(TOOLSDIR)/tools/mkimage
