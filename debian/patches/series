@@ -13,6 +13,7 @@ am335x-uenv.txt.diff
 #cubox-i/cubox-i-support.diff
 #cubox-i/cubox-i-raw-initrd.diff
 #cubox-i/Switch-mx6_cubox-i-to-Kconfig.patch
+#cubox-i/steal-board-eth-init-from-hummingboard.diff
 n900-bootz-raw-initrd.diff
 no-force-CROSS_COMPILE-powerpc.diff
 am335x-bootscript.diff

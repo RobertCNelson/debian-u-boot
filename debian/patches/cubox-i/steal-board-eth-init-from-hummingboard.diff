@@ -1,0 +1,47 @@
+Use board_eth_init from hummingboard.c, which not only compiles, but
+actually enables ethernet support.
+
+Index: u-boot/board/solidrun/mx6_cubox-i/mx6_cubox-i.c
+===================================================================
+--- u-boot.orig/board/solidrun/mx6_cubox-i/mx6_cubox-i.c
++++ u-boot/board/solidrun/mx6_cubox-i/mx6_cubox-i.c
+@@ -275,30 +275,18 @@ int board_phy_config(struct phy_device *
+ 
+ int board_eth_init(bd_t *bis)
+ {
+-	int ret;
+-        struct iomuxc_base_regs *const iomuxc_regs
+-                = (struct iomuxc_base_regs *) IOMUXC_BASE_ADDR;
+-	struct anatop_regs __iomem *anatop =
+-                (struct anatop_regs __iomem *)ANATOP_BASE_ADDR;
+-	u32 reg = 0;
+-	s32 timeout = 100000;
+-
+-	enable_fec_anatop_clock(ENET_25MHz);
+-	/* set gpr1[21] */
+-        clrsetbits_le32(&iomuxc_regs->gpr[1], 0, (1 << 21));
+-
+-	while (timeout--) {
+-        	if (readl(&anatop->pll_enet) & BM_ANADIG_PLL_ENET_LOCK)
+-			break;
+-	}
++	struct iomuxc *const iomuxc_regs = (struct iomuxc *)IOMUXC_BASE_ADDR;
+ 
+-	setup_iomux_enet();
+-
+-	ret = cpu_eth_init(bis);
++	int ret = enable_fec_anatop_clock(ENET_25MHz);
+ 	if (ret)
+-		printf("FEC MXC: %s:failed\n", __func__);
++		return ret;
++
++	/* set gpr1[ENET_CLK_SEL] */
++	setbits_le32(&iomuxc_regs->gpr[1], IOMUXC_GPR1_ENET_CLK_SEL_MASK);
++
++	setup_iomux_enet();
+ 
+-	return 0;
++	return cpu_eth_init(bis);
+ }
+ #endif
+ 
