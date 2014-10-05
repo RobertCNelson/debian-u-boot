@@ -26,3 +26,5 @@ sunxi/0001-sun7i-Add-support-for-Olimex-A20-OLinuXino-LIME.patch
 tools-generic-builds.patch
 
 bootcmd-scsi-scan-before-scsi.patch
+
+Makefile-add-kwb-target-to-all.patch
