@@ -80,8 +80,6 @@ armhf	imx		nitrogen6q	u-boot.imx
 
 avr32	-		hammerhead	u-boot.img
 
-mips	-		dbau1100	u-boot.img
-
 mips	-		qemu_mips	u-boot.img
 
 sh4	-		r2dplus		u-boot.img
