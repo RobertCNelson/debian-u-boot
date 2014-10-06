@@ -1,3 +1,36 @@
+u-boot (2014.10~rc2+dfsg1-2) unstable; urgency=medium
+
+  [ Héctor Orón Martínez ]
+  * Fix cross building.
+  * Build extra tools for kirkwood and sunxi (Closes: #750108).
+  * Build extra tools and env just once, and install in PATH again.
+  * Add nitrogen6q support to u-boot-imx.
+
+  [ Vagrant Cascadian ]
+  * Use "make all" instead of making individual targets, recording a list
+    of targets to install in each subarch package.
+  * Build FEL variants for all sunxi platforms, based on patches from Ian
+    Campbell.
+  * Add build-depends on "bc".
+  * Patch to add the debian revision to the U-boot version.
+  * Updated cubox-i patches and re-enable mx6_cubox-i target.
+  * Build tools and env with NO_SDL=1 to avoid complaining about missing
+    sdl-config.
+  * Remove mips target dbau1100, an old platform with no testers.
+  * Swich qemu_mips target to install u-boot.bin, which is what is
+    actually needed by qemu.
+  * Add patch to Set DCDC1 DDR3 to 1.35V for Beaglebone Black. Thanks to
+    Robert Nelson for the patch.
+
+  [ Ian Campbell ]
+  * Add patch to add u-boot.kwb to "make all" on Kirkwood platforms.
+  * Build tools out-of-tree too so as not to dirty the source used for the
+    actual platforms (Closes: #763024).
+  * Add patch to initialize scsi before trying scsi disks in
+    config_distro_bootcmd (Closes: #764069).
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Mon, 06 Oct 2014 16:58:04 -0700
+
 u-boot (2014.10~rc2+dfsg1-2~exp1) experimental; urgency=medium
 
   * Split u-boot package into u-boot-imx, u-boot-omap and u-boot-sunxi
