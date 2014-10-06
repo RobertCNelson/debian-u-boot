@@ -1,0 +1,48 @@
+From f7a841a0c8eab661fa06657ff6bf732041e4f07f Mon Sep 17 00:00:00 2001
+From: Vagrant Cascadian <vagrant@debian.org>
+Date: Tue, 30 Sep 2014 10:20:26 -0700
+Subject: [PATCH] Set DCDC1 (DDR3) to 1.35V for Beaglebone Black.
+
+Based on Patch by Robert Nelson <robertcnelson@gmail.com>:
+
+  https://github.com/RobertCNelson/Bootloader-Builder/raw/master/patches/v2014.10-rc2/0001-am335x_evm-uEnv.txt-bootz-n-fixes.patch
+---
+ board/ti/am335x/board.c  | 9 +++++++++
+ include/power/tps65217.h | 1 +
+ 2 files changed, 10 insertions(+)
+
+diff --git a/board/ti/am335x/board.c b/board/ti/am335x/board.c
+index 0739e60..6b6dea0 100644
+--- a/board/ti/am335x/board.c
++++ b/board/ti/am335x/board.c
+@@ -300,6 +300,15 @@ void am33xx_spl_board_init(void)
+ 			return;
+ 		}
+ 
++		/* Set DCDC1 (DDR3) to 1.35V for Beaglebone Black. */
++		if (board_is_bone_lt(&header)) {
++			if (tps65217_voltage_update(TPS65217_DEFDCDC1,
++						    TPS65217_DCDC_VOLT_SEL_1350MV)) {
++				puts("tps65217_voltage_update failure\n");
++				return;
++			}
++		}
++
+ 		/*
+ 		 * Set LDO3, LDO4 output voltage to 3.3V for Beaglebone.
+ 		 * Set LDO3 to 1.8V and LDO4 to 3.3V for Beaglebone Black.
+diff --git a/include/power/tps65217.h b/include/power/tps65217.h
+index 297c4cb..008fd6d 100644
+--- a/include/power/tps65217.h
++++ b/include/power/tps65217.h
+@@ -68,6 +68,7 @@ enum {
+ #define TPS65217_DCDC_VOLT_SEL_1125MV		0x09
+ #define TPS65217_DCDC_VOLT_SEL_1275MV		0x0F
+ #define TPS65217_DCDC_VOLT_SEL_1325MV		0x11
++#define TPS65217_DCDC_VOLT_SEL_1350MV		0x12
+ 
+ #define TPS65217_LDO_MASK			0x1F
+ #define TPS65217_LDO_VOLTAGE_OUT_1_8		0x06
+-- 
+2.1.0
+

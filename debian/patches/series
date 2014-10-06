@@ -28,3 +28,5 @@ tools-generic-builds.patch
 bootcmd-scsi-scan-before-scsi.patch
 
 Makefile-add-kwb-target-to-all.patch
+
+0001-Set-DCDC1-DDR3-to-1.35V-for-Beaglebone-Black.patch
