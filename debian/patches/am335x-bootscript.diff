@@ -4,7 +4,7 @@ Index: u-boot/include/configs/am335x_evm.h
 ===================================================================
 --- u-boot.orig/include/configs/am335x_evm.h
 +++ u-boot/include/configs/am335x_evm.h
-@@ -113,6 +113,12 @@
+@@ -125,6 +125,12 @@
  	"loadramdisk=load mmc ${mmcdev} ${rdaddr} ramdisk.gz\0" \
  	"loadimage=load mmc ${bootpart} ${loadaddr} ${bootdir}/${bootfile}\0" \
  	"loadfdt=load mmc ${bootpart} ${fdtaddr} ${bootdir}/${fdtfile}\0" \
@@ -17,20 +17,20 @@ Index: u-boot/include/configs/am335x_evm.h
  	"mmcloados=run mmcargs; " \
  		"if test ${boot_fdt} = yes || test ${boot_fdt} = try; then " \
  			"if run loadfdt; then " \
-@@ -138,6 +144,16 @@
- 				"echo Running uenvcmd ...;" \
- 				"run uenvcmd;" \
- 			"fi;" \
-+			"setenv scriptfile ${script};" \
-+			"if run loadbootscript; then " \
-+				"echo Loaded script from ${scriptfile};" \
-+				"run bootscript;" \
-+			"fi;" \
-+			"setenv scriptfile /boot/${script};" \
-+			"if run loadbootscript; then " \
-+				"echo Loaded script from ${scriptfile};" \
-+				"run bootscript;" \
-+			"fi;" \
- 			"if run loadimage; then " \
- 				"run mmcloados;" \
- 			"fi;" \
+@@ -153,6 +159,16 @@
+ 					"echo Running uenvcmd ...;" \
+ 					"run uenvcmd;" \
+ 				"fi;" \
++				"setenv scriptfile ${script};" \
++				"if run loadbootscript; then " \
++					"echo Loaded script from ${scriptfile};" \
++					"run bootscript;" \
++				"fi;" \
++				"setenv scriptfile /boot/${script};" \
++				"if run loadbootscript; then " \
++					"echo Loaded script from ${scriptfile};" \
++					"run bootscript;" \
++				"fi;" \
+ 				"if run loadimage; then " \
+ 					"run mmcloados;" \
+ 				"fi;" \

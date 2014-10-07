@@ -2262,7 +2262,7 @@ Index: u-boot/drivers/net/fec_mxc.c
 ===================================================================
 --- u-boot.orig/drivers/net/fec_mxc.c
 +++ u-boot/drivers/net/fec_mxc.c
-@@ -117,8 +117,10 @@ static int fec_mdio_read(struct ethernet
+@@ -125,8 +125,10 @@ static int fec_mdio_read(struct ethernet
  	 * it's now safe to read the PHY's register
  	 */
  	val = (unsigned short)readl(&eth->mii_data);
@@ -2273,7 +2273,7 @@ Index: u-boot/drivers/net/fec_mxc.c
  	return val;
  }
  
-@@ -165,8 +167,10 @@ static int fec_mdio_write(struct etherne
+@@ -173,8 +175,10 @@ static int fec_mdio_write(struct etherne
  	 * clear MII interrupt bit
  	 */
  	writel(FEC_IEVENT_MII, &eth->ievent);
@@ -2284,10 +2284,10 @@ Index: u-boot/drivers/net/fec_mxc.c
  
  	return 0;
  }
-@@ -718,9 +722,11 @@ static int fec_send(struct eth_device *d
- 	if (readw(&fec->tbd_base[fec->tbd_index].status) & FEC_TBD_READY)
+@@ -750,9 +754,11 @@ static int fec_send(struct eth_device *d
  		ret = -EINVAL;
  
+ out:
 +#ifdef VERBOSE_DEBUG
  	debug("fec_send: status 0x%x index %d ret %i\n",
  			readw(&fec->tbd_base[fec->tbd_index].status),
@@ -2296,7 +2296,7 @@ Index: u-boot/drivers/net/fec_mxc.c
  	/* for next transmission use the other buffer */
  	if (fec->tbd_index)
  		fec->tbd_index = 0;
-@@ -752,7 +758,9 @@ static int fec_recv(struct eth_device *d
+@@ -784,7 +790,9 @@ static int fec_recv(struct eth_device *d
  	 */
  	ievent = readl(&fec->eth->ievent);
  	writel(ievent, &fec->eth->ievent);
@@ -2306,7 +2306,7 @@ Index: u-boot/drivers/net/fec_mxc.c
  	if (ievent & FEC_IEVENT_BABR) {
  		fec_halt(dev);
  		fec_init(dev, fec->bd);
-@@ -793,7 +801,9 @@ static int fec_recv(struct eth_device *d
+@@ -825,7 +833,9 @@ static int fec_recv(struct eth_device *d
  	invalidate_dcache_range(addr, addr + size);
  
  	bd_status = readw(&rbd->status);
@@ -2316,7 +2316,7 @@ Index: u-boot/drivers/net/fec_mxc.c
  
  	if (!(bd_status & FEC_RBD_EMPTY)) {
  		if ((bd_status & FEC_RBD_LAST) && !(bd_status & FEC_RBD_ERR) &&
-@@ -848,7 +858,9 @@ static int fec_recv(struct eth_device *d
+@@ -880,7 +890,9 @@ static int fec_recv(struct eth_device *d
  		fec_rx_task_enable(fec);
  		fec->rbd_index = (fec->rbd_index + 1) % FEC_RBD_NUM;
  	}
