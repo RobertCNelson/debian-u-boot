@@ -29,7 +29,6 @@
  *
  */
 
-#define __UBOOT__
 #ifndef __UBOOT__
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
@@ -309,8 +308,7 @@ static void ioread16_rep(void *addr, void *buf, int len)
 {
 	int i;
  	u16 *p = (u16 *) buf;
-	len >>= 1;
- 
+
 	for (i = 0; i < len; i++)
 		p[i] = readw(addr);
 }
@@ -319,7 +317,6 @@ static void iowrite16_rep(void *addr, void *buf, int len)
 {
 	int i;
         u16 *p = (u16 *) buf;
-        len >>= 1;
 
         for (i = 0; i < len; i++)
                 writew(p[i], addr);
