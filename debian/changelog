@@ -1,8 +1,16 @@
-u-boot (2014.10~rc3+dfsg1-1) UNRELEASED; urgency=medium
+u-boot (2014.10~rc3+dfsg1-1) unstable; urgency=medium
 
   * New upstream release candidate.
+  * Remove patches applied upstream:
+    - bootcmd-scsi-scan-before-scsi.patch
+    - sunxi/0001-sun7i-Add-support-for-Olimex-A20-OLinuXino-LIME.patch
+  * Refresh patches:  
+    - am335x-bootscript.diff
+    - am335x-uenv.txt.diff
+    - cubox-i/cubox-i-support.diff
+    - no-force-CROSS_COMPILE-powerpc.diff
 
- -- Vagrant Cascadian <vagrant@debian.org>  Tue, 07 Oct 2014 00:04:27 -0700
+ -- Vagrant Cascadian <vagrant@debian.org>  Wed, 08 Oct 2014 09:57:35 -0700
 
 u-boot (2014.10~rc2+dfsg1-2) unstable; urgency=medium
 
