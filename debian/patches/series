@@ -27,3 +27,7 @@ tools-generic-builds.patch
 Makefile-add-kwb-target-to-all.patch
 
 0001-Set-DCDC1-DDR3-to-1.35V-for-Beaglebone-Black.patch
+
+arndale/board-spl-rule.diff
+arndale/U-Boot-for-next-arndale-Enable-config_distro_defaults.h.patch
+arndale/U-Boot-arndale-Use-config_distro_bootcmd.h.patch

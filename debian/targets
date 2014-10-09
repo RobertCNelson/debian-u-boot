@@ -78,6 +78,9 @@ armhf	imx		wandboard_solo	u-boot.imx
 # Hector Oron <zumbi@debian.org>
 armhf	imx		nitrogen6q	u-boot.imx
 
+# Ian Campbell <ijc@hellion.org.uk>
+armhf	exynos		arndale		u-boot-dtb.bin spl/arndale-spl.bin
+
 avr32	-		hammerhead	u-boot.img
 
 mips	-		qemu_mips	u-boot.bin

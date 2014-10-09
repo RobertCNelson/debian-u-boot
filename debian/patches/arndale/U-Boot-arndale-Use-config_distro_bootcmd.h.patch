@@ -1,0 +1,81 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: [U-Boot] arndale: Use config_distro_bootcmd.h
+From: Ian Campbell <ijc@hellion.org.uk>
+X-Patchwork-Id: 394344
+Message-Id: <1411986272-30809-1-git-send-email-ijc@hellion.org.uk>
+To: <u-boot@lists.denx.de>, Minkyu Kang <mk7.kang@samsung.com>
+Cc: Ian Campbell <ian.campbell@citrix.com>
+Date: Mon, 29 Sep 2014 11:24:32 +0100
+
+From: Ian Campbell <ian.campbell@citrix.com>
+
+Signed-off-by: Ian Campbell <ian.campbell@citrix.com>
+---
+ include/configs/arndale.h | 38 +++++++++++++++++++++++++++++---------
+ 1 file changed, 29 insertions(+), 9 deletions(-)
+
+diff --git a/include/configs/arndale.h b/include/configs/arndale.h
+index db7623d..a6630fd 100644
+--- a/include/configs/arndale.h
++++ b/include/configs/arndale.h
+@@ -66,13 +66,6 @@
+ /* Console configuration */
+ #define CONFIG_CONSOLE_MUX
+ #define CONFIG_SYS_CONSOLE_IS_IN_ENV
+-#define EXYNOS_DEVICE_SETTINGS \
+-		"stdin=serial\0" \
+-		"stdout=serial\0" \
+-		"stderr=serial\0"
+-
+-#define CONFIG_EXTRA_ENV_SETTINGS \
+-	EXYNOS_DEVICE_SETTINGS
+ 
+ /* SD/MMC configuration */
+ #define CONFIG_GENERIC_MMC
+@@ -123,8 +116,6 @@
+ #define CONFIG_SPL_TEXT_BASE	0x02023400
+ #define CONFIG_SPL_MAX_FOOTPRINT	(14 * 1024)
+ 
+-#define CONFIG_BOOTCOMMAND	"mmc read 40007000 451 2000; bootm 40007000"
+-
+ /* Miscellaneous configurable options */
+ #define CONFIG_SYS_PROMPT		"ARNDALE # "
+ #define CONFIG_SYS_CBSIZE		256	/* Console I/O Buffer Size */
+@@ -212,6 +203,35 @@
+ 
+ #include <config_distro_defaults.h>
+ 
++#define BOOT_TARGET_DEVICES(func) \
++	func(MMC, mmc, 1) \
++	func(MMC, mmc, 0) \
++	func(PXE, pxe, na) \
++	func(DHCP, dhcp, na)
++
++#include <config_distro_bootcmd.h>
++
++
++/* 2GB RAM, bootm size of 256M, load scripts after that */
++#define MEM_LAYOUT_ENV_SETTINGS \
++	"bootm_size=0x10000000\0" \
++	"kernel_addr_r=0x42000000\0" \
++	"fdt_addr_r=0x43000000\0" \
++	"ramdisk_addr_r=0x43300000\0" \
++	"scriptaddr=0x50000000\0" \
++	"pxefile_addr_r=0x51000000\0"
++
++#define EXYNOS_DEVICE_SETTINGS \
++	"stdin=serial\0" \
++	"stdout=serial\0" \
++	"stderr=serial\0" \
++	"fdtfile=exynos5250-arndale.dtb\0"
++
++#define CONFIG_EXTRA_ENV_SETTINGS \
++	EXYNOS_DEVICE_SETTINGS \
++	MEM_LAYOUT_ENV_SETTINGS \
++	BOOTENV
++
+ /* PMIC */
+ #define CONFIG_PMIC
+ #define CONFIG_POWER_I2C

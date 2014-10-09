@@ -1,0 +1,17 @@
+Description: Enable generic spl/$(BOARD)-spl.bin rule
+Author: Ian Campbell <ijc@debian.org>
+
+Needed for spl/arndale-spl.bin
+
+--- a/Makefile
++++ b/Makefile
+@@ -1142,6 +1142,9 @@
+ spl/sunxi-spl.bin: spl/u-boot-spl
+ 	@:
+ 
++spl/$(BOARD)-spl.bin: spl/u-boot-spl
++	@:
++
+ tpl/u-boot-tpl.bin: tools prepare
+ 	$(Q)$(MAKE) obj=tpl -f $(srctree)/scripts/Makefile.spl all
+ 
