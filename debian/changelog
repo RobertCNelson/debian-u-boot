@@ -1,9 +1,9 @@
-u-boot (2014.10~rc3+dfsg1-2) UNRELEASED; urgency=medium
+u-boot (2014.10~rc3+dfsg1-2) experimental; urgency=medium
 
   [ Ian Campbell ]
   * Add support for the Arndale board (Closes: #763186).
 
- -- Vagrant Cascadian <vagrant@debian.org>  Wed, 08 Oct 2014 20:28:59 -0700
+ -- Vagrant Cascadian <vagrant@debian.org>  Thu, 09 Oct 2014 11:41:31 -0700
 
 u-boot (2014.10~rc3+dfsg1-1) unstable; urgency=medium
 
