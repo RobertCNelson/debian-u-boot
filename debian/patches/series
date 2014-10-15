@@ -1,6 +1,5 @@
 add-debian-revision-to-u-boot-version
 mipsel-native-endianness.diff
-kerma-sheevaplug-mvsata.diff
 openrd-mmc.diff
 no-error-on-set-but-unused-variables.diff
 hurd.diff
