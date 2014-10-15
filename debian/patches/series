@@ -23,6 +23,7 @@ mx53loco
 workaround-env-ftbfs
 
 tools-generic-builds.patch
+tools-only-in-no-dot-config-targets.diff
 
 Makefile-add-kwb-target-to-all.patch
 

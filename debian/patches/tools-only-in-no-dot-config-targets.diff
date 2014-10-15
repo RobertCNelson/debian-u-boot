@@ -1,0 +1,21 @@
+Revert upstream commit c7ad5cbb1ef2c33883f0fa7d0455095004fd306d:
+
+    Makefile: drop "tools-only" from no-dot-config-targets
+
+This indirectly pulls in a build-dependency on libssl-dev used for FIT
+image support, and possibly GPL/OpenSSL licensing incompatibility
+issues.
+
+Index: u-boot/Makefile
+===================================================================
+--- u-boot.orig/Makefile
++++ u-boot/Makefile
+@@ -411,7 +411,7 @@ timestamp_h := include/generated/timesta
+ 
+ no-dot-config-targets := clean clobber mrproper distclean \
+ 			 help %docs check% coccicheck \
+-			 ubootversion backup
++			 ubootversion backup tools-only
+ 
+ config-targets := 0
+ mixed-targets  := 0
