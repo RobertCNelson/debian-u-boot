@@ -1,0 +1,138 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: [U-Boot,v2,1/2] exynos: Enable config_distro_defaults.h
+From: Ian Campbell <ijc@hellion.org.uk>
+X-Patchwork-Id: 400300
+Message-Id: <1413467042-32028-1-git-send-email-ijc@hellion.org.uk>
+To: u-boot@lists.denx.de,
+	Minkyu Kang <mk7.kang@samsung.com>
+Cc: Ian Campbell <ian.campbell@citrix.com>
+Date: Thu, 16 Oct 2014 14:44:01 +0100
+
+From: Ian Campbell <ian.campbell@citrix.com>
+
+...and remove explicit setting of things which this implies. This is done for
+all exynos platforms (4 & 5) so it is added to exynos-common.h
+
+I'm mainly interested in CONFIG_CMD_BOOTZ and CONFIG_SUPPORT_RAW_INITRD
+
+I have build tested on all exynos platforms (MAKEALL -s exynos), but only boot
+tested on arndale.
+
+Signed-off-by: Ian Campbell <ian.campbell@citrix.com>
+---
+v2: This patch was previously "arndale: Enable config_distro_defaults.h". It
+required significant rebasing.
+---
+ include/configs/arndale.h        |  2 --
+ include/configs/exynos-common.h  | 13 ++-----------
+ include/configs/exynos5-common.h | 11 -----------
+ 3 files changed, 2 insertions(+), 24 deletions(-)
+
+diff --git a/include/configs/arndale.h b/include/configs/arndale.h
+index f9ee40f..a87806d 100644
+--- a/include/configs/arndale.h
++++ b/include/configs/arndale.h
+@@ -17,8 +17,6 @@
+ /* allow to overwrite serial and ethaddr */
+ #define CONFIG_ENV_OVERWRITE
+ 
+-#define CONFIG_CMD_EXT2
+-
+ /* USB */
+ #define CONFIG_USB_EHCI
+ #define CONFIG_USB_EHCI_EXYNOS
+diff --git a/include/configs/exynos-common.h b/include/configs/exynos-common.h
+index 371f32d..ea40bb6 100644
+--- a/include/configs/exynos-common.h
++++ b/include/configs/exynos-common.h
+@@ -23,9 +23,6 @@
+ #define CONFIG_SKIP_LOWLEVEL_INIT
+ #define CONFIG_BOARD_EARLY_INIT_F
+ 
+-/* Enable fdt support */
+-#define CONFIG_OF_LIBFDT
+-
+ /* Keep L2 Cache Disabled */
+ #define CONFIG_CMD_CACHE
+ 
+@@ -35,7 +32,6 @@
+ #define CONFIG_SETUP_MEMORY_TAGS
+ #define CONFIG_CMDLINE_TAG
+ #define CONFIG_INITRD_TAG
+-#define CONFIG_CMDLINE_EDITING
+ #define CONFIG_ENV_OVERWRITE
+ 
+ /* Size of malloc() pool before and after relocation */
+@@ -54,7 +50,6 @@
+ #define CONFIG_EXYNOS_DWMMC
+ #define CONFIG_BOUNCE_BUFFER
+ 
+-#define CONFIG_BOOTDELAY		3
+ #define CONFIG_ZERO_BOOTDELAY_CHECK
+ 
+ /* PWM */
+@@ -64,19 +59,13 @@
+ #include <config_cmd_default.h>
+ 
+ #define CONFIG_CMD_MMC
+-#define CONFIG_CMD_EXT4
+ #define CONFIG_CMD_EXT4_WRITE
+-#define CONFIG_CMD_FAT
+ #define CONFIG_FAT_WRITE
+ 
+-#define CONFIG_DOS_PARTITION
+-#define CONFIG_EFI_PARTITION
+ #define CONFIG_CMD_PART
+ #define CONFIG_PARTITION_UUIDS
+ 
+ /* Miscellaneous configurable options */
+-#define CONFIG_SYS_LONGHELP		/* undef to save memory */
+-#define CONFIG_SYS_HUSH_PARSER		/* use "hush" command parser	*/
+ #define CONFIG_SYS_CBSIZE		256	/* Console I/O Buffer Size */
+ #define CONFIG_SYS_PBSIZE		384	/* Print Buffer Size */
+ #define CONFIG_SYS_MAXARGS		16	/* max number of command args */
+@@ -88,4 +77,6 @@
+ #define CONFIG_SYS_NO_FLASH
+ #undef CONFIG_CMD_IMLS
+ 
++#include <config_distro_defaults.h>
++
+ #endif	/* __CONFIG_H */
+diff --git a/include/configs/exynos5-common.h b/include/configs/exynos5-common.h
+index ba591e7..b03966d 100644
+--- a/include/configs/exynos5-common.h
++++ b/include/configs/exynos5-common.h
+@@ -55,9 +55,6 @@
+ #define CONFIG_EXTRA_ENV_SETTINGS \
+ 	EXYNOS_DEVICE_SETTINGS
+ 
+-#define CONFIG_CMD_PING
+-#define CONFIG_CMD_ELF
+-#define CONFIG_CMD_NET
+ #define CONFIG_CMD_HASH
+ 
+ /* Thermal Management Unit */
+@@ -174,12 +171,6 @@
+ #define CONFIG_ENV_SROM_BANK		1
+ #endif /*CONFIG_CMD_NET*/
+ 
+-/* Enable PXE Support */
+-#ifdef CONFIG_CMD_NET
+-#define CONFIG_CMD_PXE
+-#define CONFIG_MENU
+-#endif
+-
+ /* SHA hashing */
+ #define CONFIG_CMD_HASH
+ #define CONFIG_HASH_VERIFY
+@@ -189,8 +180,6 @@
+ /* Enable Time Command */
+ #define CONFIG_CMD_TIME
+ 
+-#define CONFIG_CMD_BOOTZ
+-
+ #define CONFIG_CMD_GPIO
+ 
+ /* USB boot mode */

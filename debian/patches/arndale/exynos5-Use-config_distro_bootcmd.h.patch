@@ -1,0 +1,173 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: [U-Boot,v2,2/2] exynos5: Use config_distro_bootcmd.h
+From: Ian Campbell <ijc@hellion.org.uk>
+X-Patchwork-Id: 400301
+Message-Id: <1413467042-32028-2-git-send-email-ijc@hellion.org.uk>
+To: u-boot@lists.denx.de,
+	Minkyu Kang <mk7.kang@samsung.com>
+Cc: Ian Campbell <ian.campbell@citrix.com>
+Date: Thu, 16 Oct 2014 14:44:02 +0100
+
+From: Ian Campbell <ian.campbell@citrix.com>
+
+This replaces the existing CONFIG_BOOTCOMMAND for exynos5250 and 5420.
+
+exynos4 platforms seem to have existing complex extra env configuration for
+booting and so are excluded here. Hence the bootcmd.h is added to
+exynos5-common.h.
+
+I have build tested on all exynos platforms (MAKEALL -s exynos), but only boot
+tested on arndale.
+
+Signed-off-by: Ian Campbell <ian.campbell@citrix.com>
+---
+v2: This was previously "arndale: Use config_distro_bootcmd.h" but required
+significant rebasing.
+
+Is replacing the existing bootcommand in this way acceptable? The
+distro_bootcmd.h infrastructure does not seem to provide a way to integrate the
+"raw" style of booting.
+---
+ include/configs/arndale.h           |  3 +++
+ include/configs/exynos5-common.h    | 45 ++++++++++++++++++++++++++++++-------
+ include/configs/exynos5-dt-common.h | 17 ++++++--------
+ include/configs/exynos5250-common.h |  2 --
+ include/configs/exynos5420-common.h |  2 --
+ 5 files changed, 47 insertions(+), 22 deletions(-)
+
+diff --git a/include/configs/arndale.h b/include/configs/arndale.h
+index a87806d..919729d 100644
+--- a/include/configs/arndale.h
++++ b/include/configs/arndale.h
+@@ -9,6 +9,9 @@
+ #ifndef __CONFIG_ARNDALE_H
+ #define __CONFIG_ARNDALE_H
+ 
++#define EXYNOS_FDTFILE_SETTING \
++	"fdtfile=exynos5250-arndale.dtb\0"
++
+ #include "exynos5250-common.h"
+ 
+ /* SD/MMC configuration */
+diff --git a/include/configs/exynos5-common.h b/include/configs/exynos5-common.h
+index b03966d..8f9b780 100644
+--- a/include/configs/exynos5-common.h
++++ b/include/configs/exynos5-common.h
+@@ -47,14 +47,6 @@
+ #define CONFIG_SYS_CONSOLE_IS_IN_ENV
+ #define CONFIG_CONSOLE_MUX
+ 
+-#define EXYNOS_DEVICE_SETTINGS \
+-		"stdin=serial\0" \
+-		"stdout=serial\0" \
+-		"stderr=serial\0"
+-
+-#define CONFIG_EXTRA_ENV_SETTINGS \
+-	EXYNOS_DEVICE_SETTINGS
+-
+ #define CONFIG_CMD_HASH
+ 
+ /* Thermal Management Unit */
+@@ -192,4 +184,41 @@
+ #define CONFIG_FIT
+ #define CONFIG_FIT_BEST_MATCH
+ 
++
++#define BOOT_TARGET_DEVICES(func) \
++	func(MMC, mmc, 1) \
++	func(MMC, mmc, 0) \
++	func(PXE, pxe, na) \
++	func(DHCP, dhcp, na)
++
++#include <config_distro_bootcmd.h>
++
++#ifndef MEM_LAYOUT_ENV_SETTINGS
++/* 2GB RAM, bootm size of 256M, load scripts after that */
++#define MEM_LAYOUT_ENV_SETTINGS \
++	"bootm_size=0x10000000\0" \
++	"kernel_addr_r=0x42000000\0" \
++	"fdt_addr_r=0x43000000\0" \
++	"ramdisk_addr_r=0x43300000\0" \
++	"scriptaddr=0x50000000\0" \
++	"pxefile_addr_r=0x51000000\0"
++#endif
++
++#ifndef EXYNOS_DEVICE_SETTINGS
++#define EXYNOS_DEVICE_SETTINGS \
++	"stdin=serial\0" \
++	"stdout=serial\0" \
++	"stderr=serial\0"
++#endif
++
++#ifndef EXYNOS_FDTFILE_SETTING
++#define EXYNOS_FDTFILE_SETTING
++#endif
++
++#define CONFIG_EXTRA_ENV_SETTINGS \
++	EXYNOS_DEVICE_SETTINGS \
++	EXYNOS_FDTFILE_SETTING \
++	MEM_LAYOUT_ENV_SETTINGS \
++	BOOTENV
++
+ #endif	/* __CONFIG_EXYNOS5_COMMON_H */
+diff --git a/include/configs/exynos5-dt-common.h b/include/configs/exynos5-dt-common.h
+index 66547fa..9cef0b0 100644
+--- a/include/configs/exynos5-dt-common.h
++++ b/include/configs/exynos5-dt-common.h
+@@ -9,6 +9,13 @@
+ #ifndef __CONFIG_EXYNOS5_DT_COMMON_H
+ #define __CONFIG_EXYNOS5_DT_COMMON_H
+ 
++/* Console configuration */
++#undef EXYNOS_DEVICE_SETTINGS
++#define EXYNOS_DEVICE_SETTINGS \
++		"stdin=serial,cros-ec-keyb\0" \
++		"stdout=serial,lcd\0" \
++		"stderr=serial,lcd\0"
++
+ #include "exynos5-common.h"
+ 
+ /* PMIC */
+@@ -22,14 +29,4 @@
+ #define CONFIG_CMD_CROS_EC
+ #define CONFIG_KEYBOARD
+ 
+-/* Console configuration */
+-#undef EXYNOS_DEVICE_SETTINGS
+-#define EXYNOS_DEVICE_SETTINGS \
+-		"stdin=serial,cros-ec-keyb\0" \
+-		"stdout=serial,lcd\0" \
+-		"stderr=serial,lcd\0"
+-
+-#define CONFIG_EXTRA_ENV_SETTINGS \
+-	EXYNOS_DEVICE_SETTINGS
+-
+ #endif
+diff --git a/include/configs/exynos5250-common.h b/include/configs/exynos5250-common.h
+index 713614f..a0107e8 100644
+--- a/include/configs/exynos5250-common.h
++++ b/include/configs/exynos5250-common.h
+@@ -29,8 +29,6 @@
+ 
+ #define CONFIG_SPL_TEXT_BASE	0x02023400
+ 
+-#define CONFIG_BOOTCOMMAND	"mmc read 40007000 451 2000; bootm 40007000"
+-
+ #define CONFIG_IRAM_STACK	0x02050000
+ 
+ #define CONFIG_SYS_INIT_SP_ADDR	CONFIG_IRAM_STACK
+diff --git a/include/configs/exynos5420-common.h b/include/configs/exynos5420-common.h
+index b0f940c..3cf9f01 100644
+--- a/include/configs/exynos5420-common.h
++++ b/include/configs/exynos5420-common.h
+@@ -44,8 +44,6 @@
+ 
+ #define CONFIG_BOARD_REV_GPIO_COUNT	2
+ 
+-#define CONFIG_BOOTCOMMAND	"mmc read 20007000 451 2000; bootm 20007000"
+-
+ #define CONFIG_SYS_USB_XHCI_MAX_ROOT_PORTS	2
+ 
+ /*
