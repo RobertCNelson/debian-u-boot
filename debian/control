@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Vagrant Cascadian <vagrant@debian.org>
 Uploaders: Loïc Minier <lool@debian.org>, Clint Adams <clint@debian.org>
 Build-Depends: debhelper (>= 9), bc, device-tree-compiler
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Homepage: http://www.denx.de/wiki/U-Boot/
 Vcs-Git: git://anonscm.debian.org/collab-maint/u-boot.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/u-boot.git;a=summary
