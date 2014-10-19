@@ -1,3 +1,18 @@
+u-boot (2014.10+dfsg1-1) unstable; urgency=medium
+
+  [ Vagrant Cascadian ]
+  * New upstream release.
+  * Refresh cubox-i patches to 2014.10.
+  * Update cubox-i patches to use generic board.
+  * Remove debian/patches/kerma-sheevaplug-mvsata.diff, merged upstream.
+  * Patch to allow tools-only to build without a configuration.
+  * Update Standards-Version to 3.9.6, no changes needed.
+
+  [ Ian Campbell ]
+  * Rebase arndale patches onto 2014.10
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Sun, 19 Oct 2014 11:34:39 -0700
+
 u-boot (2014.10~rc3+dfsg1-2) experimental; urgency=medium
 
   [ Ian Campbell ]
