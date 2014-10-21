@@ -1,0 +1,20 @@
+Adds standardized variables, fdtfile, fdt_addr_r, ramdisk_addr_r and
+kernel_addr_r.
+
+Index: u-boot/include/configs/wandboard.h
+===================================================================
+--- u-boot.orig/include/configs/wandboard.h
++++ u-boot/include/configs/wandboard.h
+@@ -131,7 +131,12 @@
+ 	"fdt_high=0xffffffff\0" \
+ 	"initrd_high=0xffffffff\0" \
+ 	"fdt_file=" CONFIG_DEFAULT_FDT_FILE "\0" \
++	"fdtfile=" CONFIG_DEFAULT_FDT_FILE "\0" \
+ 	"fdt_addr=0x18000000\0" \
++	"fdt_addr_r=0x18000000\0" \
++	"ramdiskaddr=0x13000000\0" \
++	"ramdisk_addr_r=0x13000000\0" \
++	"kernel_addr_r=" CONFIG_LOADADDR "\0" \
+ 	"boot_fdt=try\0" \
+ 	"ip_dyn=yes\0" \
+ 	"mmcdev=" __stringify(CONFIG_SYS_MMC_ENV_DEV) "\0" \
