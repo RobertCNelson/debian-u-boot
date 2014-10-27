@@ -14,7 +14,6 @@ cubox-i/spl-sata-support.diff
 cubox-i/imx6-spl-support.diff
 cubox-i/cubox-i-support.diff
 cubox-i/cubox-i-raw-initrd.diff
-cubox-i/Switch-mx6_cubox-i-to-Kconfig.patch
 cubox-i/steal-board-eth-init-from-hummingboard.diff
 cubox-i/generic-board.diff
 n900-bootz-raw-initrd.diff

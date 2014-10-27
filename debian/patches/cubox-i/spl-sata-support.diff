@@ -3,7 +3,7 @@ Description: SPL SATA support
  Taken from https://github.com/rabeeh/u-boot-imx6.git
 
 diff --git a/common/Makefile b/common/Makefile
-index de5cce8..2060498 100644
+index b19d379..7bdd8b3 100644
 --- a/common/Makefile
 +++ b/common/Makefile
 @@ -60,6 +60,8 @@ obj-$(CONFIG_ENV_IS_IN_FAT) += env_fat.o
@@ -16,7 +16,7 @@ index de5cce8..2060498 100644
  obj-$(CONFIG_ENV_IS_IN_REMOTE) += env_remote.o
  obj-$(CONFIG_ENV_IS_IN_UBI) += env_ubi.o
 diff --git a/common/cmd_nvedit.c b/common/cmd_nvedit.c
-index e6c3395..d36e4b9 100644
+index 855808c..5f56acb 100644
 --- a/common/cmd_nvedit.c
 +++ b/common/cmd_nvedit.c
 @@ -49,6 +49,8 @@ DECLARE_GLOBAL_DATA_PTR;

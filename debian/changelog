@@ -1,3 +1,9 @@
+u-boot (2014.10+dfsg1-2) UNRELEASED; urgency=medium
+
+  * Resync cubox-i patches with github.
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 26 Oct 2014 22:36:41 -0700
+
 u-boot (2014.10+dfsg1-1) unstable; urgency=medium
 
   [ Vagrant Cascadian ]

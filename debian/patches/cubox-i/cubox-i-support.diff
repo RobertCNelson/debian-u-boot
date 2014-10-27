@@ -3,11 +3,59 @@ Author: Rabeeh Khoury <rabeeh@solid-run.com>,
 Description: SolidRun CuBox-i support
  Taken from https://github.com/rabeeh/u-boot-imx6.git
 
-Index: u-boot/arch/arm/cpu/armv7/mx6/soc.c
-===================================================================
---- u-boot.orig/arch/arm/cpu/armv7/mx6/soc.c
-+++ u-boot/arch/arm/cpu/armv7/mx6/soc.c
-@@ -409,6 +409,9 @@ void imx_enable_hdmi_phy(void)
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index 72558b8..c6c526a 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -414,6 +414,12 @@ config TARGET_GW_VENTANA
+ config TARGET_HUMMINGBOARD
+ 	bool "Support hummingboard"
+ 
++config TARGET_MX6_C1
++	bool "Support mx6_c1"
++
++config TARGET_MX6_CUBOX_I
++	bool "Support mx6_cubox-i"
++
+ config TARGET_TQMA6
+ 	bool "TQ Systems TQMa6 board"
+ 
+@@ -671,6 +677,8 @@ source "board/siemens/rut/Kconfig"
+ source "board/siemens/taurus/Kconfig"
+ source "board/silica/pengwyn/Kconfig"
+ source "board/solidrun/hummingboard/Kconfig"
++source "board/solidrun/mx6_c1/Kconfig"
++source "board/solidrun/mx6_cubox-i/Kconfig"
+ source "board/spear/spear300/Kconfig"
+ source "board/spear/spear310/Kconfig"
+ source "board/spear/spear320/Kconfig"
+diff --git a/arch/arm/cpu/armv7/mx6/soc.c b/arch/arm/cpu/armv7/mx6/soc.c
+index 6352422..8079840 100644
+--- a/arch/arm/cpu/armv7/mx6/soc.c
++++ b/arch/arm/cpu/armv7/mx6/soc.c
+@@ -389,10 +389,17 @@ void s_init(void)
+ 		(periph2 != 0x3) && (periph1 != 0x3))
+ 		mask528 |= ANATOP_PFD_CLKGATE_MASK(2);
+ 
+-	writel(mask480, &anatop->pfd_480_set);
+-	writel(mask528, &anatop->pfd_528_set);
+-	writel(mask480, &anatop->pfd_480_clr);
+-	writel(mask528, &anatop->pfd_528_clr);
++	reg = readl(&anatop->pfd_480);
++	if (!(reg & ((1 << 6) | (1 << 14) | (1 << 22)))) {
++		writel(mask480, &anatop->pfd_480_set);
++		writel(mask480, &anatop->pfd_480_clr);
++	}
++
++	reg = readl(&anatop->pfd_528);
++	if (!(reg & ((1 << 6) | (1 << 14) | (1 << 22)))) {
++		writel(mask528, &anatop->pfd_528_set);
++		writel(mask528, &anatop->pfd_528_clr);
++	}
+ }
+ 
+ #ifdef CONFIG_IMX_HDMI
+@@ -409,6 +416,9 @@ void imx_enable_hdmi_phy(void)
  	udelay(3000);
  	reg |= HDMI_PHY_CONF0_GEN2_TXPWRON_MASK;
  	writeb(reg, &hdmi->phy_conf0);
@@ -17,10 +65,11 @@ Index: u-boot/arch/arm/cpu/armv7/mx6/soc.c
  	writeb(HDMI_MC_PHYRSTZ_ASSERT, &hdmi->mc_phyrstz);
  }
  
-Index: u-boot/board/solidrun/mx6-microsom/1066mhz_4x128mx16.cfg
-===================================================================
+diff --git a/board/solidrun/mx6-microsom/1066mhz_4x128mx16.cfg b/board/solidrun/mx6-microsom/1066mhz_4x128mx16.cfg
+new file mode 100644
+index 0000000..19da53e
 --- /dev/null
-+++ u-boot/board/solidrun/mx6-microsom/1066mhz_4x128mx16.cfg
++++ b/board/solidrun/mx6-microsom/1066mhz_4x128mx16.cfg
 @@ -0,0 +1,103 @@
 +/*
 + * Copyright (C) 2013 Boundary Devices
@@ -125,10 +174,11 @@ Index: u-boot/board/solidrun/mx6-microsom/1066mhz_4x128mx16.cfg
 +DATA 4, MX6_MMDC_P1_MPODTCTRL, 0x00000007
 +DATA 4, MX6_MMDC_P0_MDSCR, 0x00000000
 +DATA 4, MX6_MMDC_P0_MAPSR, 0x00011006
-Index: u-boot/board/solidrun/mx6-microsom/1066mhz_4x256mx16.cfg
-===================================================================
+diff --git a/board/solidrun/mx6-microsom/1066mhz_4x256mx16.cfg b/board/solidrun/mx6-microsom/1066mhz_4x256mx16.cfg
+new file mode 100644
+index 0000000..0800afc
 --- /dev/null
-+++ u-boot/board/solidrun/mx6-microsom/1066mhz_4x256mx16.cfg
++++ b/board/solidrun/mx6-microsom/1066mhz_4x256mx16.cfg
 @@ -0,0 +1,103 @@
 +/*
 + * Copyright (C) 2013 Boundary Devices
@@ -233,10 +283,11 @@ Index: u-boot/board/solidrun/mx6-microsom/1066mhz_4x256mx16.cfg
 +DATA 4, MX6_MMDC_P1_MPODTCTRL, 0x00000007
 +DATA 4, MX6_MMDC_P0_MDSCR, 0x00000000
 +DATA 4, MX6_MMDC_P0_MAPSR, 0x00011006
-Index: u-boot/board/solidrun/mx6-microsom/800mhz_4x128mx16.cfg
-===================================================================
+diff --git a/board/solidrun/mx6-microsom/800mhz_4x128mx16.cfg b/board/solidrun/mx6-microsom/800mhz_4x128mx16.cfg
+new file mode 100644
+index 0000000..0dea747
 --- /dev/null
-+++ u-boot/board/solidrun/mx6-microsom/800mhz_4x128mx16.cfg
++++ b/board/solidrun/mx6-microsom/800mhz_4x128mx16.cfg
 @@ -0,0 +1,99 @@
 +/*
 + * Copyright (C) 2013 Boundary Devices
@@ -337,10 +388,32 @@ Index: u-boot/board/solidrun/mx6-microsom/800mhz_4x128mx16.cfg
 +DATA 4, MX6_MMDC_P0_MDPDC, 0x0002556d
 +DATA 4, MX6_MMDC_P0_MAPSR, 0x00011006
 +DATA 4, MX6_MMDC_P0_MDSCR, 0x00000000
-Index: u-boot/board/solidrun/mx6-microsom/ddr-1066mhz-64bit-setup.cfg
-===================================================================
+diff --git a/board/solidrun/mx6-microsom/clocks.cfg b/board/solidrun/mx6-microsom/clocks.cfg
+index 1288811..d579eef 100644
+--- a/board/solidrun/mx6-microsom/clocks.cfg
++++ b/board/solidrun/mx6-microsom/clocks.cfg
+@@ -4,6 +4,16 @@
+  * Copyright (C) 2013 Jon Nettleton <jon.nettleton@gmail.com>
+  *
+  * SPDX-License-Identifier:	GPL-2.0+
++ *
++ * Device Configuration Data (DCD)
++ *
++ * Each entry must have the format:
++ * Addr-type           Address        Value
++ *
++ * where:
++ *      Addr-type register length (1,2 or 4 bytes)
++ *      Address   absolute address of the register
++ *      value     value to be stored in the register
+  */
+ 
+ /* set the default clock gate to save power */
+diff --git a/board/solidrun/mx6-microsom/ddr-1066mhz-64bit-setup.cfg b/board/solidrun/mx6-microsom/ddr-1066mhz-64bit-setup.cfg
+new file mode 100644
+index 0000000..1a8af4e
 --- /dev/null
-+++ u-boot/board/solidrun/mx6-microsom/ddr-1066mhz-64bit-setup.cfg
++++ b/board/solidrun/mx6-microsom/ddr-1066mhz-64bit-setup.cfg
 @@ -0,0 +1,101 @@
 +/*
 + * Copyright (C) 2013 Boundary Devices
@@ -443,10 +516,11 @@ Index: u-boot/board/solidrun/mx6-microsom/ddr-1066mhz-64bit-setup.cfg
 +DATA 4, MX6_IOM_DRAM_DQM5, 0x00020030
 +DATA 4, MX6_IOM_DRAM_DQM6, 0x00020030
 +DATA 4, MX6_IOM_DRAM_DQM7, 0x00020030
-Index: u-boot/board/solidrun/mx6-microsom/ddr-800mhz-64bit-setup.cfg
-===================================================================
+diff --git a/board/solidrun/mx6-microsom/ddr-800mhz-64bit-setup.cfg b/board/solidrun/mx6-microsom/ddr-800mhz-64bit-setup.cfg
+new file mode 100644
+index 0000000..a7a372d
 --- /dev/null
-+++ u-boot/board/solidrun/mx6-microsom/ddr-800mhz-64bit-setup.cfg
++++ b/board/solidrun/mx6-microsom/ddr-800mhz-64bit-setup.cfg
 @@ -0,0 +1,100 @@
 +/*
 + * Copyright (C) 2013 Boundary Devices
@@ -548,10 +622,40 @@ Index: u-boot/board/solidrun/mx6-microsom/ddr-800mhz-64bit-setup.cfg
 +DATA 4, MX6_IOM_DRAM_DQM5, 0x00000028
 +DATA 4, MX6_IOM_DRAM_DQM6, 0x00000028
 +DATA 4, MX6_IOM_DRAM_DQM7, 0x00000028
-Index: u-boot/board/solidrun/mx6_c1/Makefile
-===================================================================
+diff --git a/board/solidrun/mx6_c1/Kconfig b/board/solidrun/mx6_c1/Kconfig
+new file mode 100644
+index 0000000..4db29bb
 --- /dev/null
-+++ u-boot/board/solidrun/mx6_c1/Makefile
++++ b/board/solidrun/mx6_c1/Kconfig
+@@ -0,0 +1,23 @@
++if TARGET_MX6_C1
++
++config SYS_CPU
++	string
++	default "armv7"
++
++config SYS_BOARD
++	string
++	default "mx6_c1"
++
++config SYS_VENDOR
++	string
++	default "solidrun"
++
++config SYS_SOC
++	string
++	default "mx6"
++
++config SYS_CONFIG_NAME
++	string
++	default "mx6_c1"
++
++endif
+diff --git a/board/solidrun/mx6_c1/Makefile b/board/solidrun/mx6_c1/Makefile
+new file mode 100644
+index 0000000..b772936
+--- /dev/null
++++ b/board/solidrun/mx6_c1/Makefile
 @@ -0,0 +1,23 @@
 +#
 +# Copyright (C) 2012-2013, Guennadi Liakhovetski <lg@denx.de>
@@ -576,10 +680,11 @@ Index: u-boot/board/solidrun/mx6_c1/Makefile
 +#
 +
 +obj-y  := mx6_c1.o
-Index: u-boot/board/solidrun/mx6_c1/mx6_c1.c
-===================================================================
+diff --git a/board/solidrun/mx6_c1/mx6_c1.c b/board/solidrun/mx6_c1/mx6_c1.c
+new file mode 100644
+index 0000000..d301223
 --- /dev/null
-+++ u-boot/board/solidrun/mx6_c1/mx6_c1.c
++++ b/board/solidrun/mx6_c1/mx6_c1.c
 @@ -0,0 +1,340 @@
 +/*
 + * Copyright (C) 2012 Freescale Semiconductor, Inc.
@@ -921,10 +1026,11 @@ Index: u-boot/board/solidrun/mx6_c1/mx6_c1.c
 +
 +	return 0;
 +}
-Index: u-boot/board/solidrun/mx6_c1/mx6_c1_bootscript.txt
-===================================================================
+diff --git a/board/solidrun/mx6_c1/mx6_c1_bootscript.txt b/board/solidrun/mx6_c1/mx6_c1_bootscript.txt
+new file mode 100644
+index 0000000..c061885
 --- /dev/null
-+++ u-boot/board/solidrun/mx6_c1/mx6_c1_bootscript.txt
++++ b/board/solidrun/mx6_c1/mx6_c1_bootscript.txt
 @@ -0,0 +1,30 @@
 +setenv bootargs enable_wait_mode=off
 +setenv nextcon 0;
@@ -956,10 +1062,11 @@ Index: u-boot/board/solidrun/mx6_c1/mx6_c1_bootscript.txt
 +&& ${fs}load ${dtype} ${disk}:1 12800000 /boot/uramdisk.img
 +&& bootm 10800000 12800000 ;
 +echo "Error loading kernel image"
-Index: u-boot/board/solidrun/mx6_c1/mx6_c1d.cfg
-===================================================================
+diff --git a/board/solidrun/mx6_c1/mx6_c1d.cfg b/board/solidrun/mx6_c1/mx6_c1d.cfg
+new file mode 100644
+index 0000000..8211ac8
 --- /dev/null
-+++ u-boot/board/solidrun/mx6_c1/mx6_c1d.cfg
++++ b/board/solidrun/mx6_c1/mx6_c1d.cfg
 @@ -0,0 +1,46 @@
 +/*
 + * Copyright (C) 2013 Boundary Devices
@@ -1007,10 +1114,11 @@ Index: u-boot/board/solidrun/mx6_c1/mx6_c1d.cfg
 +#include "../mx6-microsom/ddr-1066mhz-64bit-setup.cfg"
 +#include "../mx6-microsom/1066mhz_4x256mx16.cfg"
 +#include "../mx6-microsom/clocks.cfg"
-Index: u-boot/board/solidrun/mx6_c1/mx6_c1dl.cfg
-===================================================================
+diff --git a/board/solidrun/mx6_c1/mx6_c1dl.cfg b/board/solidrun/mx6_c1/mx6_c1dl.cfg
+new file mode 100644
+index 0000000..33eddd4
 --- /dev/null
-+++ u-boot/board/solidrun/mx6_c1/mx6_c1dl.cfg
++++ b/board/solidrun/mx6_c1/mx6_c1dl.cfg
 @@ -0,0 +1,46 @@
 +/*
 + * Copyright (C) 2013 Boundary Devices
@@ -1058,10 +1166,11 @@ Index: u-boot/board/solidrun/mx6_c1/mx6_c1dl.cfg
 +#include "../mx6-microsom/ddr-800mhz-64bit-setup.cfg"
 +#include "../mx6-microsom/800mhz_4x128mx16.cfg"
 +#include "../mx6-microsom/clocks.cfg"
-Index: u-boot/board/solidrun/mx6_c1/mx6_c1q.cfg
-===================================================================
+diff --git a/board/solidrun/mx6_c1/mx6_c1q.cfg b/board/solidrun/mx6_c1/mx6_c1q.cfg
+new file mode 100644
+index 0000000..8211ac8
 --- /dev/null
-+++ u-boot/board/solidrun/mx6_c1/mx6_c1q.cfg
++++ b/board/solidrun/mx6_c1/mx6_c1q.cfg
 @@ -0,0 +1,46 @@
 +/*
 + * Copyright (C) 2013 Boundary Devices
@@ -1109,10 +1218,11 @@ Index: u-boot/board/solidrun/mx6_c1/mx6_c1q.cfg
 +#include "../mx6-microsom/ddr-1066mhz-64bit-setup.cfg"
 +#include "../mx6-microsom/1066mhz_4x256mx16.cfg"
 +#include "../mx6-microsom/clocks.cfg"
-Index: u-boot/board/solidrun/mx6_c1/mx6_c1solo.cfg
-===================================================================
+diff --git a/board/solidrun/mx6_c1/mx6_c1solo.cfg b/board/solidrun/mx6_c1/mx6_c1solo.cfg
+new file mode 100644
+index 0000000..8acb5ba
 --- /dev/null
-+++ u-boot/board/solidrun/mx6_c1/mx6_c1solo.cfg
++++ b/board/solidrun/mx6_c1/mx6_c1solo.cfg
 @@ -0,0 +1,46 @@
 +/*
 + * Copyright (C) 2013 Boundary Devices
@@ -1160,10 +1270,52 @@ Index: u-boot/board/solidrun/mx6_c1/mx6_c1solo.cfg
 +#include "../mx6-microsom/ddr-800mhz-32bit-setup.cfg"
 +#include "../mx6-microsom/800mhz_2x128mx16.cfg"
 +#include "../mx6-microsom/clocks.cfg"
-Index: u-boot/board/solidrun/mx6_cubox-i/Makefile
-===================================================================
+diff --git a/board/solidrun/mx6_cubox-i/Kconfig b/board/solidrun/mx6_cubox-i/Kconfig
+new file mode 100644
+index 0000000..c4ec8fb
 --- /dev/null
-+++ u-boot/board/solidrun/mx6_cubox-i/Makefile
++++ b/board/solidrun/mx6_cubox-i/Kconfig
+@@ -0,0 +1,23 @@
++if TARGET_MX6_CUBOX_I
++
++config SYS_CPU
++	string
++	default "armv7"
++
++config SYS_BOARD
++	string
++	default "mx6_cubox-i"
++
++config SYS_VENDOR
++	string
++	default "solidrun"
++
++config SYS_SOC
++	string
++	default "mx6"
++
++config SYS_CONFIG_NAME
++	string
++	default "mx6_cubox-i"
++
++endif
+diff --git a/board/solidrun/mx6_cubox-i/MAINTAINERS b/board/solidrun/mx6_cubox-i/MAINTAINERS
+new file mode 100644
+index 0000000..36ddf06
+--- /dev/null
++++ b/board/solidrun/mx6_cubox-i/MAINTAINERS
+@@ -0,0 +1,6 @@
++MX6 CuBox-I BOARD
++M:	Steve Langasek <vorlon@debian.org>
++S:	Maintained
++F:	board/solidrun/mx6_cubox-i/
++F:	include/configs/mx6_cubox-i.h
++F:	configs/mx6_cubox-i_defconfig
+diff --git a/board/solidrun/mx6_cubox-i/Makefile b/board/solidrun/mx6_cubox-i/Makefile
+new file mode 100644
+index 0000000..2de7a70
+--- /dev/null
++++ b/board/solidrun/mx6_cubox-i/Makefile
 @@ -0,0 +1,23 @@
 +#
 +# Copyright (C) 2012-2013, Guennadi Liakhovetski <lg@denx.de>
@@ -1188,10 +1340,11 @@ Index: u-boot/board/solidrun/mx6_cubox-i/Makefile
 +#
 +
 +obj-y	:= mx6_cubox-i.o mx6_cubox-i_spl.o
-Index: u-boot/board/solidrun/mx6_cubox-i/imx6image.cfg
-===================================================================
+diff --git a/board/solidrun/mx6_cubox-i/imx6image.cfg b/board/solidrun/mx6_cubox-i/imx6image.cfg
+new file mode 100644
+index 0000000..e9736fb
 --- /dev/null
-+++ u-boot/board/solidrun/mx6_cubox-i/imx6image.cfg
++++ b/board/solidrun/mx6_cubox-i/imx6image.cfg
 @@ -0,0 +1,28 @@
 +/*
 + * Maintainer : Richard Hu <linuxfae@technexion.com>
@@ -1221,10 +1374,11 @@ Index: u-boot/board/solidrun/mx6_cubox-i/imx6image.cfg
 +#include "asm/arch/crm_regs.h"
 +
 +#include "../mx6-microsom/clocks.cfg"
-Index: u-boot/board/solidrun/mx6_cubox-i/mx6_cubox-i.c
-===================================================================
+diff --git a/board/solidrun/mx6_cubox-i/mx6_cubox-i.c b/board/solidrun/mx6_cubox-i/mx6_cubox-i.c
+new file mode 100644
+index 0000000..61015e9
 --- /dev/null
-+++ u-boot/board/solidrun/mx6_cubox-i/mx6_cubox-i.c
++++ b/board/solidrun/mx6_cubox-i/mx6_cubox-i.c
 @@ -0,0 +1,483 @@
 +/*
 + * Copyright (C) 2012 Freescale Semiconductor, Inc.
@@ -1709,10 +1863,11 @@ Index: u-boot/board/solidrun/mx6_cubox-i/mx6_cubox-i.c
 +
 +	return 0;
 +}
-Index: u-boot/board/solidrun/mx6_cubox-i/mx6_cubox-i_bootscript.txt
-===================================================================
+diff --git a/board/solidrun/mx6_cubox-i/mx6_cubox-i_bootscript.txt b/board/solidrun/mx6_cubox-i/mx6_cubox-i_bootscript.txt
+new file mode 100644
+index 0000000..c061885
 --- /dev/null
-+++ u-boot/board/solidrun/mx6_cubox-i/mx6_cubox-i_bootscript.txt
++++ b/board/solidrun/mx6_cubox-i/mx6_cubox-i_bootscript.txt
 @@ -0,0 +1,30 @@
 +setenv bootargs enable_wait_mode=off
 +setenv nextcon 0;
@@ -1744,10 +1899,11 @@ Index: u-boot/board/solidrun/mx6_cubox-i/mx6_cubox-i_bootscript.txt
 +&& ${fs}load ${dtype} ${disk}:1 12800000 /boot/uramdisk.img
 +&& bootm 10800000 12800000 ;
 +echo "Error loading kernel image"
-Index: u-boot/board/solidrun/mx6_cubox-i/mx6_cubox-i_spl.c
-===================================================================
+diff --git a/board/solidrun/mx6_cubox-i/mx6_cubox-i_spl.c b/board/solidrun/mx6_cubox-i/mx6_cubox-i_spl.c
+new file mode 100644
+index 0000000..67d5479
 --- /dev/null
-+++ u-boot/board/solidrun/mx6_cubox-i/mx6_cubox-i_spl.c
++++ b/board/solidrun/mx6_cubox-i/mx6_cubox-i_spl.c
 @@ -0,0 +1,478 @@
 +/*
 + * Author: Tungyi Lin <tungyilin1127@gmail.com>
@@ -2227,11 +2383,93 @@ Index: u-boot/board/solidrun/mx6_cubox-i/mx6_cubox-i_spl.c
 +}
 +#endif
 +
-Index: u-boot/drivers/net/fec_mxc.c
-===================================================================
---- u-boot.orig/drivers/net/fec_mxc.c
-+++ u-boot/drivers/net/fec_mxc.c
-@@ -125,8 +125,10 @@ static int fec_mdio_read(struct ethernet
+diff --git a/configs/mx6_c1d_defconfig b/configs/mx6_c1d_defconfig
+new file mode 100644
+index 0000000..86d172a
+--- /dev/null
++++ b/configs/mx6_c1d_defconfig
+@@ -0,0 +1,3 @@
++CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/solidrun/mx6_c1/mx6_c1d.cfg,MX6Q,DDR_MB=1024"
+++S:CONFIG_ARM=y
+++S:CONFIG_TARGET_MX6_C1=y
+diff --git a/configs/mx6_c1dl_defconfig b/configs/mx6_c1dl_defconfig
+new file mode 100644
+index 0000000..4574534
+--- /dev/null
++++ b/configs/mx6_c1dl_defconfig
+@@ -0,0 +1,3 @@
++CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/solidrun/mx6_c1/mx6_c1dl.cfg,MX6DL,DDR_MB=1024"
+++S:CONFIG_ARM=y
+++S:CONFIG_TARGET_MX6_C1=y
+diff --git a/configs/mx6_c1q_defconfig b/configs/mx6_c1q_defconfig
+new file mode 100644
+index 0000000..7e52f33
+--- /dev/null
++++ b/configs/mx6_c1q_defconfig
+@@ -0,0 +1,3 @@
++CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/solidrun/mx6_c1/mx6_c1q.cfg,MX6Q,DDR_MB=2048"
+++S:CONFIG_ARM=y
+++S:CONFIG_TARGET_MX6_C1=y
+diff --git a/configs/mx6_c1solo_defconfig b/configs/mx6_c1solo_defconfig
+new file mode 100644
+index 0000000..99376aa
+--- /dev/null
++++ b/configs/mx6_c1solo_defconfig
+@@ -0,0 +1,3 @@
++CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/solidrun/mx6_c1/mx6_c1solo.cfg,MX6S,DDR_MB=512"
+++S:CONFIG_ARM=y
+++S:CONFIG_TARGET_MX6_C1=y
+diff --git a/configs/mx6_cubox-i1_defconfig b/configs/mx6_cubox-i1_defconfig
+new file mode 100644
+index 0000000..c3d3c9c
+--- /dev/null
++++ b/configs/mx6_cubox-i1_defconfig
+@@ -0,0 +1,3 @@
++CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/solidrun/mx6_c1/mx6_c1solo.cfg,MX6S,DDR_MB=512"
+++S:CONFIG_ARM=y
+++S:CONFIG_TARGET_MX6_CUBOX_I=y
+diff --git a/configs/mx6_cubox-i2_defconfig b/configs/mx6_cubox-i2_defconfig
+new file mode 100644
+index 0000000..10700c7
+--- /dev/null
++++ b/configs/mx6_cubox-i2_defconfig
+@@ -0,0 +1,3 @@
++CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/solidrun/mx6_c1/mx6_c1dl.cfg,MX6DL,DDR_MB=1024"
+++S:CONFIG_ARM=y
+++S:CONFIG_TARGET_MX6_CUBOX_I=y
+diff --git a/configs/mx6_cubox-i2ultra_defconfig b/configs/mx6_cubox-i2ultra_defconfig
+new file mode 100644
+index 0000000..a51320e
+--- /dev/null
++++ b/configs/mx6_cubox-i2ultra_defconfig
+@@ -0,0 +1,3 @@
++CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/solidrun/mx6_c1/mx6_c1d.cfg,MX6Q,DDR_MB=1024"
+++S:CONFIG_ARM=y
+++S:CONFIG_TARGET_MX6_CUBOX_I=y
+diff --git a/configs/mx6_cubox-i4pro_defconfig b/configs/mx6_cubox-i4pro_defconfig
+new file mode 100644
+index 0000000..8f95084
+--- /dev/null
++++ b/configs/mx6_cubox-i4pro_defconfig
+@@ -0,0 +1,3 @@
++CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/solidrun/mx6_c1/mx6_c1q.cfg,MX6Q,DDR_MB=2048"
+++S:CONFIG_ARM=y
+++S:CONFIG_TARGET_MX6_CUBOX_I=y
+diff --git a/configs/mx6_cubox-i_defconfig b/configs/mx6_cubox-i_defconfig
+new file mode 100644
+index 0000000..8116ec1
+--- /dev/null
++++ b/configs/mx6_cubox-i_defconfig
+@@ -0,0 +1,4 @@
++CONFIG_SPL=y
++CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/solidrun/mx6_cubox-i/imx6image.cfg,MX6QDL,FSL_ENV_IN_MMC"
+++S:CONFIG_ARM=y
+++S:CONFIG_TARGET_MX6_CUBOX_I=y
+diff --git a/drivers/net/fec_mxc.c b/drivers/net/fec_mxc.c
+index 549d648..c49d69f 100644
+--- a/drivers/net/fec_mxc.c
++++ b/drivers/net/fec_mxc.c
+@@ -125,8 +125,10 @@ static int fec_mdio_read(struct ethernet_regs *eth, uint8_t phyAddr,
  	 * it's now safe to read the PHY's register
  	 */
  	val = (unsigned short)readl(&eth->mii_data);
@@ -2242,7 +2480,7 @@ Index: u-boot/drivers/net/fec_mxc.c
  	return val;
  }
  
-@@ -173,8 +175,10 @@ static int fec_mdio_write(struct etherne
+@@ -173,8 +175,10 @@ static int fec_mdio_write(struct ethernet_regs *eth, uint8_t phyAddr,
  	 * clear MII interrupt bit
  	 */
  	writel(FEC_IEVENT_MII, &eth->ievent);
@@ -2253,7 +2491,7 @@ Index: u-boot/drivers/net/fec_mxc.c
  
  	return 0;
  }
-@@ -750,9 +754,11 @@ static int fec_send(struct eth_device *d
+@@ -750,9 +754,11 @@ static int fec_send(struct eth_device *dev, void *packet, int length)
  		ret = -EINVAL;
  
  out:
@@ -2265,7 +2503,7 @@ Index: u-boot/drivers/net/fec_mxc.c
  	/* for next transmission use the other buffer */
  	if (fec->tbd_index)
  		fec->tbd_index = 0;
-@@ -784,7 +790,9 @@ static int fec_recv(struct eth_device *d
+@@ -784,7 +790,9 @@ static int fec_recv(struct eth_device *dev)
  	 */
  	ievent = readl(&fec->eth->ievent);
  	writel(ievent, &fec->eth->ievent);
@@ -2275,7 +2513,7 @@ Index: u-boot/drivers/net/fec_mxc.c
  	if (ievent & FEC_IEVENT_BABR) {
  		fec_halt(dev);
  		fec_init(dev, fec->bd);
-@@ -825,7 +833,9 @@ static int fec_recv(struct eth_device *d
+@@ -825,7 +833,9 @@ static int fec_recv(struct eth_device *dev)
  	invalidate_dcache_range(addr, addr + size);
  
  	bd_status = readw(&rbd->status);
@@ -2285,7 +2523,7 @@ Index: u-boot/drivers/net/fec_mxc.c
  
  	if (!(bd_status & FEC_RBD_EMPTY)) {
  		if ((bd_status & FEC_RBD_LAST) && !(bd_status & FEC_RBD_ERR) &&
-@@ -880,7 +890,9 @@ static int fec_recv(struct eth_device *d
+@@ -880,7 +890,9 @@ static int fec_recv(struct eth_device *dev)
  		fec_rx_task_enable(fec);
  		fec->rbd_index = (fec->rbd_index + 1) % FEC_RBD_NUM;
  	}
@@ -2295,10 +2533,11 @@ Index: u-boot/drivers/net/fec_mxc.c
  
  	return len;
  }
-Index: u-boot/include/configs/mx6_c1.h
-===================================================================
+diff --git a/include/configs/mx6_c1.h b/include/configs/mx6_c1.h
+new file mode 100644
+index 0000000..3a3635f
 --- /dev/null
-+++ u-boot/include/configs/mx6_c1.h
++++ b/include/configs/mx6_c1.h
 @@ -0,0 +1,349 @@
 +/*
 + * Copyright (C) 2013 Freescale Semiconductor, Inc.
@@ -2649,10 +2888,10 @@ Index: u-boot/include/configs/mx6_c1.h
 +#endif
 +
 +#endif			       /* __CONFIG_H * */
-Index: u-boot/include/configs/mx6_common.h
-===================================================================
---- u-boot.orig/include/configs/mx6_common.h
-+++ u-boot/include/configs/mx6_common.h
+diff --git a/include/configs/mx6_common.h b/include/configs/mx6_common.h
+index 135a3f5..e3ee5ce 100644
+--- a/include/configs/mx6_common.h
++++ b/include/configs/mx6_common.h
 @@ -30,4 +30,6 @@
  
  #define CONFIG_MP
@@ -2660,11 +2899,12 @@ Index: u-boot/include/configs/mx6_common.h
 +#define CONFIG_USB_MAX_CONTROLLER_COUNT 2
 +
  #endif
-Index: u-boot/include/configs/mx6_cubox-i.h
-===================================================================
+diff --git a/include/configs/mx6_cubox-i.h b/include/configs/mx6_cubox-i.h
+new file mode 100644
+index 0000000..aefba7a
 --- /dev/null
-+++ u-boot/include/configs/mx6_cubox-i.h
-@@ -0,0 +1,369 @@
++++ b/include/configs/mx6_cubox-i.h
+@@ -0,0 +1,370 @@
 +/*
 + * Copyright (C) 2013 Freescale Semiconductor, Inc.
 + * Copyright (C) 2013 SolidRun ltd.
@@ -2814,6 +3054,7 @@ Index: u-boot/include/configs/mx6_cubox-i.h
 +#define CONFIG_MXC_USB_PORTSC   (PORT_PTS_UTMI | PORT_PTS_PTW)
 +#define CONFIG_MXC_USB_FLAGS    0
 +#define CONFIG_USB_KEYBOARD
++#define CONFIG_SYS_STDIO_DEREGISTER
 +#define CONFIG_SYS_USB_EVENT_POLL
 +#define CONFIG_PREBOOT "usb start"
 +#endif
@@ -3034,10 +3275,10 @@ Index: u-boot/include/configs/mx6_cubox-i.h
 +#endif
 +
 +#endif			       /* __CONFIG_H * */
-Index: u-boot/lib/hashtable.c
-===================================================================
---- u-boot.orig/lib/hashtable.c
-+++ u-boot/lib/hashtable.c
+diff --git a/lib/hashtable.c b/lib/hashtable.c
+index 18ed590..8de0d58 100644
+--- a/lib/hashtable.c
++++ b/lib/hashtable.c
 @@ -922,7 +922,7 @@ int himport_r(struct hsearch_data *htab,
  			printf("himport_r: can't insert \"%s=%s\" into hash table\n",
  				name, value);
@@ -3047,3 +3288,7 @@ Index: u-boot/lib/hashtable.c
  			htab, htab->filled, htab->size,
  			rv, name, value);
  	} while ((dp < data + size) && *dp);	/* size check needed for text */
+diff --git a/tools/logos/solidrun.bmp b/tools/logos/solidrun.bmp
+new file mode 100644
+index 0000000..93db1f8
+Binary files /dev/null and b/tools/logos/solidrun.bmp differ

@@ -2,10 +2,11 @@ Author: Rabeeh Khoury <rabeeh@solid-run.com>
 Description: add i.MX6 SPL support
  Taken from https://github.com/rabeeh/u-boot-imx6.git
 
-Index: u-boot/arch/arm/cpu/armv7/mx6/u-boot-spl.lds
-===================================================================
+diff --git a/arch/arm/cpu/armv7/mx6/u-boot-spl.lds b/arch/arm/cpu/armv7/mx6/u-boot-spl.lds
+new file mode 100644
+index 0000000..5e93b34
 --- /dev/null
-+++ u-boot/arch/arm/cpu/armv7/mx6/u-boot-spl.lds
++++ b/arch/arm/cpu/armv7/mx6/u-boot-spl.lds
 @@ -0,0 +1,47 @@
 +/*
 + * (C) Copyright 2002
@@ -54,10 +55,10 @@ Index: u-boot/arch/arm/cpu/armv7/mx6/u-boot-spl.lds
 +		__bss_end = .;
 +	} >.sdram
 +}
-Index: u-boot/arch/arm/imx-common/spl.c
-===================================================================
---- u-boot.orig/arch/arm/imx-common/spl.c
-+++ u-boot/arch/arm/imx-common/spl.c
+diff --git a/arch/arm/imx-common/spl.c b/arch/arm/imx-common/spl.c
+index 9a02a64..30ca9fa 100644
+--- a/arch/arm/imx-common/spl.c
++++ b/arch/arm/imx-common/spl.c
 @@ -46,7 +46,10 @@ u32 spl_boot_device(void)
  	/* SD/eSD: 8.5.3, Table 8-15  */
  	case 0x4:
@@ -86,10 +87,10 @@ Index: u-boot/arch/arm/imx-common/spl.c
  		break;
  	default:
  		puts("spl: ERROR:  unsupported device\n");
-Index: u-boot/common/spl/spl_mmc.c
-===================================================================
---- u-boot.orig/common/spl/spl_mmc.c
-+++ u-boot/common/spl/spl_mmc.c
+diff --git a/common/spl/spl_mmc.c b/common/spl/spl_mmc.c
+index fa6f891..847d840 100644
+--- a/common/spl/spl_mmc.c
++++ b/common/spl/spl_mmc.c
 @@ -93,26 +93,26 @@ void spl_mmc_load_image(void)
  	}
  
@@ -169,11 +170,11 @@ Index: u-boot/common/spl/spl_mmc.c
  
  	if (err)
  		hang();
-Index: u-boot/drivers/mtd/nand/mxs_nand.c
-===================================================================
---- u-boot.orig/drivers/mtd/nand/mxs_nand.c
-+++ u-boot/drivers/mtd/nand/mxs_nand.c
-@@ -1014,9 +1014,12 @@ static int mxs_nand_scan_bbt(struct mtd_
+diff --git a/drivers/mtd/nand/mxs_nand.c b/drivers/mtd/nand/mxs_nand.c
+index 036c113..36cfc18 100644
+--- a/drivers/mtd/nand/mxs_nand.c
++++ b/drivers/mtd/nand/mxs_nand.c
+@@ -1014,9 +1014,12 @@ static int mxs_nand_scan_bbt(struct mtd_info *mtd)
  		nand_info->hooked_block_markbad = mtd->_block_markbad;
  		mtd->_block_markbad = mxs_nand_hook_block_markbad;
  	}
@@ -187,11 +188,11 @@ Index: u-boot/drivers/mtd/nand/mxs_nand.c
  }
  
  /*
-Index: u-boot/drivers/mtd/nand/mxs_nand_spl.c
-===================================================================
---- u-boot.orig/drivers/mtd/nand/mxs_nand_spl.c
-+++ u-boot/drivers/mtd/nand/mxs_nand_spl.c
-@@ -223,9 +223,30 @@ int nand_default_bbt(struct mtd_info *mt
+diff --git a/drivers/mtd/nand/mxs_nand_spl.c b/drivers/mtd/nand/mxs_nand_spl.c
+index 0e7c364..8bc7147 100644
+--- a/drivers/mtd/nand/mxs_nand_spl.c
++++ b/drivers/mtd/nand/mxs_nand_spl.c
+@@ -223,9 +223,30 @@ int nand_default_bbt(struct mtd_info *mtd)
  
  void nand_init(void)
  {
@@ -223,23 +224,23 @@ Index: u-boot/drivers/mtd/nand/mxs_nand_spl.c
 +		nand_chip.select_chip(&mtd, -1);
  }
 -
-Index: u-boot/include/configs/imx6_spl.h
-===================================================================
---- u-boot.orig/include/configs/imx6_spl.h
-+++ u-boot/include/configs/imx6_spl.h
+diff --git a/include/configs/imx6_spl.h b/include/configs/imx6_spl.h
+index 970460d..d824705 100644
+--- a/include/configs/imx6_spl.h
++++ b/include/configs/imx6_spl.h
 @@ -25,7 +25,7 @@
   *    or 64KB
   */
  #define CONFIG_SYS_THUMB_BUILD
 -#define CONFIG_SPL_LDSCRIPT	"arch/arm/cpu/armv7/omap-common/u-boot-spl.lds"
-+#define CONFIG_SPL_LDSCRIPT    "arch/arm/cpu/armv7/mx6/u-boot-spl.lds"
++#define CONFIG_SPL_LDSCRIPT	"arch/arm/cpu/armv7/mx6/u-boot-spl.lds"
  #define CONFIG_SPL_TEXT_BASE		0x00908000
  #define CONFIG_SPL_MAX_SIZE		(64 * 1024)
  #define CONFIG_SPL_START_S_PATH		"arch/arm/cpu/armv7"
-Index: u-boot/include/spl.h
-===================================================================
---- u-boot.orig/include/spl.h
-+++ u-boot/include/spl.h
+diff --git a/include/spl.h b/include/spl.h
+index a7e41da..dd80a81 100644
+--- a/include/spl.h
++++ b/include/spl.h
 @@ -17,6 +17,7 @@
  #define MMCSD_MODE_RAW		1
  #define MMCSD_MODE_FAT		2
