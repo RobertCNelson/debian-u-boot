@@ -223,9 +223,30 @@ int nand_default_bbt(struct mtd_info *mtd)
 
 void nand_init(void)
 {
+	/*
+	 * Init board specific nand support
+	 */
+	mtd.priv = &nand_chip;
+
+	board_nand_init(&nand_chip);
+	mtd.priv = &nand_chip;	
+
+	if (nand_chip.select_chip)
+		nand_chip.select_chip(&mtd, 0);
+	
+	mtd.writesize = CONFIG_SYS_NAND_PAGE_SIZE;
+	mtd.oobsize = CONFIG_SYS_NAND_OOBSIZE;
+
+	//Actually, not scan and create bbt, just for setting flash memory geometry to BCH
+	nand_chip.scan_bbt(&mtd); 
+
+	nand_chip.buffers = memalign(ARCH_DMA_MINALIGN, sizeof(*nand_chip.buffers));
+	nand_chip.oob_poi = nand_chip.buffers->databuf + mtd.writesize;	
 }
 
+/* Unselect after operation */
 void nand_deselect(void)
 {
+	if (nand_chip.select_chip)
+		nand_chip.select_chip(&mtd, -1);
 }
-

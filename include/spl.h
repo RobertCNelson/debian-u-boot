@@ -17,6 +17,7 @@
 #define MMCSD_MODE_RAW		1
 #define MMCSD_MODE_FAT		2
 #define MMCSD_MODE_EMMCBOOT	3
+#define MMCSD_MODE_ANY		4
 
 struct spl_image_info {
 	const char *name;

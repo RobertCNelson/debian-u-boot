@@ -125,8 +125,10 @@ static int fec_mdio_read(struct ethernet_regs *eth, uint8_t phyAddr,
 	 * it's now safe to read the PHY's register
 	 */
 	val = (unsigned short)readl(&eth->mii_data);
+#ifdef VERBOSE_DEBUG
 	debug("%s: phy: %02x reg:%02x val:%#x\n", __func__, phyAddr,
 			regAddr, val);
+#endif
 	return val;
 }
 
@@ -173,8 +175,10 @@ static int fec_mdio_write(struct ethernet_regs *eth, uint8_t phyAddr,
 	 * clear MII interrupt bit
 	 */
 	writel(FEC_IEVENT_MII, &eth->ievent);
+#ifdef VERBOSE_DEBUG
 	debug("%s: phy: %02x reg:%02x val:%#x\n", __func__, phyAddr,
 			regAddr, data);
+#endif
 
 	return 0;
 }
@@ -750,9 +754,11 @@ static int fec_send(struct eth_device *dev, void *packet, int length)
 		ret = -EINVAL;
 
 out:
+#ifdef VERBOSE_DEBUG
 	debug("fec_send: status 0x%x index %d ret %i\n",
 			readw(&fec->tbd_base[fec->tbd_index].status),
 			fec->tbd_index, ret);
+#endif
 	/* for next transmission use the other buffer */
 	if (fec->tbd_index)
 		fec->tbd_index = 0;
@@ -784,7 +790,9 @@ static int fec_recv(struct eth_device *dev)
 	 */
 	ievent = readl(&fec->eth->ievent);
 	writel(ievent, &fec->eth->ievent);
+#ifdef VERBOSE_DEBUG
 	debug("fec_recv: ievent 0x%lx\n", ievent);
+#endif
 	if (ievent & FEC_IEVENT_BABR) {
 		fec_halt(dev);
 		fec_init(dev, fec->bd);
@@ -825,7 +833,9 @@ static int fec_recv(struct eth_device *dev)
 	invalidate_dcache_range(addr, addr + size);
 
 	bd_status = readw(&rbd->status);
+#ifdef VERBOSE_DEBUG
 	debug("fec_recv: status 0x%x\n", bd_status);
+#endif
 
 	if (!(bd_status & FEC_RBD_EMPTY)) {
 		if ((bd_status & FEC_RBD_LAST) && !(bd_status & FEC_RBD_ERR) &&
@@ -880,7 +890,9 @@ static int fec_recv(struct eth_device *dev)
 		fec_rx_task_enable(fec);
 		fec->rbd_index = (fec->rbd_index + 1) % FEC_RBD_NUM;
 	}
+#ifdef VERBOSE_DEBUG
 	debug("fec_recv: stop\n");
+#endif
 
 	return len;
 }

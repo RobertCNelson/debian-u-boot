@@ -25,7 +25,7 @@
  *    or 64KB
  */
 #define CONFIG_SYS_THUMB_BUILD
-#define CONFIG_SPL_LDSCRIPT	"arch/arm/cpu/armv7/omap-common/u-boot-spl.lds"
+#define CONFIG_SPL_LDSCRIPT	"arch/arm/cpu/armv7/mx6/u-boot-spl.lds"
 #define CONFIG_SPL_TEXT_BASE		0x00908000
 #define CONFIG_SPL_MAX_SIZE		(64 * 1024)
 #define CONFIG_SPL_START_S_PATH		"arch/arm/cpu/armv7"

@@ -26,6 +26,15 @@
  * Commands configuration
  */
 #define CONFIG_SYS_NO_FLASH		/* Declare no flash (NOR/SPI) */
+#define CONFIG_CMD_EXT2
+#define CONFIG_CMD_UBI
+#define CONFIG_CMD_UBIFS
+#define CONFIG_RBTREE
+#define CONFIG_MTD_DEVICE               /* needed for mtdparts commands */
+#define CONFIG_MTD_PARTITIONS
+#define CONFIG_CMD_MTDPARTS
+#define CONFIG_LZO
+
 #include <config_cmd_default.h>
 #define CONFIG_CMD_DHCP
 #define CONFIG_CMD_ENV
@@ -90,5 +99,10 @@
 #endif /*CONFIG_MVSATA_IDE*/
 
 #define CONFIG_SYS_ALT_MEMTEST
+
+#ifdef CONFIG_CMD_MMC
+#define CONFIG_MMC
+#define CONFIG_MV_SDIO
+#endif /* CONFIG_CMD_MMC */
 
 #endif /* _CONFIG_GURUPLUG_H */

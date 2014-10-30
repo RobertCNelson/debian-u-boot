@@ -682,7 +682,7 @@ index 0000000..b772936
 +obj-y  := mx6_c1.o
 diff --git a/board/solidrun/mx6_c1/mx6_c1.c b/board/solidrun/mx6_c1/mx6_c1.c
 new file mode 100644
-index 0000000..d301223
+index 0000000..ef0b9e2
 --- /dev/null
 +++ b/board/solidrun/mx6_c1/mx6_c1.c
 @@ -0,0 +1,340 @@
@@ -893,8 +893,8 @@ index 0000000..d301223
 +int board_eth_init(bd_t *bis)
 +{
 +	int ret;
-+        struct iomuxc_base_regs *const iomuxc_regs
-+                = (struct iomuxc_base_regs *) IOMUXC_BASE_ADDR;
++        struct iomuxc *const iomuxc_regs
++                = (struct iomuxc *) IOMUXC_BASE_ADDR;
 +	struct anatop_regs __iomem *anatop =
 +                (struct anatop_regs __iomem *)ANATOP_BASE_ADDR;
 +	u32 reg = 0;
@@ -1376,10 +1376,10 @@ index 0000000..e9736fb
 +#include "../mx6-microsom/clocks.cfg"
 diff --git a/board/solidrun/mx6_cubox-i/mx6_cubox-i.c b/board/solidrun/mx6_cubox-i/mx6_cubox-i.c
 new file mode 100644
-index 0000000..61015e9
+index 0000000..8b1e2e3
 --- /dev/null
 +++ b/board/solidrun/mx6_cubox-i/mx6_cubox-i.c
-@@ -0,0 +1,483 @@
+@@ -0,0 +1,484 @@
 +/*
 + * Copyright (C) 2012 Freescale Semiconductor, Inc.
 + * Copyright (C) 2013 SolidRun ltd.
@@ -1423,7 +1423,7 @@ index 0000000..61015e9
 +DECLARE_GLOBAL_DATA_PTR;
 +
 +#define MX6QDL_SET_PAD(p, q) \
-+	if (is_cpu_type(MXC_CPU_MX6Q)) \
++	if (is_cpu_type(MXC_CPU_MX6Q) || is_cpu_type(MXC_CPU_MX6D)) \
 +		imx_iomux_v3_setup_pad(MX6Q_##p | q);\
 +	else \
 +		imx_iomux_v3_setup_pad(MX6DL_##p | q)
@@ -1469,6 +1469,7 @@ index 0000000..61015e9
 +		sdram_size = 512u * 1024 * 1024;
 +		break;
 +	case MXC_CPU_MX6Q:
++	case MXC_CPU_MX6D:
 +	{
 +		/* Read first the snoop control unit config register */
 +		u32 scu_config = *(u32 *)(SCU_BASE_ADDR + 0x4);
@@ -1507,7 +1508,7 @@ index 0000000..61015e9
 +iomux_v3_cfg_t const key_row1[] = {
 +	/* Following is only for sensing if it's CuBox-i or HummingBoard */
 +	MX6_PAD_KEY_ROW1__GPIO4_IO09      | MUX_PAD_CTRL(UART_PAD_CTRL),
-+}
++};
 +#endif
 +
 +static void setup_iomux_uart(void)
@@ -1658,8 +1659,8 @@ index 0000000..61015e9
 +int board_eth_init(bd_t *bis)
 +{
 +	int ret;
-+        struct iomuxc_base_regs *const iomuxc_regs
-+                = (struct iomuxc_base_regs *) IOMUXC_BASE_ADDR;
++        struct iomuxc *const iomuxc_regs
++                = (struct iomuxc *) IOMUXC_BASE_ADDR;
 +	struct anatop_regs __iomem *anatop =
 +                (struct anatop_regs __iomem *)ANATOP_BASE_ADDR;
 +	u32 reg = 0;
@@ -1806,7 +1807,7 @@ index 0000000..61015e9
 +
 +#if defined(CONFIG_MX6Q) || defined(CONFIG_MX6DL)
 +iomux_v3_cfg_t const led_pads[] = {
-+	MX6_PAD_DISP0_DAT8__GPIO_4_29 | MUX_PAD_CTRL(UART_PAD_CTRL),
++	MX6_PAD_DISP0_DAT8__GPIO4_IO29 | MUX_PAD_CTRL(UART_PAD_CTRL),
 +};
 +#endif
 +
@@ -1901,10 +1902,10 @@ index 0000000..c061885
 +echo "Error loading kernel image"
 diff --git a/board/solidrun/mx6_cubox-i/mx6_cubox-i_spl.c b/board/solidrun/mx6_cubox-i/mx6_cubox-i_spl.c
 new file mode 100644
-index 0000000..67d5479
+index 0000000..3a6c63f
 --- /dev/null
 +++ b/board/solidrun/mx6_cubox-i/mx6_cubox-i_spl.c
-@@ -0,0 +1,478 @@
+@@ -0,0 +1,479 @@
 +/*
 + * Author: Tungyi Lin <tungyilin1127@gmail.com>
 + *
@@ -2331,6 +2332,7 @@ index 0000000..67d5479
 +		spl_dram_init_mx6solo_512mb();
 +		break;
 +	case MXC_CPU_MX6Q:
++	case MXC_CPU_MX6D:
 +	{
 +		/* Read first the snoop control unit config register */
 +		u32 scu_config = *(u32 *)(SCU_BASE_ADDR + 0x4);

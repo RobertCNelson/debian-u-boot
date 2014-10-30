@@ -17,6 +17,9 @@
 #include <asm/arch/kirkwood.h>
 #include <asm/arch/mpp.h>
 #include "openrd.h"
+#ifdef CONFIG_MRVL_MMC
+#include <mrvl_mmc.h>
+#endif /* CONFIG_MRVL_MMC */
 
 DECLARE_GLOBAL_DATA_PTR;
 
@@ -159,3 +162,11 @@ void reset_phy(void)
 #endif
 }
 #endif /* CONFIG_RESET_PHY_R */
+
+#ifdef CONFIG_MRVL_MMC
+int board_mmc_init(bd_t *bis)
+{
+       mrvl_mmc_init(bis);
+       return 0;
+}
+#endif /* CONFIG_MRVL_MMC */

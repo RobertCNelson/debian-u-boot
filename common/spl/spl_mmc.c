@@ -93,26 +93,26 @@ void spl_mmc_load_image(void)
 	}
 
 	boot_mode = spl_boot_mode();
-	if (boot_mode == MMCSD_MODE_RAW) {
-		debug("boot mode - RAW\n");
-#ifdef CONFIG_SPL_OS_BOOT
-		if (spl_start_uboot() || mmc_load_image_raw_os(mmc))
-#endif
-		err = mmc_load_image_raw(mmc,
-			CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR);
-#ifdef CONFIG_SPL_FAT_SUPPORT
-	} else if (boot_mode == MMCSD_MODE_FAT) {
-		debug("boot mode - FAT\n");
-#ifdef CONFIG_SPL_OS_BOOT
-		if (spl_start_uboot() || spl_load_image_fat_os(&mmc->block_dev,
-								CONFIG_SYS_MMC_SD_FAT_BOOT_PARTITION))
-#endif
-		err = spl_load_image_fat(&mmc->block_dev,
-					CONFIG_SYS_MMC_SD_FAT_BOOT_PARTITION,
-					CONFIG_SPL_FAT_LOAD_PAYLOAD_NAME);
-#endif
+	switch (boot_mode) {
+		case MMCSD_MODE_RAW:
+		case MMCSD_MODE_ANY:
 #ifdef CONFIG_SUPPORT_EMMC_BOOT
-	} else if (boot_mode == MMCSD_MODE_EMMCBOOT) {
+		case MMCSD_MODE_EMMCBOOT:
+#endif
+#ifdef CONFIG_SPL_FAT_SUPPORT
+		case MMCSD_MODE_FAT:
+#endif
+			break;
+		default:
+#ifdef CONFIG_SPL_LIBCOMMON_SUPPORT
+			puts("spl: wrong MMC boot mode\n");
+#endif
+			hang();
+			break;
+	}
+
+#ifdef CONFIG_SUPPORT_EMMC_BOOT
+	if (boot_mode == MMCSD_MODE_EMMCBOOT) {
 		/*
 		 * We need to check what the partition is configured to.
 		 * 1 and 2 match up to boot0 / boot1 and 7 is user data
@@ -129,18 +129,31 @@ void spl_mmc_load_image(void)
 #endif
 			hang();
 		}
+	}
+#endif
+	if (boot_mode == MMCSD_MODE_RAW || boot_mode == MMCSD_MODE_ANY
+	    || boot_mode == MMCSD_MODE_EMMCBOOT)
+	{
+		debug("boot mode - RAW\n");
 #ifdef CONFIG_SPL_OS_BOOT
 		if (spl_start_uboot() || mmc_load_image_raw_os(mmc))
 #endif
 		err = mmc_load_image_raw(mmc,
 			CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR);
-#endif
-	} else {
-#ifdef CONFIG_SPL_LIBCOMMON_SUPPORT
-		puts("spl: wrong MMC boot mode\n");
-#endif
-		hang();
 	}
+#ifdef CONFIG_SPL_FAT_SUPPORT
+	if (boot_mode == MMCSD_MODE_FAT || (boot_mode == MMCSD_MODE_ANY && err))
+	{
+		debug("boot mode - FAT\n");
+#ifdef CONFIG_SPL_OS_BOOT
+		if (spl_start_uboot() || spl_load_image_fat_os(&mmc->block_dev,
+								CONFIG_SYS_MMC_SD_FAT_BOOT_PARTITION))
+#endif
+		err = spl_load_image_fat(&mmc->block_dev,
+					CONFIG_SYS_MMC_SD_FAT_BOOT_PARTITION,
+					CONFIG_SPL_FAT_LOAD_PAYLOAD_NAME);
+	}
+#endif
 
 	if (err)
 		hang();

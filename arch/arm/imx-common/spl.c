@@ -46,7 +46,10 @@ u32 spl_boot_device(void)
 	/* SD/eSD: 8.5.3, Table 8-15  */
 	case 0x4:
 	case 0x5:
-		return BOOT_DEVICE_MMC1;
+		if ((reg & 0x00001000) >> 12)
+			return BOOT_DEVICE_MMC1;
+		else
+			return BOOT_DEVICE_MMC2;
 	/* MMC/eMMC: 8.5.3 */
 	case 0x6:
 	case 0x7:
@@ -67,11 +70,10 @@ u32 spl_boot_mode(void)
 	/* for MMC return either RAW or FAT mode */
 	case BOOT_DEVICE_MMC1:
 	case BOOT_DEVICE_MMC2:
-#ifdef CONFIG_SPL_FAT_SUPPORT
-		return MMCSD_MODE_FAT;
-#else
-		return MMCSD_MODE_RAW;
-#endif
+		return MMCSD_MODE_ANY;
+		break;
+	case BOOT_DEVICE_SATA:
+		return MMCSD_MODE_UNDEFINED;
 		break;
 	default:
 		puts("spl: ERROR:  unsupported device\n");

@@ -414,6 +414,12 @@ config TARGET_GW_VENTANA
 config TARGET_HUMMINGBOARD
 	bool "Support hummingboard"
 
+config TARGET_MX6_C1
+	bool "Support mx6_c1"
+
+config TARGET_MX6_CUBOX_I
+	bool "Support mx6_cubox-i"
+
 config TARGET_TQMA6
 	bool "TQ Systems TQMa6 board"
 
@@ -671,6 +677,8 @@ source "board/siemens/rut/Kconfig"
 source "board/siemens/taurus/Kconfig"
 source "board/silica/pengwyn/Kconfig"
 source "board/solidrun/hummingboard/Kconfig"
+source "board/solidrun/mx6_c1/Kconfig"
+source "board/solidrun/mx6_cubox-i/Kconfig"
 source "board/spear/spear300/Kconfig"
 source "board/spear/spear310/Kconfig"
 source "board/spear/spear320/Kconfig"

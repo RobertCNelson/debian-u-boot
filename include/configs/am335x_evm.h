@@ -115,7 +115,7 @@
 	"loadbootscript=load mmc ${mmcdev} ${loadaddr} boot.scr\0" \
 	"bootscript=echo Running bootscript from mmc${mmcdev} ...; " \
 		"source ${loadaddr}\0" \
-	"loadbootenv=load mmc ${mmcdev} ${loadaddr} ${bootenv}\0" \
+	"loadbootenv=load mmc ${bootpart} ${loadaddr} ${bootenv}\0" \
 	"importbootenv=echo Importing environment from mmc ...; " \
 		"env import -t -r $loadaddr $filesize\0" \
 	"ramargs=setenv bootargs console=${console} " \
