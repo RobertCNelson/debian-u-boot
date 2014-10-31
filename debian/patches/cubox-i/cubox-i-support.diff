@@ -3192,10 +3192,10 @@ index 0000000..aefba7a
 +	   "mmc dev ${mmcdev}; if mmc rescan; then " \
 +               "for prefix in ${boot_prefixes}; do " \
 +		   "setenv file_prefix ${prefix}; " \
++		   "run autodetectfdt; " \
 +		   "if run loadbootscript; then " \
 +			   "run bootscript; " \
 +		   "else " \
-+			   "run autodetectfdt; " \
 +			   "if run loadbootenv; then " \
 +				   "run importbootenv; " \
 +			   "fi; " \
