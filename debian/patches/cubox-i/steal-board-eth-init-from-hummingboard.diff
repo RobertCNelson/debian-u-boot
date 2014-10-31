@@ -10,8 +10,8 @@ Index: u-boot/board/solidrun/mx6_cubox-i/mx6_cubox-i.c
  int board_eth_init(bd_t *bis)
  {
 -	int ret;
--        struct iomuxc_base_regs *const iomuxc_regs
--                = (struct iomuxc_base_regs *) IOMUXC_BASE_ADDR;
+-        struct iomuxc *const iomuxc_regs
+-                = (struct iomuxc *) IOMUXC_BASE_ADDR;
 -	struct anatop_regs __iomem *anatop =
 -                (struct anatop_regs __iomem *)ANATOP_BASE_ADDR;
 -	u32 reg = 0;
