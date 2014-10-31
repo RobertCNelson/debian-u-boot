@@ -76,8 +76,6 @@
 #define CONFIG_BOUNCE_BUFFER
 #define CONFIG_CMD_EXT2
 #define CONFIG_CMD_FAT
-#define CONFIG_CMD_EXT4
-#define CONFIG_CMD_FS_GENERIC
 #define CONFIG_DOS_PARTITION
 
 /* Ethernet Configuration */
@@ -131,12 +129,7 @@
 	"fdt_high=0xffffffff\0" \
 	"initrd_high=0xffffffff\0" \
 	"fdt_file=" CONFIG_DEFAULT_FDT_FILE "\0" \
-	"fdtfile=" CONFIG_DEFAULT_FDT_FILE "\0" \
 	"fdt_addr=0x18000000\0" \
-	"fdt_addr_r=0x18000000\0" \
-	"ramdiskaddr=0x13000000\0" \
-	"ramdisk_addr_r=0x13000000\0" \
-	"kernel_addr_r=" __stringify(CONFIG_LOADADDR) "\0" \
 	"boot_fdt=try\0" \
 	"ip_dyn=yes\0" \
 	"mmcdev=" __stringify(CONFIG_SYS_MMC_ENV_DEV) "\0" \
@@ -184,16 +177,12 @@
 			"echo '- no FWBADAPT-7WVGA-LCD-F07A-0102 display';" \
 		"fi; " \
 		"setenv bootargs ${bootargs} ${fbmem}\0" \
-	"loadbootenv=load mmc ${mmcdev}:${mmcpart} ${loadaddr} uEnv.txt\0" \
-	"importbootenv=echo Importing environment from mmc (uEnv.txt)...; " \
-		"env import -t $loadaddr $filesize\0" \
 	"loadbootscript=" \
-		"load mmc ${mmcdev}:${mmcpart} ${loadaddr} ${script};\0" \
+		"fatload mmc ${mmcdev}:${mmcpart} ${loadaddr} ${script};\0" \
 	"bootscript=echo Running bootscript from mmc ...; " \
 		"source\0" \
-	"loadimage=load mmc ${mmcdev}:${mmcpart} ${loadaddr} ${image}\0" \
-	"loadzimage=load mmc ${mmcdev}:${mmcpart} ${loadaddr} zImage\0" \
-	"loadfdt=load mmc ${mmcdev}:${mmcpart} ${fdt_addr} ${fdt_file}\0" \
+	"loadimage=fatload mmc ${mmcdev}:${mmcpart} ${loadaddr} ${image}\0" \
+	"loadfdt=fatload mmc ${mmcdev}:${mmcpart} ${fdt_addr} ${fdt_file}\0" \
 	"mmcboot=echo Booting from mmc ...; " \
 		"run mmcargs; " \
 		"if test ${boot_fdt} = yes || test ${boot_fdt} = try; then " \
@@ -235,32 +224,16 @@
 		"fi;\0"
 
 #define CONFIG_BOOTCOMMAND \
-	"mmc dev ${mmcdev};" \
-	"if mmc rescan; then " \
-		"echo SD/MMC found on device ${mmcdev};" \
-		"if run loadbootenv; then " \
-			"run importbootenv;" \
-		"fi;" \
-		"echo Checking if uenvcmd is set ...;" \
-		"if test -n $uenvcmd; then " \
-			"echo Running uenvcmd ...;" \
-			"run uenvcmd;" \
-		"fi;" \
-		"if run loadbootscript; then " \
-			"echo Running boot script ${script} ...;" \
-			"run bootscript; " \
-		"fi;" \
-		"setenv script /boot/${script};" \
-		"if run loadbootscript; then " \
-			"echo Running boot script ${script} ...;" \
-			"run bootscript; " \
-		"fi;" \
-		"echo Running default loadzimage ...;" \
-		"if run loadzimage; then " \
-			"run loadfdt;" \
-			"run mmcboot;" \
-		"fi;" \
-	"fi;"
+	   "mmc dev ${mmcdev}; if mmc rescan; then " \
+		   "if run loadbootscript; then " \
+			   "run bootscript; " \
+		   "else " \
+			   "if run loadimage; then " \
+				   "run mmcboot; " \
+			   "else run netboot; " \
+			   "fi; " \
+		   "fi; " \
+	   "else run netboot; fi"
 
 /* Miscellaneous configurable options */
 #define CONFIG_SYS_LONGHELP
@@ -301,7 +274,6 @@
 
 #define CONFIG_OF_LIBFDT
 #define CONFIG_CMD_BOOTZ
-#define CONFIG_SUPPORT_RAW_INITRD
 
 #ifndef CONFIG_SYS_DCACHE_OFF
 #define CONFIG_CMD_CACHE
