@@ -17,6 +17,7 @@ cubox-i/cubox-i-raw-initrd.diff
 cubox-i/steal-board-eth-init-from-hummingboard.diff
 cubox-i/generic-board.diff
 cubox-i/cubox-i-standardize-variables.diff
+cubox-i/emulate-config_distro_bootcmd-standardization.diff
 
 n900-bootz-raw-initrd.diff
 no-force-CROSS_COMPILE-powerpc.diff
