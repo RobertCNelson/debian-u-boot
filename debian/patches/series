@@ -16,6 +16,8 @@ cubox-i/cubox-i-support.diff
 cubox-i/cubox-i-raw-initrd.diff
 cubox-i/steal-board-eth-init-from-hummingboard.diff
 cubox-i/generic-board.diff
+cubox-i/cubox-i-standardize-variables.diff
+
 n900-bootz-raw-initrd.diff
 no-force-CROSS_COMPILE-powerpc.diff
 am335x-bootscript.diff

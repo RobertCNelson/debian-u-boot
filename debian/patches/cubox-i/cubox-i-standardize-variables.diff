@@ -1,0 +1,26 @@
+Add compatibility variables defined in README for kernel_addr_r,
+fdt_addr_r, ramdisk_addr_r and fdtfile.
+
+Index: u-boot/include/configs/mx6_cubox-i.h
+===================================================================
+--- u-boot.orig/include/configs/mx6_cubox-i.h
++++ u-boot/include/configs/mx6_cubox-i.h
+@@ -170,6 +170,9 @@
+         "initrd_high=0xffffffff\0" \
+         "fdt_addr=0x18000000\0" \
+         "ramdiskaddr=0x11800000\0" \
++        "kernel_addr_r=" __stringify(CONFIG_LOADADDR) "\0" \
++        "fdt_addr_r=0x18000000\0" \
++        "ramdisk_addr_r=0x11800000\0" \
+         "ramdisk=uInitrd\0" \
+         "boot_fdt=try\0" \
+         "ip_dyn=yes\0" \
+@@ -205,7 +208,7 @@
+                         "setenv fdt_file ${fdt_prefix}-cubox-i.dtb; " \
+                 "else " \
+                         "setenv fdt_file ${fdt_prefix}-hummingboard.dtb; " \
+-                "fi;\0" \
++                "fi; setenv fdtfile ${fdt_file};\0" \
+         "loadbootenv=load mmc ${mmcdev}:${mmcpart} ${loadaddr} ${bootenv};\0" \
+         "loadfdt=if test ${boottype} = mmc; then " \
+                      "load mmc ${mmcdev}:${mmcpart} ${fdt_addr} ${file_prefix}${fdt_file}; " \
