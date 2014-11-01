@@ -3193,12 +3193,12 @@ index 0000000..aefba7a
 +               "for prefix in ${boot_prefixes}; do " \
 +		   "setenv file_prefix ${prefix}; " \
 +		   "run autodetectfdt; " \
++		   "if run loadbootenv; then " \
++			   "run importbootenv; " \
++		   "fi; " \
 +		   "if run loadbootscript; then " \
 +			   "run bootscript; " \
 +		   "else " \
-+			   "if run loadbootenv; then " \
-+				   "run importbootenv; " \
-+			   "fi; " \
 +                           "if test ${bootfile} = auto; then " \
 +                                   "setenv origbootfile auto; " \
 +                                   "setenv bootfile zImage; " \
