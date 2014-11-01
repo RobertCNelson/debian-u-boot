@@ -1,0 +1,20 @@
+== Installation ==
+
+At this point, you must install U-Boot to flash yourself.
+
+MX53LOCO:
+
+ dd bs=1024 if=u-boot.imx of=/dev/sdX seek=1
+
+wandboard_quad:
+
+ dd if=/usr/lib/u-boot/wandboard_quad/u-boot.imx of=/dev/mmcblkX bs=512 seek=2
+
+mx6_cubox-i:
+
+ dd if=/usr/lib/u-boot/mx6_cubox-i/SPL of=/dev/mmcblk0 bs=1k seek=1
+ dd if=/usr/lib/u-boot/mx6_cubox-i/u-boot.img of=/dev/mmcblk0 bs=1k seek=42
+
+== U-Boot environment tools ==
+
+fw_printenv / fw_setenv read /etc/fw_env.config for configuration.

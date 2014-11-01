@@ -1,0 +1,13 @@
+== Installation ==
+
+At this point, you must install U-Boot to flash yourself.
+
+The BeagleBone Black (am335x_boneblack) can be flashed to microSD or eMMC directly:
+
+ dd if=/usr/lib/u-boot/am335x_boneblack/MLO of=/dev/mmcblkX count=1 seek=1 conv=notrunc bs=128k
+ dd if=/usr/lib/u-boot/am335x_boneblack/u-boot.img of=/dev/mmcblkX count=2 seek=1 conv=notrunc bs=384k
+
+== U-Boot environment tools ==
+
+fw_printenv / fw_setenv read /etc/fw_env.config for configuration.
+

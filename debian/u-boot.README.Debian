@@ -14,10 +14,6 @@ GuruPlug:
  sudo flash_erase /dev/mtd0 0 0
  sudo nandwrite -p /dev/mtd0 /usr/lib/u-boot/guruplug/u-boot.kwb
 
-MX53LOCO:
-
- sudo dd bs=1024 if=u-boot.imx of=/dev/sdX seek=1
-
 DreamPlug:
 
  At this point you cannot write to the SPI/NOR flash from Linux,
