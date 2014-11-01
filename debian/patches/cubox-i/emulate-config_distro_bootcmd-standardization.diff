@@ -16,4 +16,4 @@ Index: u-boot/include/configs/mx6_cubox-i.h
 +               "setenv bootpart ${mmcpart} ; " \
                 "for prefix in ${boot_prefixes}; do " \
  		   "setenv file_prefix ${prefix}; " \
- 		   "if run loadbootscript; then " \
+ 		   "run autodetectfdt; " \
