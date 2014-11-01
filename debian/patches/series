@@ -7,6 +7,7 @@ guruplug_mvfs_and_mmc.diff
 
 wandboard/wandboard-uEnv.txt-bootz-n-fixes.patch
 wandboard/wandboard-standardized-variables
+wandboard/emulate-config_distro_bootcmd-standardization.diff
 
 ti_armv7_common-support_raw_initrd.diff
 am335x-uenv.txt.diff
@@ -37,3 +38,4 @@ Makefile-add-kwb-target-to-all.patch
 arndale/board-spl-rule.diff
 arndale/exynos-Enable-config_distro_defaults.h.patch
 arndale/exynos5-Use-config_distro_bootcmd.h.patch
+

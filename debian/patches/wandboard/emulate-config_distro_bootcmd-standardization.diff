@@ -1,0 +1,19 @@
+Set additional variables (boot_targets, devtype, devnum, bootpart) to
+emulate config_distro_bootcmd.h so that the debian-installer
+bootscript will work.
+
+Index: u-boot/include/configs/wandboard.h
+===================================================================
+--- u-boot.orig/include/configs/wandboard.h
++++ u-boot/include/configs/wandboard.h
+@@ -236,6 +236,10 @@
+ 
+ #define CONFIG_BOOTCOMMAND \
+ 	"mmc dev ${mmcdev};" \
++	"setenv boot_targets mmc ; " \
++	"setenv devtype mmc ; " \
++	"setenv devnum ${mmcdev} ; " \
++	"setenv bootpart ${mmcpart} ; " \
+ 	"if mmc rescan; then " \
+ 		"echo SD/MMC found on device ${mmcdev};" \
+ 		"if run loadbootenv; then " \
