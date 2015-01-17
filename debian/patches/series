@@ -1,15 +1,21 @@
 add-debian-revision-to-u-boot-version
 mipsel-native-endianness.diff
-openrd-mmc.diff
 no-error-on-set-but-unused-variables.diff
+no-force-CROSS_COMPILE-powerpc.diff
+tools-generic-builds.patch
+tools-only-in-no-dot-config-targets.diff
+Makefile-add-kwb-target-to-all.patch
 hurd.diff
+
+openrd-mmc.diff
 guruplug_mvfs_and_mmc.diff
 
 wandboard/wandboard-uEnv.txt-bootz-n-fixes.patch
 wandboard/wandboard-standardized-variables
 wandboard/emulate-config_distro_bootcmd-standardization.diff
 
-am335x-uenv.txt.diff
+udoo_quad-support.patch
+mx53loco
 
 #cubox-i/spl-sata-support.diff
 #cubox-i/imx6-spl-support.diff
@@ -21,20 +27,12 @@ am335x-uenv.txt.diff
 #cubox-i/emulate-config_distro_bootcmd-standardization.diff
 
 n900-bootz-raw-initrd.diff
-no-force-CROSS_COMPILE-powerpc.diff
+
+am335x-uenv.txt.diff
 am335x-bootscript.diff
 am335x-try-boot-from-first-partition.diff
-udoo_quad-support.patch
-mx53loco
-
-tools-generic-builds.patch
-tools-only-in-no-dot-config-targets.diff
-
-Makefile-add-kwb-target-to-all.patch
-
 0001-Set-DCDC1-DDR3-to-1.35V-for-Beaglebone-Black.patch
 
 arndale/board-spl-rule.diff
 #arndale/exynos-Enable-config_distro_defaults.h.patch
 #arndale/exynos5-Use-config_distro_bootcmd.h.patch
-
