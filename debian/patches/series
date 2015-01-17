@@ -14,8 +14,8 @@ wandboard/wandboard-uEnv.txt-bootz-n-fixes.patch
 wandboard/wandboard-standardized-variables
 wandboard/emulate-config_distro_bootcmd-standardization.diff
 
-udoo_quad-support.patch
-udoo-standardized-variables
+udoo/udoo_quad-support.patch
+udoo/udoo-standardized-variables
 
 mx53loco
 
