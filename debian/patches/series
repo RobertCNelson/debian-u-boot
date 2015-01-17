@@ -25,7 +25,6 @@ am335x-bootscript.diff
 am335x-try-boot-from-first-partition.diff
 udoo_quad-support.patch
 mx53loco
-workaround-env-ftbfs
 
 tools-generic-builds.patch
 tools-only-in-no-dot-config-targets.diff
