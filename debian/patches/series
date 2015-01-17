@@ -30,10 +30,10 @@ mx53loco
 
 n900-bootz-raw-initrd.diff
 
-am335x-uenv.txt.diff
-am335x-bootscript.diff
-am335x-try-boot-from-first-partition.diff
-0001-Set-DCDC1-DDR3-to-1.35V-for-Beaglebone-Black.patch
+beagleboneblack/am335x-uenv.txt.diff
+beagleboneblack/am335x-bootscript.diff
+beagleboneblack/am335x-try-boot-from-first-partition.diff
+beagleboneblack/0001-Set-DCDC1-DDR3-to-1.35V-for-Beaglebone-Black.patch
 
 arndale/board-spl-rule.diff
 #arndale/exynos-Enable-config_distro_defaults.h.patch
