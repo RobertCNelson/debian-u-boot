@@ -15,6 +15,8 @@ wandboard/wandboard-standardized-variables
 wandboard/emulate-config_distro_bootcmd-standardization.diff
 
 udoo_quad-support.patch
+udoo-standardized-variables
+
 mx53loco
 
 #cubox-i/spl-sata-support.diff
