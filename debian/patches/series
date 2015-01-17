@@ -9,7 +9,6 @@ wandboard/wandboard-uEnv.txt-bootz-n-fixes.patch
 wandboard/wandboard-standardized-variables
 wandboard/emulate-config_distro_bootcmd-standardization.diff
 
-ti_armv7_common-support_raw_initrd.diff
 am335x-uenv.txt.diff
 cubox-i/spl-sata-support.diff
 cubox-i/imx6-spl-support.diff
