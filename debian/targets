@@ -53,7 +53,7 @@ armhf	imx		mx53loco	u-boot.imx
 # Steve Langasek <vorlon@debian.org>, CuBox-i4
 # Vagrant Cascadian <vagrant@debian.org>, CuBox-i4
 # Rainer Dorsch <ml@bokomoko.de>, CuBox-i2u (i2u-300-d)
-armhf	imx		mx6_cubox-i	u-boot.img spl/u-boot-spl.bin SPL
+#armhf	imx		mx6_cubox-i	u-boot.img spl/u-boot-spl.bin SPL
 
 armhf	omap		nokia_rx51	u-boot.bin
 
