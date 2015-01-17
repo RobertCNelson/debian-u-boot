@@ -3,7 +3,6 @@ Upstream-Name: Das U-Boot
 Source: ftp://ftp.denx.de/pub/u-boot/
 Files-Excluded: *fpgadata*
  arch/powerpc/cpu/mpc8xx/upatch.c
- board/dave/PPChameleonEVB/fpgadata.c 
  drivers/dma/MCD_tasks.c
 
 Files: *
