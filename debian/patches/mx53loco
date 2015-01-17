@@ -4,7 +4,7 @@ Index: u-boot/include/configs/mx53loco.h
 ===================================================================
 --- u-boot.orig/include/configs/mx53loco.h
 +++ u-boot/include/configs/mx53loco.h
-@@ -43,6 +43,8 @@
+@@ -45,6 +45,8 @@
  #define CONFIG_GENERIC_MMC
  #define CONFIG_CMD_FAT
  #define CONFIG_CMD_EXT2
@@ -13,11 +13,3 @@ Index: u-boot/include/configs/mx53loco.h
  #define CONFIG_DOS_PARTITION
  
  /* Eth Configs */
-@@ -92,6 +94,7 @@
- /* Command definition */
- #include <config_cmd_default.h>
- #define CONFIG_CMD_BOOTZ
-+#define CONFIG_SUPPORT_RAW_INITRD
- 
- #undef CONFIG_CMD_IMLS
- 

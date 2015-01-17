@@ -29,8 +29,8 @@ Index: u-boot/include/configs/wandboard.h
 +#define CONFIG_CMD_FS_GENERIC
  #define CONFIG_DOS_PARTITION
  
- /* Ethernet Configuration */
-@@ -172,12 +174,16 @@
+ /* USB Configs */
+@@ -186,12 +188,16 @@
  			"echo '- no FWBADAPT-7WVGA-LCD-F07A-0102 display';" \
  		"fi; " \
  		"setenv bootargs ${bootargs} ${fbmem}\0" \
@@ -50,7 +50,7 @@ Index: u-boot/include/configs/wandboard.h
  	"mmcboot=echo Booting from mmc ...; " \
  		"run mmcargs; " \
  		"if test ${boot_fdt} = yes || test ${boot_fdt} = try; then " \
-@@ -219,16 +225,32 @@
+@@ -233,16 +239,32 @@
  		"fi;\0"
  
  #define CONFIG_BOOTCOMMAND \
@@ -93,7 +93,7 @@ Index: u-boot/include/configs/wandboard.h
  
  /* Miscellaneous configurable options */
  #define CONFIG_SYS_LONGHELP
-@@ -269,6 +291,7 @@
+@@ -283,6 +305,7 @@
  
  #define CONFIG_OF_LIBFDT
  #define CONFIG_CMD_BOOTZ
