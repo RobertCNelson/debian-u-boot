@@ -1,6 +1,8 @@
---- a/include/configs/guruplug.h
-+++ b/include/configs/guruplug.h
-@@ -43,6 +43,15 @@
+Index: u-boot/include/configs/guruplug.h
+===================================================================
+--- u-boot.orig/include/configs/guruplug.h
++++ u-boot/include/configs/guruplug.h
+@@ -46,6 +46,15 @@
   * Commands configuration
   */
  #define CONFIG_SYS_NO_FLASH		/* Declare no flash (NOR/SPI) */
@@ -14,9 +16,9 @@
 +#define CONFIG_LZO
 +
  #include <config_cmd_default.h>
+ #define CONFIG_CMD_BOOTZ
  #define CONFIG_CMD_DHCP
- #define CONFIG_CMD_ENV
-@@ -108,4 +117,9 @@
+@@ -141,4 +150,9 @@
  
  #define CONFIG_SYS_ALT_MEMTEST
  
