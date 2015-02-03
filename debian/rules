@@ -83,3 +83,10 @@ override_dh_auto_test:
 override_dh_clean:
 	rm -rf debian/build/
 	dh_clean
+
+get-orig-source:
+	# Use uscan from the devscripts package to download new
+	# tarball, remove files incompatible with the DFSG (see
+	# Files-Excluded in debian/copyright), and repack with xz
+	# compression.
+	uscan --download --repack --compression=xz
