@@ -34,6 +34,7 @@ beagleboneblack/am335x-uenv.txt.diff
 beagleboneblack/am335x-bootscript.diff
 beagleboneblack/am335x-try-boot-from-first-partition.diff
 beagleboneblack/0001-Set-DCDC1-DDR3-to-1.35V-for-Beaglebone-Black.patch
+beagleboneblack/usb-mass-storage.patch
 
 arndale/board-spl-rule.diff
 #arndale/exynos-Enable-config_distro_defaults.h.patch
