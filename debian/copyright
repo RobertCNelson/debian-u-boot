@@ -199,21 +199,10 @@ Files: lib/sha1.c
 Copyright: Copyright (C) 2003-2006  Christophe Devine
 License: LGPL-2.1
 
-Files: include/bzlib.h  
- lib/bzlib_private.h
- lib/bzlib.c
- lib/bzlib_huffman.c
- lib/bzlib_decompress.c
- lib/bzlib_randtable.c
- lib/bzlib_crctable.c
+Files: include/bzlib.h
+ lib/bzip2/*
 Copyright: Copyright (C) 1996-2002 Julian R Seward.  All rights reserved.
 License: bzlib-BSD-3
-
-Files: arch/x86/include/asm/arch-coreboot/ipchecksum.h
- arch/x86/cpu/coreboot/ipchecksum.c
-Copyright: Copyright (c) 2001 Charles Mott <cm@linktel.net>
- Copyright (c) 2008 coresystems GmbH
-License: BSD-2
 
 Files: drivers/usb/musb-new/musb_host.h
  drivers/usb/musb-new/musb_core.h
@@ -246,11 +235,7 @@ Copyright: 2006 David Gibson, IBM Corporation
  2012 Kim Phillips, Freescale Semiconductor
 License: libfdt-BSD-GPL
 
-Files: include/pcmcia/cirrus.h
- include/pcmcia/i82365.h
- include/pcmcia/ss.h
- include/pcmcia/ti113x.h
- include/pcmcia/yenta.h
+Files: include/pcmcia/yenta.h
 Copyright: 1999 David A. Hinds. All Rights Reserved
 License: MPL-GPL
 
@@ -332,28 +317,6 @@ License: Beerware
  Sergey Lyubka wrote this file.  As long as you retain this notice you
  can do whatever you want with this stuff. If we meet some day, and you think
  this stuff is worth it, you can buy me a beer in return.
-
-License: BSD-2
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in the
-    documentation and/or other materials provided with the distribution.
- . 
- THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
- ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- SUCH DAMAGE.
 
 License: GPL-2
  This program is free software; you can redistribute it and/or
