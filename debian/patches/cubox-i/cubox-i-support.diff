@@ -3290,7 +3290,3 @@ index 18ed590..8de0d58 100644
  			htab, htab->filled, htab->size,
  			rv, name, value);
  	} while ((dp < data + size) && *dp);	/* size check needed for text */
-diff --git a/tools/logos/solidrun.bmp b/tools/logos/solidrun.bmp
-new file mode 100644
-index 0000000..93db1f8
-Binary files /dev/null and b/tools/logos/solidrun.bmp differ
