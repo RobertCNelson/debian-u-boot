@@ -1,3 +1,13 @@
+u-boot (2014.10+dfsg1-3) unstable; urgency=medium
+
+  * cubox-i-support.diff: Refresh patch, dropping solidrun.bmp, which
+    causes FTBFS with newer version of patch (Closes: #777518).
+
+  * Add patch to support A20-OLinuXino-LIME2, backported from u-boot
+    2015.01. Thanks to Karsten Merker for the patch (Closes: #777466).
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Sat, 21 Feb 2015 13:13:31 -0800
+
 u-boot (2014.10+dfsg1-2.1) unstable; urgency=medium
 
   * Non-maintainer upload.
