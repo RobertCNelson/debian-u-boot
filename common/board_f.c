@@ -111,7 +111,7 @@ static int init_func_watchdog_init(void)
 {
 # if defined(CONFIG_HW_WATCHDOG) && (defined(CONFIG_BLACKFIN) || \
 	defined(CONFIG_M68K) || defined(CONFIG_MICROBLAZE) || \
-	defined(CONFIG_SH))
+	defined(CONFIG_SH) || defined(CONFIG_AT91SAM9_WATCHDOG))
 	hw_watchdog_init();
 # endif
 	puts("       Watchdog enabled\n");
@@ -262,7 +262,7 @@ static int zero_global_data(void)
 
 static int setup_mon_len(void)
 {
-#ifdef __ARM__
+#if defined(__ARM__) || defined(__MICROBLAZE__)
 	gd->mon_len = (ulong)&__bss_end - (ulong)_start;
 #elif defined(CONFIG_SANDBOX)
 	gd->mon_len = (ulong)&_end - (ulong)_init;
@@ -909,7 +909,7 @@ static init_fnc_t init_sequence_f[] = {
 #endif
 	announce_dram_init,
 	/* TODO: unify all these dram functions? */
-#if defined(CONFIG_ARM) || defined(CONFIG_X86)
+#if defined(CONFIG_ARM) || defined(CONFIG_X86) || defined(CONFIG_MICROBLAZE)
 	dram_init,		/* configure available RAM banks */
 #endif
 #if defined(CONFIG_MIPS) || defined(CONFIG_PPC)
@@ -1074,5 +1074,23 @@ void board_init_f_r(void)
 
 	/* NOTREACHED - board_init_r() does not return */
 	hang();
+}
+#else
+ulong board_init_f_mem(ulong top)
+{
+	/* Leave space for the stack we are running with now */
+	top -= 0x40;
+
+	top -= sizeof(struct global_data);
+	top = ALIGN(top, 16);
+	gd = (struct global_data *)top;
+	memset((void *)gd, '\0', sizeof(*gd));
+
+#ifdef CONFIG_SYS_MALLOC_F_LEN
+	top -= CONFIG_SYS_MALLOC_F_LEN;
+	gd->malloc_base = top;
+#endif
+
+	return top;
 }
 #endif /* CONFIG_X86 */

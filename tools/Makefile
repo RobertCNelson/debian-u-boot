@@ -115,6 +115,10 @@ ifdef CONFIG_FIT_SIGNATURE
 HOST_EXTRACFLAGS	+= -DCONFIG_FIT_SIGNATURE
 endif
 
+ifdef CONFIG_SYS_SPI_U_BOOT_OFFS
+HOSTCFLAGS_kwbimage.o += -DCONFIG_SYS_SPI_U_BOOT_OFFS=$(CONFIG_SYS_SPI_U_BOOT_OFFS)
+endif
+
 # MXSImage needs LibSSL
 ifneq ($(CONFIG_MX23)$(CONFIG_MX28)$(CONFIG_FIT_SIGNATURE),)
 HOSTLOADLIBES_mkimage += -lssl -lcrypto
@@ -123,8 +127,6 @@ endif
 HOSTLOADLIBES_dumpimage := $(HOSTLOADLIBES_mkimage)
 HOSTLOADLIBES_fit_info := $(HOSTLOADLIBES_mkimage)
 HOSTLOADLIBES_fit_check_sign := $(HOSTLOADLIBES_mkimage)
-
-HOSTLDFLAGS += -T $(srctree)/tools/imagetool.lds
 
 hostprogs-$(CONFIG_EXYNOS5250) += mkexynosspl
 hostprogs-$(CONFIG_EXYNOS5420) += mkexynosspl
