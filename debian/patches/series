@@ -42,3 +42,5 @@ arndale/exynos5-Use-config_distro_bootcmd.h.patch
 sh4-fix-linker-name-prefix.patch
 
 A20-OLinuXino-LIME2/sun7i-Add-support-for-Olimex-A20-OLinuXino-LIME2.patch
+
+BananaPro/Add-support-for-the-LeMaker-Banana-Pro.patch

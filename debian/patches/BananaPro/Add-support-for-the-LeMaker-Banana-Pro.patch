@@ -1,0 +1,48 @@
+Index: u-boot-2014.10+dfsg1/board/sunxi/MAINTAINERS
+===================================================================
+--- u-boot-2014.10+dfsg1.orig/board/sunxi/MAINTAINERS
++++ u-boot-2014.10+dfsg1/board/sunxi/MAINTAINERS
+@@ -19,6 +19,7 @@ F:	configs/r7-tv-dongle_defconfig
+ F:	include/configs/sun7i.h
+ F:	configs/A20-OLinuXino_MICRO_defconfig
+ F:	configs/Bananapi_defconfig
++F:	configs/Bananapro_defconfig
+ F:	configs/i12-tvbox_defconfig
+ F:	configs/Linksprite_pcDuino3_defconfig
+ F:	configs/qt840a_defconfig
+Index: u-boot-2014.10+dfsg1/board/sunxi/Makefile
+===================================================================
+--- u-boot-2014.10+dfsg1.orig/board/sunxi/Makefile
++++ u-boot-2014.10+dfsg1/board/sunxi/Makefile
+@@ -22,6 +22,7 @@ obj-$(CONFIG_A20_OLINUXINO_M)	+= dram_su
+ obj-$(CONFIG_AUXTEK_T004)	+= dram_a10s_olinuxino_m.o
+ obj-$(CONFIG_BA10_TV_BOX)	+= dram_sun4i_384_1024_iow8.o
+ obj-$(CONFIG_BANANAPI)		+= dram_bananapi.o
++obj-$(CONFIG_BANANAPRO) 	+= dram_bananapi.o
+ obj-$(CONFIG_CUBIEBOARD)	+= dram_cubieboard.o
+ obj-$(CONFIG_CUBIEBOARD2)	+= dram_cubieboard2.o
+ obj-$(CONFIG_CUBIETRUCK)	+= dram_cubietruck.o
+Index: u-boot-2014.10+dfsg1/board/sunxi/gmac.c
+===================================================================
+--- u-boot-2014.10+dfsg1.orig/board/sunxi/gmac.c
++++ u-boot-2014.10+dfsg1/board/sunxi/gmac.c
+@@ -29,7 +29,7 @@ int sunxi_gmac_initialize(bd_t *bis)
+ 	 * need to set bits 10-12 GTXDC "GMAC Transmit Clock Delay Chain"
+ 	 * of the GMAC clk register to 3.
+ 	 */
+-#ifdef CONFIG_BANANAPI
++#if defined CONFIG_BANANAPI || defined CONFIG_BANANAPRO
+ 	setbits_le32(&ccm->gmac_clk_cfg, 0x3 << 10);
+ #endif
+ 
+Index: u-boot-2014.10+dfsg1/configs/Bananapro_defconfig
+===================================================================
+--- /dev/null
++++ u-boot-2014.10+dfsg1/configs/Bananapro_defconfig
+@@ -0,0 +1,6 @@
++CONFIG_SPL=y
++CONFIG_SYS_EXTRA_OPTIONS="BANANAPRO,AXP209_POWER,SUNXI_GMAC,RGMII,MACPWR=SUNXI_GPH(23),AHCI,USB_EHCI,SUNXI_USB_VBUS0_GPIO=SUNXI_GPH(0),SUNXI_USB_VBUS1_GPIO=SUNXI_GPH(1)"
++CONFIG_FDTFILE="sun7i-a20-bananapro.dtb"
+++S:CONFIG_ARM=y
+++S:CONFIG_TARGET_SUN7I=y
++
