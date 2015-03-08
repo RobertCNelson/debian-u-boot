@@ -1,3 +1,13 @@
+u-boot (2014.10+dfsg1-4) unstable; urgency=medium
+
+  [ Karsten Merker ]
+  * Backport support for the LeMaker Banana Pro board (Closes: #779908).
+
+  [ Vagrant Cascadian ]
+  * Update lintian rules for BananaPro and A20-OlinuXino-LIME2.
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Sun, 08 Mar 2015 11:13:07 -0700
+
 u-boot (2014.10+dfsg1-3) unstable; urgency=medium
 
   * cubox-i-support.diff: Refresh patch, dropping solidrun.bmp, which
