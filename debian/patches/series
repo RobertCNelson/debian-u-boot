@@ -39,3 +39,5 @@ beagleboneblack/usb-mass-storage.patch
 arndale/board-spl-rule.diff
 #arndale/exynos-Enable-config_distro_defaults.h.patch
 #arndale/exynos5-Use-config_distro_bootcmd.h.patch
+
+sh4-fix-linker-name-prefix.patch
