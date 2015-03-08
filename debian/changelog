@@ -1,4 +1,4 @@
-u-boot (2015.04~rc1+dfsg1-1) UNRELEASED; urgency=medium
+u-boot (2015.04~rc3+dfsg1-1) experimental; urgency=medium
 
   * New upstream release candidate.
   * Remove patches applied upstream:
@@ -21,7 +21,7 @@ u-boot (2015.04~rc1+dfsg1-1) UNRELEASED; urgency=medium
     - arndale/exynos5-Use-config_distro_bootcmd.h.patch
   * Disable cubox-i build target and patches, as it fails to build.
 
- -- Vagrant Cascadian <vagrant@debian.org>  Mon, 02 Feb 2015 22:02:24 -0800
+ -- Vagrant Cascadian <vagrant@debian.org>  Sun, 08 Mar 2015 12:15:59 -0700
 
 u-boot (2014.10+dfsg1-4) unstable; urgency=medium
 
