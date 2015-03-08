@@ -91,6 +91,6 @@ avr32	-		hammerhead	u-boot.img
 
 mips	-		qemu_mips	u-boot.bin
 
-sh4	-		r2dplus		u-boot.img
+sh4	-		r2dplus		u-boot.bin
 
-sh4	-		sh7785lcr_32bit	u-boot.img
+sh4	-		sh7785lcr_32bit	u-boot.bin
