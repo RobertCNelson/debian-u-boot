@@ -167,14 +167,17 @@ static int initr_serial(void)
 	return 0;
 }
 
-#ifdef CONFIG_PPC
+#if defined(CONFIG_PPC) || defined(CONFIG_M68K)
 static int initr_trap(void)
 {
 	/*
 	 * Setup trap handlers
 	 */
+#if defined(CONFIG_PPC)
 	trap_init(gd->relocaddr);
-
+#else
+	trap_init(CONFIG_SYS_SDRAM_BASE);
+#endif
 	return 0;
 }
 #endif
@@ -729,7 +732,7 @@ init_fnc_t init_sequence_r[] = {
 #ifdef CONFIG_NEEDS_MANUAL_RELOC
 	initr_manual_reloc_cmdtable,
 #endif
-#ifdef CONFIG_PPC
+#if defined(CONFIG_PPC) || defined(CONFIG_M68K)
 	initr_trap,
 #endif
 #ifdef CONFIG_ADDR_MAP
@@ -767,7 +770,7 @@ init_fnc_t init_sequence_r[] = {
 	initr_flash,
 #endif
 	INIT_FUNC_WATCHDOG_RESET
-#if defined(CONFIG_PPC)
+#if defined(CONFIG_PPC) || defined(CONFIG_M68K)
 	/* initialize higher level parts of CPU like time base and timers */
 	cpu_init_r,
 #endif
@@ -831,7 +834,8 @@ init_fnc_t init_sequence_r[] = {
 #if defined(CONFIG_ARM) || defined(CONFIG_AVR32)
 	initr_enable_interrupts,
 #endif
-#if defined(CONFIG_X86) || defined(CONFIG_MICROBLAZE) || defined(CONFIG_AVR32)
+#if defined(CONFIG_X86) || defined(CONFIG_MICROBLAZE) || defined(CONFIG_AVR32) \
+	|| defined(CONFIG_M68K)
 	timer_init,		/* initialize timer */
 #endif
 #if defined(CONFIG_STATUS_LED) && defined(STATUS_LED_BOOT)

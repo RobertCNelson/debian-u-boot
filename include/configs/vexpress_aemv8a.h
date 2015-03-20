@@ -29,8 +29,6 @@
 
 /*#define CONFIG_ARMV8_SWITCH_TO_EL1*/
 
-#define CONFIG_SYS_NO_FLASH
-
 #define CONFIG_SUPPORT_RAW_INITRD
 
 /* Cache Definitions */
@@ -56,14 +54,6 @@
 /* Flat Device Tree Definitions */
 #define CONFIG_OF_LIBFDT
 
-
-/* SMP Spin Table Definitions */
-#ifdef CONFIG_TARGET_VEXPRESS64_BASE_FVP
-#define CPU_RELEASE_ADDR		(CONFIG_SYS_SDRAM_BASE + 0x03f00000)
-#else
-#define CPU_RELEASE_ADDR		(CONFIG_SYS_SDRAM_BASE + 0x7fff0)
-#endif
-
 /* CS register bases for the original memory map. */
 #define V2M_PA_CS0			0x00000000
 #define V2M_PA_CS1			0x14000000
@@ -78,13 +68,6 @@
 #define V2M_SERIAL_BUS_PCI		(V2M_PA_CS3 + V2M_PERIPH_OFFSET(3))
 
 #define V2M_BASE			0x80000000
-
-/*
- * Physical addresses, offset from V2M_PA_CS0-3
- */
-#define V2M_NOR0			(V2M_PA_CS0)
-#define V2M_NOR1			(V2M_PA_CS4)
-#define V2M_SRAM			(V2M_PA_CS1)
 
 /* Common peripherals relative to CS7. */
 #define V2M_AACI			(V2M_PA_CS3 + V2M_PERIPH_OFFSET(4))
@@ -146,9 +129,17 @@
 /* Size of malloc() pool */
 #define CONFIG_SYS_MALLOC_LEN		(CONFIG_ENV_SIZE + (8 << 20))
 
-/* SMSC91C111 Ethernet Configuration */
+/* Ethernet Configuration */
+#ifdef CONFIG_TARGET_VEXPRESS64_JUNO
+/* The real hardware Versatile express uses SMSC9118 */
+#define CONFIG_SMC911X			1
+#define CONFIG_SMC911X_32_BIT		1
+#define CONFIG_SMC911X_BASE		(0x018000000)
+#else
+/* The Vexpress64 simulators use SMSC91C111 */
 #define CONFIG_SMC91111			1
 #define CONFIG_SMC91111_BASE		(0x01A000000)
+#endif
 
 /* PL011 Serial Configuration */
 #define CONFIG_PL011_SERIAL
@@ -175,7 +166,6 @@
 #define CONFIG_CMD_DHCP
 #define CONFIG_CMD_PXE
 #define CONFIG_CMD_ENV
-#define CONFIG_CMD_FLASH
 #define CONFIG_CMD_IMI
 #define CONFIG_CMD_LOADB
 #define CONFIG_CMD_MEMORY
@@ -237,7 +227,7 @@
 					"fdt_addr_r=0x83000000\0"		\
 					"fdt_high=0xa0000000\0"
 
-#define CONFIG_BOOTARGS			"console=ttyAMA0 root=/dev/ram0"
+#define CONFIG_BOOTARGS			"console=ttyAMA0,115200n8 root=/dev/ram0"
 #define CONFIG_BOOTCOMMAND		"bootm $kernel_addr_r " \
 					"$initrd_addr_r:$initrd_size $fdt_addr_r"
 #define CONFIG_BOOTDELAY		-1
@@ -257,5 +247,28 @@
 #define CONFIG_SYS_LONGHELP
 #define CONFIG_CMDLINE_EDITING
 #define CONFIG_SYS_MAXARGS		64	/* max command args */
+
+/* Flash memory is available on the Juno board only */
+#ifndef CONFIG_TARGET_VEXPRESS64_JUNO
+#define CONFIG_SYS_NO_FLASH
+#else
+#define CONFIG_CMD_FLASH
+#define CONFIG_SYS_FLASH_CFI		1
+#define CONFIG_FLASH_CFI_DRIVER		1
+#define CONFIG_SYS_FLASH_BASE		0x08000000
+#define CONFIG_SYS_FLASH_SIZE		0x04000000 /* 64 MiB */
+#define CONFIG_SYS_MAX_FLASH_BANKS	2
+
+/* Timeout values in ticks */
+#define CONFIG_SYS_FLASH_ERASE_TOUT	(2 * CONFIG_SYS_HZ) /* Erase Timeout */
+#define CONFIG_SYS_FLASH_WRITE_TOUT	(2 * CONFIG_SYS_HZ) /* Write Timeout */
+
+/* 255 0x40000 sectors + first or last sector may have 4 erase regions = 259 */
+#define CONFIG_SYS_MAX_FLASH_SECT	259		/* Max sectors */
+#define CONFIG_SYS_FLASH_USE_BUFFER_WRITE /* use buffered writes */
+#define CONFIG_SYS_FLASH_PROTECTION	/* The devices have real protection */
+#define CONFIG_SYS_FLASH_EMPTY_INFO	/* flinfo indicates empty blocks */
+
+#endif
 
 #endif /* __VEXPRESS_AEMV8A_H */

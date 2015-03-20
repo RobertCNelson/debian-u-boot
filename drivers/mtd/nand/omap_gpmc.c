@@ -30,13 +30,22 @@ static u8  bch8_polynomial[] = {0xef, 0x51, 0x2e, 0x09, 0xed, 0x93, 0x9a, 0xc2,
 static uint8_t cs_next;
 static __maybe_unused struct nand_ecclayout omap_ecclayout;
 
+#if defined(CONFIG_NAND_OMAP_GPMC_WSCFG)
+static const int8_t wscfg[CONFIG_SYS_MAX_NAND_DEVICE] =
+	{ CONFIG_NAND_OMAP_GPMC_WSCFG };
+#else
+/* wscfg is preset to zero since its a static variable */
+static const int8_t wscfg[CONFIG_SYS_MAX_NAND_DEVICE];
+#endif
+
 /*
  * Driver configurations
  */
 struct omap_nand_info {
 	struct bch_control *control;
 	enum omap_ecc ecc_scheme;
-	int cs;
+	uint8_t cs;
+	uint8_t ws;		/* wait status pin (0,1) */
 };
 
 /* We are wasting a bit of memory but al least we are safe */
@@ -76,7 +85,9 @@ static void omap_nand_hwcontrol(struct mtd_info *mtd, int32_t cmd,
 /* Check wait pin as dev ready indicator */
 static int omap_dev_ready(struct mtd_info *mtd)
 {
-	return gpmc_cfg->status & (1 << 8);
+	register struct nand_chip *this = mtd->priv;
+	struct omap_nand_info *info = this->priv;
+	return gpmc_cfg->status & (1 << (8 + info->ws));
 }
 
 /*
@@ -901,8 +912,18 @@ int __maybe_unused omap_nand_switch_ecc(uint32_t hardware, uint32_t eccstrength)
 			return -EINVAL;
 		}
 	} else {
-		err = omap_select_ecc_scheme(nand, OMAP_ECC_HAM1_CODE_SW,
+		if (eccstrength == 1) {
+			err = omap_select_ecc_scheme(nand,
+					OMAP_ECC_HAM1_CODE_SW,
 					mtd->writesize, mtd->oobsize);
+		} else if (eccstrength == 8) {
+			err = omap_select_ecc_scheme(nand,
+					OMAP_ECC_BCH8_CODE_HW_DETECTION_SW,
+					mtd->writesize, mtd->oobsize);
+		} else {
+			printf("nand: error: unsupported ECC scheme\n");
+			return -EINVAL;
+		}
 	}
 
 	/* Update NAND handling after ECC mode switch */
@@ -962,6 +983,7 @@ int board_nand_init(struct nand_chip *nand)
 	nand->IO_ADDR_W = (void __iomem *)&gpmc_cfg->cs[cs].nand_cmd;
 	omap_nand_info[cs].control = NULL;
 	omap_nand_info[cs].cs = cs;
+	omap_nand_info[cs].ws = wscfg[cs];
 	nand->priv	= &omap_nand_info[cs];
 	nand->cmd_ctrl	= omap_nand_hwcontrol;
 	nand->options	|= NAND_NO_PADDING | NAND_CACHEPRG;

@@ -381,6 +381,19 @@ config TARGET_AM43XX_EVM
 	select CPU_V7
 	select SUPPORT_SPL
 
+config TARGET_BAV335X
+	bool "Support bav335x"
+	select CPU_V7
+	select SUPPORT_SPL
+	help
+	  The BAV335x OEM Network Processor integrates all the functions of an
+	  embedded network computer in a small, easy to use SODIMM module which
+	  incorporates the popular Texas Instruments Sitara 32bit ARM Coretex-A8
+	  processor, with fast DDR3 512MB SDRAM, 4GB of embedded MMC and a Gigabit
+	  ethernet with simple connection to external connectors.
+
+	  For more information, visit: http://birdland.com/oem
+
 config TARGET_TI814X_EVM
 	bool "Support ti814x_evm"
 	select CPU_V7
@@ -463,6 +476,10 @@ config TARGET_UDOO
 
 config TARGET_WANDBOARD
 	bool "Support wandboard"
+	select CPU_V7
+
+config TARGET_WARP
+	bool "Support WaRP"
 	select CPU_V7
 
 config TARGET_TITANIUM
@@ -567,6 +584,11 @@ config TARGET_CM_FX6
 	select CPU_V7
 	select SUPPORT_SPL
 
+config TARGET_SOCFPGA_ARRIA5
+	bool "Support socfpga_arria5"
+	select CPU_V7
+	select SUPPORT_SPL
+
 config TARGET_SOCFPGA_CYCLONE5
 	bool "Support socfpga_cyclone5"
 	select CPU_V7
@@ -619,10 +641,12 @@ config TARGET_VEXPRESS64_JUNO
 config TARGET_LS2085A_EMU
 	bool "Support ls2085a_emu"
 	select ARM64
+	select ARMV8_MULTIENTRY
 
 config TARGET_LS2085A_SIMU
 	bool "Support ls2085a_simu"
 	select ARM64
+	select ARMV8_MULTIENTRY
 
 config TARGET_LS1021AQDS
 	bool "Support ls1021aqds"
@@ -735,6 +759,8 @@ source "arch/arm/cpu/armv7/zynq/Kconfig"
 
 source "arch/arm/cpu/armv7/Kconfig"
 
+source "arch/arm/cpu/armv8/Kconfig"
+
 source "board/aristainetos/Kconfig"
 source "board/BuR/kwb/Kconfig"
 source "board/BuR/tseries/Kconfig"
@@ -832,6 +858,7 @@ source "board/syteco/zmx25/Kconfig"
 source "board/tbs/tbs2910/Kconfig"
 source "board/ti/am335x/Kconfig"
 source "board/ti/am43xx/Kconfig"
+source "board/birdland/bav335x/Kconfig"
 source "board/ti/ti814x/Kconfig"
 source "board/ti/ti816x/Kconfig"
 source "board/timll/devkit3250/Kconfig"
@@ -842,6 +869,7 @@ source "board/ttcontrol/vision2/Kconfig"
 source "board/udoo/Kconfig"
 source "board/vpac270/Kconfig"
 source "board/wandboard/Kconfig"
+source "board/warp/Kconfig"
 source "board/woodburn/Kconfig"
 source "board/xaeniax/Kconfig"
 source "board/xilinx/zynqmp/Kconfig"

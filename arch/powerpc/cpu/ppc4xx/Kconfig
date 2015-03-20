@@ -13,12 +13,6 @@ config TARGET_CSB272
 config TARGET_CSB472
 	bool "Support csb472"
 
-config TARGET_JSE
-	bool "Support JSE"
-
-config TARGET_KORAT
-	bool "Support korat"
-
 config TARGET_LWMON5
 	bool "Support lwmon5"
 	select SUPPORT_SPL
@@ -34,12 +28,6 @@ config TARGET_SC3
 
 config TARGET_T3CORP
 	bool "Support t3corp"
-
-config TARGET_W7OLMC
-	bool "Support W7OLMC"
-
-config TARGET_W7OLMG
-	bool "Support W7OLMG"
 
 config TARGET_ZEUS
 	bool "Support zeus"
@@ -204,8 +192,6 @@ source "board/gdsys/405ex/Kconfig"
 source "board/gdsys/dlvision/Kconfig"
 source "board/gdsys/gdppc440etx/Kconfig"
 source "board/gdsys/intip/Kconfig"
-source "board/jse/Kconfig"
-source "board/korat/Kconfig"
 source "board/lwmon5/Kconfig"
 source "board/mosaixtech/icon/Kconfig"
 source "board/mpl/mip405/Kconfig"
@@ -216,7 +202,6 @@ source "board/prodrive/p3p440/Kconfig"
 source "board/sbc405/Kconfig"
 source "board/sc3/Kconfig"
 source "board/t3corp/Kconfig"
-source "board/w7o/Kconfig"
 source "board/xes/xpedite1000/Kconfig"
 source "board/xilinx/ml507/Kconfig"
 source "board/xilinx/ppc405-generic/Kconfig"

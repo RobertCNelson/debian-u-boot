@@ -8,6 +8,7 @@ F:	configs/ba10_tv_box_defconfig
 F:	configs/Chuwi_V7_CW0825_defconfig
 F:	configs/Cubieboard_defconfig
 F:	configs/Hyundai_A7HD_defconfig
+F:	configs/jesurun_q5_defconfig
 F:	configs/Mele_A1000_defconfig
 F:	configs/Mele_M3_defconfig
 F:	configs/Mini-X_defconfig
@@ -30,7 +31,10 @@ F:	configs/Bananapro_defconfig
 F:	configs/i12-tvbox_defconfig
 F:	configs/Linksprite_pcDuino3_defconfig
 F:	configs/Linksprite_pcDuino3_fdt_defconfig
+F:	configs/Orangepi_defconfig
+F:	configs/Orangepi_mini_defconfig
 F:	configs/qt840a_defconfig
+F:	configs/Wits_Pro_A20_DKT_defconfig
 F:	include/configs/sun8i.h
 F:	configs/Ippo_q8h_v1_2_defconfig
 
@@ -63,6 +67,11 @@ S:	Maintained
 F:	include/configs/sun7i.h
 F:	configs/Cubieboard2_defconfig
 F:	configs/Cubietruck_defconfig
+
+FORFUN-Q88DB TABLET
+M:	Jens Lucius <info@jenslucius.com>
+S:	Maintained
+F:	configs/forfun_q88db_defconfig
 
 GEMEI-G9 TABLET
 M:	Priit Laes <plaes@plaes.org>
@@ -100,10 +109,20 @@ M:	Aleksei Mamlin <mamlinav@gmail.com>
 S:	Maintained
 F:	configs/Marsboard_A10_defconfig
 
+MELE I7 BOARD
+M:	Marcus Cooper <codekipper@gmail.com>
+S:	Maintained
+F:	configs/Mele_I7_defconfig
+
 MELE M5 BOARD
 M:	Ian Campbell <ijc@hellion.org.uk>
 S:	Maintained
 F:	configs/Mele_M5_defconfig
+
+MK808C BOARD
+M:	Marcus Cooper <codekipper@gmail.com>
+S:	Maintained
+F:	configs/MK808C_defconfig
 
 MSI-PRIMO73 BOARD
 M:	Siarhei Siamashka <siarhei.siamashka@gmail.com>
@@ -119,3 +138,8 @@ TZX-Q8-713B7 BOARD
 M:	Paul Kocialkowski <contact@paulk.fr>
 S:	Maintained
 F:	configs/TZX-Q8-713B7_defconfig
+
+WEXLER-TAB7200 BOARD
+M:	Aleksei Mamlin <mamlinav@gmail.com>
+S:	Maintained
+F:	configs/Wexler_TAB7200_defconfig

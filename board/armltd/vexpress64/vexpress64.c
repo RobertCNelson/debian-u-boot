@@ -22,12 +22,6 @@ int board_init(void)
 
 int dram_init(void)
 {
-	/*
-	 * Clear spin table so that secondary processors
-	 * observe the correct value after waken up from wfe.
-	 */
-	*(unsigned long *)CPU_RELEASE_ADDR = 0;
-
 	gd->ram_size = PHYS_SDRAM_1_SIZE;
 	return 0;
 }
@@ -142,6 +136,9 @@ int board_eth_init(bd_t *bis)
 	int rc = 0;
 #ifdef CONFIG_SMC91111
 	rc = smc91111_initialize(0, CONFIG_SMC91111_BASE);
+#endif
+#ifdef CONFIG_SMC911X
+	rc = smc911x_initialize(0, CONFIG_SMC911X_BASE);
 #endif
 	return rc;
 }
