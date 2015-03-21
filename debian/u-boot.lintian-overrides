@@ -7,7 +7,7 @@ u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boo
 u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/dreamplug/uboot.elf
 u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/guruplug/uboot.elf
 u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/openrd_ultimate/uboot.elf
-u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/rpi_b/uboot.elf
+u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/rpi/uboot.elf
 u-boot [armel]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/sheevaplug/uboot.elf
 u-boot [avr32]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/hammerhead/uboot.elf
 u-boot [mips]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/qemu_mips/uboot.elf
@@ -19,7 +19,7 @@ u-boot [armel]: statically-linked-binary usr/lib/u-boot/dockstar/uboot.elf
 u-boot [armel]: statically-linked-binary usr/lib/u-boot/dreamplug/uboot.elf
 u-boot [armel]: statically-linked-binary usr/lib/u-boot/guruplug/uboot.elf
 u-boot [armel]: statically-linked-binary usr/lib/u-boot/openrd_ultimate/uboot.elf
-u-boot [armel]: statically-linked-binary usr/lib/u-boot/rpi_b/uboot.elf
+u-boot [armel]: statically-linked-binary usr/lib/u-boot/rpi/uboot.elf
 u-boot [armel]: statically-linked-binary usr/lib/u-boot/sheevaplug/uboot.elf
 u-boot [avr32]: statically-linked-binary usr/lib/u-boot/hammerhead/uboot.elf
 u-boot [mips]: statically-linked-binary usr/lib/u-boot/qemu_mips/uboot.elf
