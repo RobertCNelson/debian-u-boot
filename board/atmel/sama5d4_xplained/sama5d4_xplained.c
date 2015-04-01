@@ -24,6 +24,7 @@
 #include <netdev.h>
 #include <nand.h>
 #include <spi.h>
+#include <version.h>
 
 DECLARE_GLOBAL_DATA_PTR;
 
@@ -179,6 +180,7 @@ void lcd_show_board_info(void)
 	int i;
 	char temp[32];
 
+	lcd_printf("%s\n", U_BOOT_VERSION);
 	lcd_printf("2014 ATMEL Corp\n");
 	lcd_printf("%s CPU at %s MHz\n", get_cpu_name(),
 		   strmhz(temp, get_cpu_clk_rate()));
@@ -228,6 +230,9 @@ void sama5d4_xplained_mci1_hw_init(void)
 
 int board_mmc_init(bd_t *bis)
 {
+	/* Enable the power supply */
+	at91_set_pio_output(AT91_PIO_PORTE, 4, 0);
+
 	return atmel_mci_init((void *)ATMEL_BASE_MCI1);
 }
 #endif /* CONFIG_GENERIC_ATMEL_MCI */

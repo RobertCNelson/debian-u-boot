@@ -1,9 +1,6 @@
 menu "Panasonic UniPhier platform"
 	depends on ARCH_UNIPHIER
 
-config SYS_SOC
-	default "uniphier"
-
 config SYS_CONFIG_NAME
 	default "uniphier"
 
@@ -47,12 +44,6 @@ config DCC_MICRO_SUPPORT_CARD
 	  Say Y to use the on-board UART, Ether, LED devices.
 
 endchoice
-
-config SYS_MALLOC_F
-	default y
-
-config SYS_MALLOC_F_LEN
-	default 0x400
 
 config CMD_PINMON
 	bool "Enable boot mode pins monitor command"

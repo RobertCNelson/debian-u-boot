@@ -169,8 +169,6 @@
 #define CONFIG_AUTO_COMPLETE
 #define CONFIG_SYS_CBSIZE		256
 
-/* Print Buffer Size */
-#define CONFIG_SYS_PBSIZE (CONFIG_SYS_CBSIZE + sizeof(CONFIG_SYS_PROMPT) + 16)
 #define CONFIG_SYS_MAXARGS		16
 #define CONFIG_SYS_BARGSIZE CONFIG_SYS_CBSIZE
 
@@ -249,6 +247,13 @@
 #define CONFIG_SYS_FSL_USDHC_NUM	3
 #if defined(CONFIG_ENV_IS_IN_MMC)
 #define CONFIG_SYS_MMC_ENV_DEV		1	/* SDHC2*/
+#endif
+
+#define CONFIG_IMX6_THERMAL
+
+#define CONFIG_CMD_FUSE
+#if defined(CONFIG_CMD_FUSE) || defined(CONFIG_IMX6_THERMAL)
+#define CONFIG_MXC_OCOTP
 #endif
 
 #endif				/* __CONFIG_H */

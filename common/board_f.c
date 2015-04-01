@@ -111,7 +111,8 @@ static int init_func_watchdog_init(void)
 {
 # if defined(CONFIG_HW_WATCHDOG) && (defined(CONFIG_BLACKFIN) || \
 	defined(CONFIG_M68K) || defined(CONFIG_MICROBLAZE) || \
-	defined(CONFIG_SH) || defined(CONFIG_AT91SAM9_WATCHDOG))
+	defined(CONFIG_SH) || defined(CONFIG_AT91SAM9_WATCHDOG) || \
+	defined(CONFIG_IMX_WATCHDOG))
 	hw_watchdog_init();
 # endif
 	puts("       Watchdog enabled\n");
@@ -493,7 +494,7 @@ static int reserve_trace(void)
 
 #if defined(CONFIG_VIDEO) && (!defined(CONFIG_PPC) || defined(CONFIG_8xx)) && \
 		!defined(CONFIG_ARM) && !defined(CONFIG_X86) && \
-		!defined(CONFIG_BLACKFIN)
+		!defined(CONFIG_BLACKFIN) && !defined(CONFIG_M68K)
 static int reserve_video(void)
 {
 	/* reserve memory for video display (always full pages) */
@@ -967,7 +968,7 @@ static init_fnc_t init_sequence_f[] = {
 	/* TODO: Why the dependency on CONFIG_8xx? */
 #if defined(CONFIG_VIDEO) && (!defined(CONFIG_PPC) || defined(CONFIG_8xx)) && \
 		!defined(CONFIG_ARM) && !defined(CONFIG_X86) && \
-		!defined(CONFIG_BLACKFIN)
+		!defined(CONFIG_BLACKFIN) && !defined(CONFIG_M68K)
 	reserve_video,
 #endif
 #if !defined(CONFIG_BLACKFIN) && !defined(CONFIG_NIOS2)
@@ -1079,7 +1080,9 @@ void board_init_f_r(void)
 	/* NOTREACHED - board_init_r() does not return */
 	hang();
 }
-#else
+#endif /* CONFIG_X86 */
+
+#ifndef CONFIG_X86
 ulong board_init_f_mem(ulong top)
 {
 	/* Leave space for the stack we are running with now */
@@ -1097,4 +1100,4 @@ ulong board_init_f_mem(ulong top)
 
 	return top;
 }
-#endif /* CONFIG_X86 */
+#endif /* !CONFIG_X86 */
