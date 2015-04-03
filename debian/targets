@@ -8,8 +8,6 @@ armel	-		dreamplug	u-boot.kwb
 # drEagle <drEagle@doukki.net>
 armel	-		guruplug	u-boot.kwb
 
-armel	-		openrd_ultimate	u-boot.kwb
-
 # Vagrant Cascadian <vagrant@debian.org>, rpi B 256M
 armel	-		rpi		u-boot.bin
 
