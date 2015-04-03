@@ -7,9 +7,6 @@ tools-only-in-no-dot-config-targets.diff
 Makefile-add-kwb-target-to-all.patch
 hurd.diff
 
-openrd-mmc.diff
-guruplug_mvfs_and_mmc.diff
-
 wandboard/wandboard-uEnv.txt-bootz-n-fixes.patch
 wandboard/wandboard-standardized-variables
 wandboard/emulate-config_distro_bootcmd-standardization.diff
