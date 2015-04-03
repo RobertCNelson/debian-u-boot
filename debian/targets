@@ -26,6 +26,9 @@ armhf	sunxi		A20-OLinuXino-Lime	u-boot-sunxi-with-spl.bin
 # Karsten Merker <merker@debian.org>
 armhf	sunxi		A20-OLinuXino-Lime2	u-boot-sunxi-with-spl.bin
 
+# Arne Ploese <aploese@gmx.de>
+armhf  sunxi		A20-OLinuXino_MICRO	u-boot-sunxi-with-spl.bin
+
 # Ian Campbell <ijc@hellion.org.uk>
 # Vagrant Cascadian <vagrant@debian.org>
 armhf	sunxi		Bananapi	u-boot-sunxi-with-spl.bin
