@@ -7,6 +7,7 @@ export DEBIAN_REVISION ?= $(shell dpkg-parsechangelog --show-field Version | sed
 
 ifneq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
 export CROSS_COMPILE ?= $(DEB_HOST_GNU_TYPE)-
+cross_build_tools ?= y
 endif
 
 # support parallel build using DEB_BUILD_OPTIONS=parallel=N
@@ -60,16 +61,15 @@ override_dh_auto_build:
 	mkdir -p $(TOOLSDIR)/include/config
 	touch $(TOOLSDIR)/include/config/auto.conf
 	# Load dummy config
-	make O=$(TOOLSDIR) sandbox_defconfig
+	$(MAKE) O=$(TOOLSDIR) CROSS_COMPILE=$(CROSS_COMPILE) sandbox_defconfig
 	# board-independent tools
 	$(MAKE) O=$(TOOLSDIR) $(DEB_UBOOT_FLAGS) \
-		HOSTCC=$(CROSS_COMPILE)gcc \
-		HOSTSTRIP=$(CROSS_COMPILE)strip \
+		CROSS_COMPILE=$(CROSS_COMPILE) \
+		CROSS_BUILD_TOOLS=$(cross_build_tools) \
 		NO_SDL=1 \
 	    tools-only
 	$(MAKE) O=$(TOOLSDIR) $(DEB_UBOOT_FLAGS) \
-		HOSTCC=$(CROSS_COMPILE)gcc \
-		HOSTSTRIP=$(CROSS_COMPILE)strip \
+		CROSS_COMPILE=$(CROSS_COMPILE) \
 		NO_SDL=1 \
 	    env
 	$(CROSS_COMPILE)strip --remove-section=.comment $(TOOLSDIR)/tools/env/fw_printenv
