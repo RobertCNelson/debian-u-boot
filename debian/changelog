@@ -1,3 +1,16 @@
+u-boot (2014.10+dfsg1-5) unstable; urgency=medium
+
+  [ John Paul Adrian Glaubitz ]
+  * [sh4] Fix FTBFS due to incorrect target names (Closes: #780066).
+
+  [ Vagrant Cascadian ]
+  * [armhf] u-boot-sunxi: Enable A20-OLinuXino_MICRO. Thanks to Arne
+    Ploese for testing!
+  * [armhf] u-boot-sunxi: Enable Linksprite_pcDuino3. Thanks to Patrice Go
+    for testing!
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Tue, 07 Apr 2015 13:42:30 -0700
+
 u-boot (2014.10+dfsg1-4) unstable; urgency=medium
 
   [ Karsten Merker ]
