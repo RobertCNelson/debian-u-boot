@@ -1,3 +1,22 @@
+u-boot (2015.04~rc5+dfsg1-1) experimental; urgency=medium
+
+  [ John Paul Adrian Glaubitz ]
+  * [sh4] Fix FTBFS due to incorrect target names (Closes: #780066).
+
+  [ Vagrant Cascadian ]
+  * [armel] Use "rpi" for the Raspberry pi target, as it was renamed
+    upstream.
+  * [armel] Remove openrd_ultimate target, which fails to build upstream.
+  * [armel] Remove obsolete mmc guruplug and openrd patches.
+  * [armhf] Remove arndale patches, applied upstream.
+  * Fix cross-building of u-boot-tools (Closes: #775614).
+  * [armhf] u-boot-sunxi: Enable A20-OLinuXino_MICRO. Thanks to Arne
+    Ploese for testing!
+  * [armhf] u-boot-sunxi: Enable Linksprite_pcDuino3. Thanks to Patrice Go
+    for testing!
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Tue, 07 Apr 2015 13:58:39 -0700
+
 u-boot (2015.04~rc3+dfsg1-1) experimental; urgency=medium
 
   * New upstream release candidate.
