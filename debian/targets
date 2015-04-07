@@ -47,6 +47,9 @@ armhf	sunxi		Cubieboard2	u-boot-sunxi-with-spl.bin
 # Karsten Merker <merker@debian.org>
 armhf	sunxi		Cubietruck	u-boot-sunxi-with-spl.bin
 
+# Patrice Go <patgsiosisr@gmail.com>
+armhf	sunxi		Linksprite_pcDuino3	u-boot-sunxi-with-spl.bin
+
 # Vagrant Cascadian <vagrant@debian.org>
 # Andrew M.A. Cater <amacater@galactic.demon.co.uk>
 armhf	omap		am335x_boneblack u-boot.img spl/u-boot-spl.bin MLO
