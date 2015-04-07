@@ -12,6 +12,7 @@ u-boot-sunxi [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib
 u-boot-sunxi [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubieboard/uboot.elf
 u-boot-sunxi [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubieboard2/uboot.elf
 u-boot-sunxi [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Cubietruck/uboot.elf
+u-boot-sunxi [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/Linksprite_pcDuino3/uboot.elf
 
 # These bootloaders need to be statically linked.
 u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/A10-OLinuXino-Lime/uboot.elf
@@ -23,5 +24,6 @@ u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/Bananapro/uboot.el
 u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/Cubieboard/uboot.elf
 u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/Cubieboard2/uboot.elf
 u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/Cubietruck/uboot.elf
+u-boot-sunxi [armhf]: statically-linked-binary usr/lib/u-boot/Linksprite_pcDuino3/uboot.elf
 
 u-boot-sunxi: description-synopsis-starts-with-article
