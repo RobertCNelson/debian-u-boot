@@ -1,7 +1,7 @@
 VERSION = 2015
 PATCHLEVEL = 04
 SUBLEVEL =
-EXTRAVERSION = -rc5
+EXTRAVERSION =
 NAME =
 
 # *DOCUMENTATION*
@@ -513,11 +513,15 @@ include/config/%.conf: $(KCONFIG_CONFIG) include/config/auto.conf.cmd
 # is up-to-date. When we switch to a different board configuration, old CONFIG
 # macros are still remaining in include/config/auto.conf. Without the following
 # gimmick, wrong config.mk would be included leading nasty warnings/errors.
-autoconf_is_current := $(if $(wildcard $(KCONFIG_CONFIG)),$(shell find . \
-		-path ./include/config/auto.conf -newer $(KCONFIG_CONFIG)))
-ifneq ($(autoconf_is_current),)
+ifneq ($(wildcard $(KCONFIG_CONFIG)),)
+ifneq ($(wildcard include/config/auto.conf),)
+autoconf_is_old := $(shell find . -path ./$(KCONFIG_CONFIG) -newer \
+						include/config/auto.conf)
+ifeq ($(autoconf_is_old),)
 include $(srctree)/config.mk
 include $(srctree)/arch/$(ARCH)/Makefile
+endif
+endif
 endif
 
 # If board code explicitly specified LDSCRIPT or CONFIG_SYS_LDSCRIPT, use
@@ -904,6 +908,26 @@ OBJCOPYFLAGS_u-boot-with-spl.bin = -I binary -O binary \
 				   --pad-to=$(CONFIG_SPL_PAD_TO)
 u-boot-with-spl.bin: spl/u-boot-spl.bin $(SPL_PAYLOAD) FORCE
 	$(call if_changed,pad_cat)
+
+MKIMAGEFLAGS_lpc32xx-spl.img = -T lpc32xximage -a $(CONFIG_SPL_TEXT_BASE)
+
+lpc32xx-spl.img: spl/u-boot-spl.bin FORCE
+	$(call if_changed,mkimage)
+
+OBJCOPYFLAGS_lpc32xx-boot-0.bin = -I binary -O binary --pad-to=$(CONFIG_SPL_PAD_TO)
+
+lpc32xx-boot-0.bin: lpc32xx-spl.img
+	$(call if_changed,objcopy)
+
+OBJCOPYFLAGS_lpc32xx-boot-1.bin = -I binary -O binary --pad-to=$(CONFIG_SPL_PAD_TO)
+
+lpc32xx-boot-1.bin: lpc32xx-spl.img
+	$(call if_changed,objcopy)
+
+lpc32xx-full.bin: lpc32xx-boot-0.bin lpc32xx-boot-1.bin u-boot.img
+	$(call if_changed,cat)
+
+CLEAN_FILES += lpc32xx-*
 
 OBJCOPYFLAGS_u-boot-with-tpl.bin = -I binary -O binary \
 				   --pad-to=$(CONFIG_TPL_PAD_TO)

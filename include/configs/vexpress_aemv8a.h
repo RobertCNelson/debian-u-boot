@@ -8,6 +8,8 @@
 #ifndef __VEXPRESS_AEMV8A_H
 #define __VEXPRESS_AEMV8A_H
 
+#define CONFIG_DM
+
 /* We use generic board for v8 Versatile Express */
 #define CONFIG_SYS_GENERIC_BOARD
 
@@ -116,6 +118,7 @@
 #define CONFIG_SYS_MEMTEST_END		(V2M_BASE + 0x80000000)
 
 /* Size of malloc() pool */
+#define CONFIG_SYS_MALLOC_F_LEN		0x2000
 #define CONFIG_SYS_MALLOC_LEN		(CONFIG_ENV_SIZE + (8 << 20))
 
 /* Ethernet Configuration */
@@ -131,6 +134,14 @@
 #endif
 
 /* PL011 Serial Configuration */
+#define CONFIG_BAUDRATE			115200
+#ifdef CONFIG_DM
+#define CONFIG_DM_SERIAL
+#define CONFIG_PL01X_SERIAL
+#else
+#define CONFIG_SYS_SERIAL0		V2M_UART0
+#define CONFIG_SYS_SERIAL1		V2M_UART1
+#define CONFIG_CONS_INDEX		0
 #define CONFIG_PL011_SERIAL
 #ifdef CONFIG_TARGET_VEXPRESS64_JUNO
 #define CONFIG_PL011_CLOCK		7273800
@@ -139,7 +150,7 @@
 #endif
 #define CONFIG_PL01x_PORTS		{(void *)CONFIG_SYS_SERIAL0, \
 					 (void *)CONFIG_SYS_SERIAL1}
-#define CONFIG_CONS_INDEX		0
+#endif
 
 #define CONFIG_BAUDRATE			115200
 #define CONFIG_SYS_SERIAL0		V2M_UART0
@@ -187,7 +198,34 @@
 #define CONFIG_SYS_SDRAM_BASE		PHYS_SDRAM_1
 
 /* Initial environment variables */
-#ifdef CONFIG_TARGET_VEXPRESS64_BASE_FVP
+#ifdef CONFIG_TARGET_VEXPRESS64_JUNO
+/*
+ * Defines where the kernel and FDT exist in NOR flash and where it will
+ * be copied into DRAM
+ */
+#define CONFIG_EXTRA_ENV_SETTINGS	\
+				"kernel_name=Image\0"	\
+				"kernel_addr=0x80000000\0" \
+				"fdt_name=juno\0" \
+				"fdt_addr=0x83000000\0" \
+				"fdt_high=0xffffffffffffffff\0" \
+				"initrd_high=0xffffffffffffffff\0" \
+
+/* Assume we boot with root on the first partition of a USB stick */
+#define CONFIG_BOOTARGS		"console=ttyAMA0,115200n8 " \
+				"root=/dev/sda1 rw " \
+				"earlyprintk=pl011,0x7ff80000 debug user_debug=31 "\
+				"loglevel=9"
+
+/* Copy the kernel and FDT to DRAM memory and boot */
+#define CONFIG_BOOTCOMMAND	"afs load ${kernel_name} ${kernel_addr} ; " \
+				"afs load  ${fdt_name} ${fdt_addr} ; " \
+				"fdt addr ${fdt_addr}; fdt resize; " \
+				"booti ${kernel_addr} - ${fdt_addr}"
+
+#define CONFIG_BOOTDELAY		1
+
+#elif CONFIG_TARGET_VEXPRESS64_BASE_FVP
 #define CONFIG_EXTRA_ENV_SETTINGS	\
 				"kernel_name=uImage\0"		\
 				"kernel_addr=0x80000000\0"	\
@@ -235,6 +273,7 @@
 #define CONFIG_SYS_NO_FLASH
 #else
 #define CONFIG_CMD_FLASH
+#define CONFIG_CMD_ARMFLASH
 #define CONFIG_SYS_FLASH_CFI		1
 #define CONFIG_FLASH_CFI_DRIVER		1
 #define CONFIG_SYS_FLASH_BASE		0x08000000

@@ -132,6 +132,11 @@ config TARGET_DEVKIT3250
 	bool "Support devkit3250"
 	select CPU_ARM926EJS
 
+config TARGET_WORK_92105
+	bool "Support work_92105"
+	select CPU_ARM926EJS
+	select SUPPORT_SPL
+
 config TARGET_MX25PDK
 	bool "Support mx25pdk"
 	select CPU_ARM926EJS
@@ -430,6 +435,10 @@ config ARCH_KEYSTONE
 
 config ARCH_MX6
 	bool "Freescale MX6"
+	select CPU_V7
+
+config ARCH_MX5
+	bool "Freescale MX5"
 	select CPU_V7
 
 config TARGET_M53EVK
@@ -736,6 +745,8 @@ source "arch/arm/mach-kirkwood/Kconfig"
 
 source "arch/arm/cpu/armv7/mx6/Kconfig"
 
+source "arch/arm/cpu/armv7/mx5/Kconfig"
+
 source "arch/arm/mach-nomadik/Kconfig"
 
 source "arch/arm/cpu/armv7/omap3/Kconfig"
@@ -872,6 +883,7 @@ source "board/vpac270/Kconfig"
 source "board/wandboard/Kconfig"
 source "board/warp/Kconfig"
 source "board/woodburn/Kconfig"
+source "board/work-microwave/work_92105/Kconfig"
 source "board/xaeniax/Kconfig"
 source "board/xilinx/zynqmp/Kconfig"
 source "board/zipitz2/Kconfig"
