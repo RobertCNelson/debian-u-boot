@@ -76,6 +76,9 @@ armhf	omap		omap4_panda	u-boot.bin spl/u-boot-spl.bin MLO
 # Michael Fladischer <michael@fladi.at>
 armhf	imx		udoo_quad	u-boot.imx
 
+# Vagrant Cascadian <vagrant@debian.org>
+armhf	imx		usbarmory	u-boot.imx
+
 # Robert Nelson <robertcnelson@gmail.com>
 armhf	imx		wandboard_dl	u-boot.imx
 

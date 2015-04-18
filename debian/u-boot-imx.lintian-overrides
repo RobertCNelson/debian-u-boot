@@ -5,6 +5,7 @@
 # the package for the architecture needed.
 u-boot-imx [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/mx53loco/uboot.elf
 u-boot-imx [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/udoo_quad/uboot.elf
+u-boot-imx [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/usbarmory/uboot.elf
 u-boot-imx [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/wandboard_dl/uboot.elf
 u-boot-imx [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/wandboard_quad/uboot.elf
 u-boot-imx [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u-boot/wandboard_solo/uboot.elf
@@ -13,6 +14,7 @@ u-boot-imx [armhf]: arch-dependent-file-not-in-arch-specific-directory usr/lib/u
 # These bootloaders need to be statically linked.
 u-boot-imx [armhf]: statically-linked-binary usr/lib/u-boot/mx53loco/uboot.elf
 u-boot-imx [armhf]: statically-linked-binary usr/lib/u-boot/udoo_quad/uboot.elf
+u-boot-imx [armhf]: statically-linked-binary usr/lib/u-boot/usbarmory/uboot.elf
 u-boot-imx [armhf]: statically-linked-binary usr/lib/u-boot/wandboard_dl/uboot.elf
 u-boot-imx [armhf]: statically-linked-binary usr/lib/u-boot/wandboard_quad/uboot.elf
 u-boot-imx [armhf]: statically-linked-binary usr/lib/u-boot/wandboard_solo/uboot.elf
